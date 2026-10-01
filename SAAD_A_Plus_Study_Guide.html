@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAAD — دليل الـ A+ (System Analysis & Design)</title>
+<style>
+:root{--bg:#ffffff;--ink:#17202a;--mut:#5b6773;--line:#d9e0e6;--soft:#f2f6f8;--acc:#0f5c63;--acc2:#b4472f;--ok:#1d6b3a;--code:#101820;--codeink:#e6edf3}
+@media (prefers-color-scheme:dark){:root{--bg:#10171c;--ink:#e6edf1;--mut:#9fb0bc;--line:#2a3640;--soft:#18222a;--acc:#5fc4cc;--acc2:#f0907a;--ok:#6fd08c;--code:#0a0f13;--codeink:#e6edf3}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,"Noto Sans Arabic","Noto Naskh Arabic",system-ui,sans-serif;line-height:1.85;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:24px 18px 80px}
+h1{font-size:2rem;margin:.2em 0;line-height:1.35}
+h2{font-size:1.45rem;margin:2.2em 0 .5em;padding:.45em .8em;background:var(--acc);color:#fff;border-radius:8px}
+h3{font-size:1.12rem;margin:1.4em 0 .3em;color:var(--acc);border-bottom:2px solid var(--line);padding-bottom:.15em}
+p{margin:.5em 0}
+ul,ol{padding-inline-start:1.4em;margin:.4em 0}
+li{margin:.2em 0}
+code,.en{direction:ltr;unicode-bidi:isolate;font-family:Consolas,"Courier New",monospace}
+code{background:var(--soft);padding:.05em .4em;border-radius:4px;font-size:.92em;border:1px solid var(--line)}
+pre{direction:ltr;text-align:left;background:var(--code);color:var(--codeink);padding:12px 14px;border-radius:8px;overflow-x:auto;font-size:.88rem;line-height:1.55}
+pre code{background:none;border:0;padding:0;color:inherit}
+.lead{color:var(--mut)}
+.box{background:var(--soft);border:1px solid var(--line);border-inline-start:5px solid var(--acc);border-radius:8px;padding:10px 16px;margin:12px 0}
+.box.warn{border-inline-start-color:var(--acc2)}
+.box.ok{border-inline-start-color:var(--ok)}
+.box b.t{display:block;margin-bottom:.2em}
+details{border:1px solid var(--line);border-radius:8px;margin:8px 0;background:var(--bg)}
+summary{cursor:pointer;padding:9px 14px;font-weight:600;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"❓ ";}
+details[open]>summary{background:var(--soft);border-bottom:1px solid var(--line)}
+details .a{padding:8px 16px 10px}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.95rem;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:start;vertical-align:top}
+th{background:var(--soft)}
+nav.toc{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px 18px;margin:16px 0}
+nav.toc a{display:inline-block;margin:2px 10px 2px 0;color:var(--acc);text-decoration:none;font-weight:600}
+nav.toc a:hover{text-decoration:underline}
+.tag{display:inline-block;font-size:.78rem;padding:0 .55em;border-radius:99px;border:1px solid var(--acc2);color:var(--acc2);margin-inline-start:.4em;vertical-align:middle}
+.hot{color:var(--acc2);font-weight:700}
+@media print{body{font-size:12.5px}details{break-inside:avoid}details .a{display:block}h2{break-after:avoid}nav.toc{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>دليل الـ A+ في System Analysis &amp; Design</h1>
+<p class="lead">طلعته من الـ ZIP كله: 9 محاضرات + محاضرة الضيف + 10 لابات + ملف الـ CI/CD + ملف الـ Git cheat sheet. كل قسم فيه: <b>قبل ما تدخل لازم تعرف</b> و<b>أسئلة متوقعة</b> (اضغط على السؤال عشان يطلع الجواب، حاول تجاوب قبل ما تفتح).</p>
+
+<nav class="toc">
+<b>المحاضرات:</b>
+<a href="#l1">L1</a><a href="#l2">L2</a><a href="#l3">L3</a><a href="#l4">L4</a><a href="#l5">L5</a><a href="#l6">L6</a><a href="#l7">L7</a><a href="#l8">L8</a><a href="#l9">L9</a>
+<br><b>اللابات:</b>
+<a href="#b1">Lab1</a><a href="#b2">Lab2</a><a href="#b3">Lab3</a><a href="#b4">Lab4</a><a href="#b5">Lab5</a><a href="#b6">Lab6</a><a href="#b7">Lab7</a><a href="#b8">Lab8</a><a href="#b9">Lab9</a><a href="#b10">Lab10</a>
+<br><b>إضافي:</b> <a href="#devops">DevOps</a><a href="#cheat">Git Cheat</a><a href="#plan">خطة المذاكرة</a><a href="#night">ليلة الامتحان</a>
+</nav>
+
+<h2 id="start">0) الصورة الكبيرة قبل ما تبدأ</h2>
+<table>
+<tr><th>المكوّن</th><th>Mainstream</th><th>CHP</th></tr>
+<tr><td>Final</td><td>60</td><td>50</td></tr>
+<tr><td>Midterm (المحاضرات 1–5، أسئلة مقالية)</td><td>15</td><td>15</td></tr>
+<tr><td>Practical (اللابات)</td><td>20</td><td>20</td></tr>
+<tr><td>Quiz (مواضيع اللاب، كان على Trello)</td><td>5</td><td>5</td></tr>
+<tr><td>Year work تاني</td><td colspan="2">CHP: 10 درجات</td></tr>
+</table>
+<div class="box ok"><b class="t">أهم اكتشاف في الملفات</b>
+آخر شرائح في المحاضرات 2 و4 و9 فيها أسئلة جاهزة من الدكتورة: <b>"Replace with scientific term"</b>، <b>"List"</b>، <b>"Describe"</b>، <b>"What is meant by"</b>، <b>"Comment"</b>، <b>"Complete"</b>. دي غالباً نفس طريقة أسئلة الامتحان. أنا حليتها كلها تحت. ذاكر بنفس صياغة الشرائح لأن الأسئلة مقالية.</div>
+<div class="box warn"><b class="t">صراحة: حدود اللي أقدر أقوله</b>
+(1) ما عندي الامتحانات القديمة، فالأسئلة "المتوقعة" مبنية على أسئلة الشرائح نفسها وعلى الـ hands-on في اللابات، مش ضمان إنها تجي بالحرف. (2) بعض الشرائح رسومات وصور وما قدرت أقراها كلها (حولت وشفت شرائح مختارة بس)، فالحاجات اللي مصدرها معلومة معروفة من برّه الشرائح علّمتها بـ <span class="tag">معلومة عامة</span> وراجعها مع الشريحة. (3) في تناقض في مثال الـ critical path في L2 وضحته هناك.</div>
+
+<h3>طريقة المذاكرة اللي توصّل لـ A+</h3>
+<ol>
+<li><b>المحاضرات:</b> احفظ القوائم (مثلاً: الـ 5 pricing factors، الـ 7 أقسام في project plan). الأسئلة مقالية فالدرجة بتجي من إنك تسرد النقاط كلها.</li>
+<li><b>اللابات:</b> ما تقرا بس. افتح Git Bash وطبّق كل hands-on بإيدك، لأن الـ practical وغالباً الـ quiz عملي. اتدرب لحد ما تكتب الأوامر من غير ما تبص.</li>
+<li><b>الرسومات:</b> Use case وClass diagram لازم ترسمهم بالقلم على ورق 5 مرات. القراءة ما بتكفي.</li>
+<li>بعد كل قسم أخفي الأجوبة وجاوب الأسئلة بصوت عالي أو كتابة.</li>
+</ol>
+
+<!-- ===================== LECTURES ===================== -->
+<h2 id="l1">المحاضرة 1: SDLC و Business Analysis</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>SDLC</b> (6 مراحل): Planning ← Analysis ← Design ← Implementation ← Testing ← Maintenance. المخرجات: software + documentation + training للمستخدمين.</li>
+<li><b>Planning:</b> لماذا نبني النظام (need) وكيف سنبنيه (plan). فيها Project Initiation (business need + <b>Feasibility</b>) ثم Project Management. المخرج: <b>Project Plan</b>.</li>
+<li><b>Feasibility:</b> Technical (نقدر نبنيه؟)، Economic (يعطي قيمة؟)، Organizational (لو بنيناه حيُستخدم؟). وفي الشرائح كمان: Operational وSchedule. هدفها <b>تحديد المشكلة ونطاقها وليس حلها</b>. مخرجها: system proposal.</li>
+<li><b>Analysis:</b> مين بيستخدم، النظام بيعمل إيه، وين ومتى. جزءين: Requirements Determination وRequirements Structuring.</li>
+<li><b>Design:</b> Logical design (الوظائف بغض النظر عن المنصة) ثم Physical design (تفاصيل تقنية).</li>
+<li><b>Implementation:</b> code، validate، install، support. <b>Maintenance:</b> مش مرحلة منفصلة، هي <b>تكرار للمراحل الأخرى</b>.</li>
+<li><b>Business Analyst vs System Analyst:</b> BA تركيزه على الـ business process وممكن يحل المشكلة من غير تغيير software. SA تقني، بيجي بس لما فيه software change (data modeling، تكامل الأنظمة).</li>
+<li><b>مهارات System Analyst الست:</b> technical, business, analytical, interpersonal, management, ethical.</li>
+<li><b>Core Concept Model (6):</b> Need, Change, Solution, Stakeholder, Value, Context.</li>
+<li><b>Stakeholder roles:</b> customer, end user, domain SME, implementation SME, project manager, operational support, regulator, sponsor, supplier, tester.</li>
+<li><b>Value:</b> Tangible (قابلة للقياس مباشرة، مالية) وIntangible (تقاس بشكل غير مباشر، زي سمعة الشركة وروح الموظفين).</li>
+<li><b>CASE tools:</b> diagramming، display/report generators، analysis tools (تفحص النواقص والتناقض)، <b>central repository</b>، documentation generators، code generators. أمثلة: Oracle Designer, Rational Rose, Eclipse.</li>
+<li><b>Outsourcing:</b> الأسباب: cost-effective، تحرير موارد داخلية، تقليل time-to-market، رفع كفاءة العمليات، تطوير النظم non-core.</li>
+</ul>
+<h3>أسئلة متوقعة</h3>
+<details><summary>فرّق بين Business Analyst وSystem Analyst.</summary><div class="a">BA: تركيز على الـ business process، قد يحل المشكلة دون تغيير في الـ software. SA: تركيز تقني، يتدخل فقط عند وجود software change ويهتم بـ data modeling وتدفق البيانات وتكامل الأنظمة.</div></details>
+<details><summary>اشرح أنواع الـ feasibility. ومن مخرجات الـ feasibility study؟</summary><div class="a">Technical, Economic, Organizational/Operational, Schedule (اشرح كل واحد بجملة من فوق). المخرج: formal system proposal هو وثيقة قرار فيها طبيعة ونطاق النظام المقترح. هدفها تحديد outline المشكلة وscope وليس حلها.</div></details>
+<details><summary>ليه الـ Maintenance مش مرحلة منفصلة؟</summary><div class="a">لأنها تكرار للمراحل الأخرى (planning, analysis, design...) بتتعمل لإصلاح وتحسين النظام بشكل منتظم.</div></details>
+<details><summary>عدّد الـ 6 core concepts وعرّف اثنين منها.</summary><div class="a">Need: مشكلة أو فرصة يجب معالجتها. Change: فعل التحول استجابة لحاجة. Solution: طريقة محددة لإشباع حاجة في سياق. Stakeholder: فرد أو مجموعة لها علاقة بالتغيير أو الحاجة أو الحل. Value: أهمية الشيء لـ stakeholder في سياق. Context: الظروف المحيطة التي تؤثر في التغيير.</div></details>
+<details><summary>وضّح دور الـ repository في CASE tools.</summary><div class="a">قاعدة بيانات موحدة وقياسية بتخزن المواصفات والرسومات والتقارير ومعلومات إدارة المشروع، وهي وسيلة التكامل بين المنتجات والأدوات.</div></details>
+<details><summary>ما الفرق بين logical وphysical design؟</summary><div class="a">Logical: الخصائص الوظيفية مستقلة عن المنصة. Physical: تحويل المواصفات المنطقية إلى تفاصيل خاصة بالتقنية.</div></details>
+
+<h2 id="l2">المحاضرة 2: Project Planning (Sommerville ch. 23)</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>Planning stages (3):</b> Proposal (لتسعير النظام)، Project startup (لتحديد من يعمل وكيف يقسم المشروع وتخصيص الموارد)، Development (تعديل الخطة دورياً بحسب الخبرة والمتابعة). حتى الـ agile يحتاج startup plan.</li>
+<li><b>عوامل تسعير البرمجيات (5):</b> Contractual terms, Cost estimate uncertainty, Financial health, Market opportunity, Requirements volatility.</li>
+<li><b>Under pricing:</b> للفوز بعقد يحتفظ بالموظفين، أو لدخول سوق جديد. <b>Increased pricing:</b> لما العميل يريد fixed-price فالمورد يرفع السعر لتغطية المخاطر غير المتوقعة.</li>
+<li><b>Plan-driven:</b> مع: تؤخذ القضايا التنظيمية بالحسبان ويتم اكتشاف المشاكل والـ dependencies قبل البدء. ضد: كثير من القرارات المبكرة يتم تعديلها بسبب تغير البيئة.</li>
+<li><b>أقسام الـ project plan (7):</b> Introduction, Project organization, Risk analysis, HW/SW resource requirements, Work breakdown, Project schedule, Monitoring &amp; reporting.</li>
+<li><b>الخطط الإضافية (5):</b> Configuration management, Deployment, Maintenance, Quality, Validation.</li>
+<li><b>افتراضات واقعية + contingency.</b> لو حصلت مشاكل كبيرة: risk mitigation + re-plan + إعادة التفاوض على القيود والـ deliverables + جدول جديد يتفق عليه مع العميل.</li>
+<li><b>Scheduling activities (4):</b> تقسيم المشروع لمهام وتقدير الوقت والموارد؛ تنظيم المهام بالتوازي؛ تقليل الـ dependencies؛ تعتمد على حدس وخبرة المدير.</li>
+<li><b>Scheduling problems (4):</b> صعوبة تقدير الصعوبة والتكلفة؛ الإنتاجية لا تتناسب مع عدد الأشخاص؛ إضافة أشخاص لمشروع متأخر تؤخره (communication overhead)؛ غير المتوقع يحدث دائماً فاترك contingency.</li>
+<li><b>كل activity لها:</b> duration، effort (person-days)، deadline، defined end-point. المهام لازم تكون حوالي أسبوع أو أسبوعين.</li>
+<li><b>Milestone</b> = نقطة في الجدول لتقييم التقدم (مثل تسليم النظام للاختبار). <b>Deliverable</b> = منتج عمل يُسلّم للعميل (مثل requirements document).</li>
+<li><b>أدوات العرض:</b> Bar charts (calendar-based) وActivity networks (تُظهر الـ dependencies). أدوات: Basecamp, MS Project.</li>
+<li><b>الـ Critical path:</b> أطول مسار في الـ activity network، وهو يحدد أقل زمن لإنهاء المشروع.</li>
+</ul>
+<h3>مثال بناء البيت (مهم للحساب)</h3>
+<ul>
+<li>Most likely = مجموع الأزمنة المتوقعة على الـ critical path = 5+2+12+9+10+7+5 = <b>50 يوم</b>.</li>
+<li>Optimistic = 4+2+10+8+8+7+4 = <b>43</b>. Pessimistic = 7+3+14+10+11+8+6 = <b>59</b>.</li>
+<li>الخلاصة: غالباً 50 يوم، ممكن تخلص في 43، وممكن توصل 59.</li>
+</ul>
+<div class="box warn"><b class="t">تنبيه على مثال T1–T12</b>
+الشريحة بتقول الـ critical path = 55 يوم. أنا لما حسبته من الجدول اللي في الشريحة (T1=10, T3=15, T9=15, T11=10, T12=10) طلع <b>60</b>، والرسمة نفسها فيها أرقام مختلفة شوية (T1=8, T11=7). يعني فيه عدم اتساق في الشرائح. اسأل الدكتورة أو المعيد أي رقم معتمد. في الامتحان اعرض <b>الطريقة</b> (forward pass: كل مهمة تبدأ بعد انتهاء أكبر dependency) وحدد المسار بوضوح.</div>
+<h3>أسئلة الدكتورة نفسها (آخر شرائح) مع الأجوبة</h3>
+<details><summary>Replace with scientific term: "Document that describes how the software and hardware will be installed in the customer's environment."</summary><div class="a"><b>Deployment plan</b></div></details>
+<details><summary>"Document used to communicate how the work will be done to team and customers and to assess progress."</summary><div class="a"><b>Project plan</b></div></details>
+<details><summary>"Actions introduced to reduce the risk of project failure if serious problems will likely cause significant delays."</summary><div class="a"><b>Risk mitigation</b></div></details>
+<details><summary>"Points in the schedule against which you can assess progress" و"Work products delivered to the customer".</summary><div class="a">الأولى <b>Milestones</b>، والثانية <b>Deliverables</b>.</div></details>
+<details><summary>Project planning is conducted during the project proposal and startup only. Comment.</summary><div class="a">خطأ. التخطيط عملية تكرارية، يبدأ في proposal وstartup وبعدين يُراجَع دورياً طول المشروع في ضوء الخبرة والمعلومات الجديدة وتغير أهداف العمل (risks وschedule وcost تتحدث باستمرار).</div></details>
+<details><summary>What is the rationale behind development by following a plan?</summary><div class="a">التخطيط المبكر يسمح بأخذ القضايا التنظيمية (توفر الموظفين ومشاريع أخرى) في الحسبان، وتُكتشف المشاكل والـ dependencies قبل بدء المشروع بدل ما تظهر وهو شغال.</div></details>
+<details><summary>Elaborate on the need for plans supplementary to the project plan.</summary><div class="a">كل خطة تغطي جانب محدد: configuration management (إجراءات إدارة التغيير)، deployment (النشر ونقل البيانات)، maintenance (تقدير متطلبات وتكلفة الصيانة)، quality (إجراءات ومعايير الجودة)، validation (منهج وموارد وجدول التحقق).</div></details>
+<details><summary>You should include ---- in your plan so that if things go wrong, the delivery schedule is not seriously disrupted.</summary><div class="a"><b>Contingency</b></div></details>
+<details><summary>Give two reasons for inevitable change to plans. / ماذا نفعل لو في مشاكل كبيرة؟</summary><div class="a">الأسباب: (1) تتوفر معلومات أكثر عن النظام والفريق أثناء المشروع، (2) تغير أهداف العمل. عند المشاكل الكبيرة: نبدأ risk mitigation actions ونعيد التخطيط، وقد نعيد التفاوض مع العميل على القيود والـ deliverables ونضع جدولاً جديداً متفقاً عليه.</div></details>
+<details><summary>List: factors affecting pricing / project plan elements / scheduling activities / scheduling problems.</summary><div class="a">كلها فوق في "قبل ما تدخل". احفظها بالعدد (5، 7، 4، 4).</div></details>
+
+<h2 id="l3">المحاضرة 3: Requirements</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>Requirement</b> = تمثيل قابل للاستخدام لـ need. يحدد: Feature (مثل Cloud Access)، Function (مثل Calculate Savings)، Fact يجب أن يفرضه الحل (لوائح)، Quality (مثل فتح الملف في ثانية).</li>
+<li><b>التصنيف (4 أنواع):</b>
+ <ul>
+ <li><b>Business:</b> أهداف عليا، تجيب على "لماذا المشروع"، يحددها المستوى التنفيذي في BRD.</li>
+ <li><b>Stakeholder:</b> احتياجات stakeholder وكيف يتفاعل مع الحل. الجسر بين business وsolution. "ما المطلوب" وليس "كيف".</li>
+ <li><b>Solution:</b> خصائص الحل، وتنقسم إلى Functional وNon-functional.</li>
+ <li><b>Transition:</b> قدرات مؤقتة لنقل الحل من as-is إلى to-be (data conversion، training، business continuity). غير مطلوبة بعد دخول الحل production. مثالها: "Sales personnel must attend 2-day program قبل استخدام النظام".</li>
+ </ul></li>
+<li><b>Functional:</b> الخدمات التي ينبغي أن يقدمها النظام وكيف يتفاعل مع مدخلات معينة، وقد تذكر ما يجب ألا يفعله. <b>Non-functional:</b> قيود على الخدمات (زمن، عملية التطوير، معايير) وغالباً على النظام ككل.</li>
+<li><b>3Cs:</b> Clear, Complete, Consistent. الغموض مثل كلمة "search" (المستخدم يقصد كل العيادات، المطور يفهمها عيادة واحدة).</li>
+<li><b>أنواع الـ functional (9):</b> Authentication، Authorization levels، Data processing، UI/UX، Reporting، System integration، Transaction handling، Error handling &amp; logging، Backup &amp; recovery.</li>
+<li><b>Functional decomposition / WBS:</b> High-level function ← Subfunction ← Process ← Activity، نفكك لحد ما ما يعود ينقسم.</li>
+<li><b>Goal vs Verifiable NFR:</b> "سهل الاستخدام" = goal لا يُختبر. "الطاقم يستخدم كل الوظائف بعد 4 ساعات تدريب وبمتوسط أخطاء لا يتجاوز 2 في الساعة" = verifiable.</li>
+<li><b>تصنيف الـ NFR (3):</b> Product (سرعة، reliability)، Organisational (سياسات وإجراءات المؤسسة)، External (تشريعات وinteroperability).</li>
+<li><b>مقاييس NFR:</b> Speed (transactions/second، response time)، Size (MB)، Ease of use (training time)، Reliability (MTTF، احتمال عدم التوفر)، Robustness (وقت إعادة التشغيل)، ...</li>
+<li><b>FURPS:</b> Functionality, Usability, Reliability, Performance, Supportability. <b>FURPS+</b> تضيف: Design constraints, Implementation, Interface, Physical.</li>
+<li><b>Perfect Technology:</b> لو الـ requirement يبقى مطلوباً حتى مع تقنية مثالية = functional، وإلا = non-functional.</li>
+<li><b>Elicitation tasks (4):</b> Prepare, Conduct, Confirm results, Manage stakeholder collaboration.</li>
+<li><b>Stakeholder collaboration:</b> lists, maps, personas. <b>Stakeholder matrix</b> = influence مقابل impact. <b>Persona</b> = شخصية تمثيلية لفئة مستخدمين. <b>Proto-persona</b> = persona مبنية على معلومات محدودة (أفضل من لا شيء).</li>
+</ul>
+<h3>تمارين الشرائح (E-commerce) مع حلها</h3>
+<details><summary>استخرج الـ functional requirements من نص الـ E-commerce.</summary><div class="a"><ul>
+<li>تصفح الكتالوج، اختيار الأصناف ووضعها في e-cart.</li>
+<li>الدفع بـ credit card أو personal check أو money order.</li>
+<li>اختيار طريقة الشحن: ground, second business day, next business day.</li>
+<li>Admin: إضافة منتجات، إدارة حسابات العملاء، إدارة المخزون.</li>
+<li>التواصل مع العملاء بالبريد الإلكتروني.</li></ul></div></details>
+<details><summary>استخرج الـ non-functional requirements (وحدد الغامض منها).</summary><div class="a"><ul>
+<li>Secure payment transactions: security (غامض، لازم يتحول لقياس).</li>
+<li>Conform to local/international laws: <b>External</b>. Conform to STD0945: <b>Organisational</b>.</li>
+<li>Client side: web browser + قدر معقول من الذاكرة: constraint (وكلمة "reasonable" غامضة).</li>
+<li>Fast response time: performance (غامض، مثال verifiable: "الصفحة تحمل في أقل من 2 ثانية لـ 95% من الطلبات").</li>
+<li>Tolerate common types of faults: reliability (غامض، حوّله لـ MTTF أو availability).</li></ul></div></details>
+<details><summary>Hospital MS: أعد كتابة المتطلبات 3 و4 وأعطِ transition requirement وأي واحد business وشخصيتين.</summary><div class="a">
+<p class="lead">(الترقيم افتراضي حسب ترتيب الفقرات في الشريحة 51: 3 = "النظام يحتفظ بمعلومات الأعراض والتشخيص والأدوية"، 4 = "المريض يستطيع التسجيل وإلغاء التسجيل وتأكيد الإجراء وطلب الخروج". راجع ترقيم الشريحة الأصلية.)</p>
+<ul>
+<li><b>Stakeholder req (للـ 3):</b> "As a doctor, I need to view a patient's symptoms, diagnosis and prescription details so that I can make accurate treatment decisions."</li>
+<li><b>Non-functional (للـ 4):</b> "Patient registration shall be completed in under 3 minutes, and the registration form shall respond within 2 seconds."</li>
+<li><b>Transition:</b> "All existing paper patient records shall be migrated to the new system before go-live" أو "Doctors and nurses must attend a 1-day training before using the system."</li>
+<li><b>Business req:</b> الهدف العام (الأول): "The hospital shall keep information related to doctors, patients, visits and prescriptions to improve patient care."</li>
+<li><b>Personas:</b> (1) Dr. Hala، 45، استشارية باطنة، وقتها ضيق وتحتاج وصولاً سريعاً لتاريخ المريض. (2) Mr. Omar، 62، مريض جديد قليل الخبرة بالتقنية ويحتاج واجهة تسجيل بسيطة.</li></ul></div></details>
+<details><summary>الفرق بين Business وStakeholder وSolution وTransition requirements.</summary><div class="a">Business = لماذا (أهداف عليا). Stakeholder = ماذا يحتاج stakeholder. Solution = خصائص الحل (functional/NFR). Transition = مؤقتة لنقل النظام من as-is لـ to-be.</div></details>
+<details><summary>اشرح FURPS+.</summary><div class="a">F الوظائف، U usability (واجهة، help، توثيق)، R reliability، P performance (throughput، response time)، S supportability (تركيب، إعداد، مراقبة، صيانة). الـ + تضيف design constraints وimplementation وinterface وphysical.</div></details>
+
+<h2 id="l4">المحاضرة 4: Elicitation &amp; Specification &amp; Validation</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>Elicitation techniques:</b> Traditional (5): interviewing individuals، interviewing groups، survey/questionnaire، ethnography، analyzing procedures/documents. Modern (3): <b>JAD، CASE tools، Prototyping</b>.</li>
+<li><b>Open-ended questions:</b> مزايا: تظهر معلومات غير متوقعة، تريح المُقابَل، تعطيه إحساساً بالمشاركة. عيوب: تأخذ وقتاً، صعبة التلخيص.</li>
+<li><b>Closed-ended:</b> مزايا: مناسبة لما الإجابات معروفة، لا تأخذ وقتاً، بداية سهلة للمقابلة، ويمكن إضافة "other". عيب: قد تفوت معلومات لا تناسب الخيارات.</li>
+<li><b>إرشادات المقابلة:</b> خطط، حضّر المُقابَل (موعد وأسئلة تمهيدية)، جهّز agenda وأسئلة، استمع وسجل، راجع الملاحظات خلال 48 ساعة، كن محايداً.</li>
+<li><b>Individual interviews:</b> أسهل جدولة؛ لكن تناقضات بين المقابَلين والمتابعة تأخذ وقتاً. <b>Group interviews:</b> استخدام أفضل للوقت، تسمع الاتفاق والاختلاف معاً؛ لكن جدولتها أصعب.</li>
+<li><b>NGT (Nominal Group Technique):</b> الأعضاء يجتمعون لكن يعملون منفردين أولاً، كل واحد يكتب أفكاره، المُيسّر يقرأها وتُكتب على السبورة، مناقشة ثم ترتيب وتحديد الأولويات.</li>
+<li><b>Survey:</b> قوة: رخيص، جمهور كبير، مناسب للمتفرقين جغرافياً، <b class="hot">ممتاز للبيانات الكمية والتحليل الإحصائي</b>. حدود: يحتاج مهارة sampling، قد تقل نسبة الاستجابة، الأسئلة المفتوحة تحتاج تحليل، الغموض.</li>
+<li><b>Ethnography:</b> مراقبة المستخدمين وهم يعملون (أدق من self-reporting). عيوب: المراقبة قد تغير سلوكهم، تعطي لقطة صغيرة، تأخذ وقتاً.</li>
+<li><b>أنواع المستندات المفيدة (4):</b> Written work procedures، Business forms، Reports، Description of current information system.</li>
+<li><b>JAD:</b> تقنية مكثفة جماعية لجمع المتطلبات من المستخدمين والمديرين والمحللين في نفس الوقت، في عزلة وفي مكان غير مكان عملهم المعتاد، وتحل التعارضات.</li>
+<li><b>Prototyping:</b> نموذج لتوضيح وتحقق المتطلبات تكرارياً. مفيد لما: طلبات المستخدم غير واضحة، مستخدمون قليلون، تاريخ من مشاكل التواصل. عيوب: صعب تعميمه، يحتاج فهماً تقنياً، توقعات غير واقعية، يركز على التصميم أكثر من الـ NFR.</li>
+<li><b>أهمية elicitation (4):</b> Stakeholder alignment، تقليل scope/feature creep، تحسين التواصل، تخفيف المخاطر مبكراً.</li>
+<li><b>مشاكل elicitation (5):</b> لا يعرفون ما يريدون؛ يعبرون بمصطلحاتهم؛ تعارض بين stakeholders؛ عوامل سياسية وتنظيمية؛ المتطلبات تتغير وتظهر أطراف جديدة.</li>
+<li><b>طرق كتابة المواصفات (5):</b> Natural language، Structured (template)، Design description languages، Graphical notations (UML)، Mathematical specs.</li>
+<li><b>مشاكل natural language (3):</b> lack of clarity، requirements confusion (خلط functional وNFR)، requirements combination (عدة متطلبات في جملة).</li>
+<li><b>SRS:</b> البيان الرسمي لما يُطلب من المطورين: user requirements + system requirements. المثالي: complete، unambiguous، بلا jargon، يوضح معلومات تشغيلية واستراتيجية، يحل الخلافات، يستخدم وسائل رسومية.</li>
+<li><b>Best practices (4):</b> clear &amp; understandable، feasible &amp; sensible، specific/accurate/complete (بلا عبارات ضعيفة مثل "fast")، testable.</li>
+<li><b>Validation:</b> إثبات أن المتطلبات تعرّف النظام الذي يريده العميل فعلاً. تصليح خطأ requirements بعد التسليم قد يكلف <b>حتى 100 ضعف</b> تصليح خطأ implementation.</li>
+<li><b>Wireframes:</b> هياكل منخفضة الدقة للموقع أو التطبيق. <b>Requirements Management</b> = إدارة المتطلبات المتغيرة. <b>RTM (Traceability Matrix)</b> تُظهر أثر التغيير المقترح على باقي المتطلبات وتتبع تقدم كل requirement.</li>
+</ul>
+<h3>أسئلة الدكتورة نفسها مع الأجوبة</h3>
+<details><summary>Which technique includes observing the users work in their own environment?</summary><div class="a"><b>Ethnography</b></div></details>
+<details><summary>Elaborate on the advantages of using open-ended questions in interviews.</summary><div class="a">تكشف معلومات لم تكن معروفة ويمكن متابعة اتجاهات غير متوقعة؛ تريح المُقابَل لأنه يجيب بكلماته؛ تعطيه إحساساً أكبر بالمشاركة والتحكم في المقابلة.</div></details>
+<details><summary>Which technique works best to obtain quantitative data for statistical analysis?</summary><div class="a"><b>Survey / Questionnaire</b> (خصوصاً بأسئلة closed-ended)</div></details>
+<details><summary>List three modern requirements determination techniques.</summary><div class="a">Joint Application Design (JAD)، CASE tools، Prototyping.</div></details>
+<details><summary>When do business analysts use prototypes?</summary><div class="a">لاستنباط والتحقق من احتياجات stakeholders عبر عملية تكرارية، وخصوصاً عندما تكون طلبات المستخدم غير واضحة، أو عدد المستخدمين قليل، أو هناك تاريخ من مشاكل التواصل بين المحللين والمستخدمين. تعطي تمثيلاً مرئياً للحالة المستقبلية وfeedback مبكراً.</div></details>
+
+<h2 id="l5">المحاضرة 5: System Modelling (UML)</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>4 perspectives:</b> External (context models)، Interaction (use case + sequence)، Structural (class diagram)، Behavioral (state diagram). <b>UML diagram types:</b> Activity, Use case, Sequence, Class, State.</li>
+<li><b>استخدامات الـ graphical models (3):</b> لتسهيل النقاش (يجوز أن تكون ناقصة)، لتوثيق نظام موجود (دقيقة)، كوصف تفصيلي لتوليد التنفيذ (صحيحة وكاملة).</li>
+<li><b>Use case:</b> مهمة منفصلة تتضمن تفاعلاً مع نظام خارجي. <b>الاسم يبدأ بفعل.</b> يركز على العمليات المؤتمتة. الـ diagram لا يوضح ترتيب التنفيذ.</li>
+<li><b>أنواع الـ actors (3):</b> مستخدمون، أنظمة أخرى، الوقت (Time).</li>
+<li><b>العلاقات:</b>
+<table><tr><th>العلاقة</th><th>تربط</th><th>الفكرة</th></tr>
+<tr><td>Association</td><td>actor ↔ use case فقط</td><td>كل use case يبدأه actor (ما عدا الـ abstract)</td></tr>
+<tr><td>Include</td><td>use case ↔ use case</td><td><b>دائماً</b> يُستخدم (مثل Make Reservation include Check Credit). تُستخدم عند تكرار جزء كبير أو use case ضخم</td></tr>
+<tr><td>Extend</td><td>use case ↔ use case</td><td><b>اختياري</b> بشرط (Change Reservation extend بـ Check Credit فقط إذا تغيّر المبلغ). السهم من الاختياري إلى الأساسي</td></tr>
+<tr><td>Generalization</td><td>actor ↔ actor (العلاقة الوحيدة المسموحة بينهم)</td><td>وراثة (نستخدمها لو نوع يبدأ use cases لا يبدأها الآخر)</td></tr></table></li>
+<li><b>Abstract use case:</b> لا يبدأه actor مباشرة، وهو الذي يشارك في include أو extend.</li>
+<li><b>قواعد الأخطاء الشائعة:</b> كل use case وظيفة رئيسية (مش خطوة مثل "select seat" أو "enter user name")؛ لا أسماء غامضة ("manage data"، "save data")؛ بدل Add/Delete/Update course ثلاثة، اعمل <b>"Manage course data"</b> واحد؛ لو النظام هو من ينفذ، ما تعمل "System" actor بل ضمّنه (include) في use case يبدأه مستخدم.</li>
+<li><b>Class diagram:</b> اسم الفئة، attributes، methods، مع visibility (Private/Package/Protected/Public).</li>
+<li><b>Association + Multiplicity:</b> 0, 1, m, m..n, 0..1, * (أو 0..*), 1..*. <b>Reflexive</b> = علاقة بين فئة ونفسها (مثل supervise).</li>
+<li><b>Generalization (IS-A):</b> الـ subclass يرث الـ attributes والـ operations.</li>
+<li><b>Aggregation (HAS-A):</b> الجزء ممكن يوجد مستقلاً، عمر الجزء مستقل. <b>Composition (WHOLE-PART):</b> الجزء لا يوجد بدون الكل، يُنشأن ويُدمّران معاً. <span class="tag">معلومة عامة</span> في UML المعيار: aggregation = معين مفرغ، composition = معين مليان عند طرف الكل.</li>
+</ul>
+<h3>أسئلة متوقعة</h3>
+<details><summary>ارسم use case لـ weather station: الموظف يبلغ بيانات الطقس وحالة hardware، والفنيون يصدرون أوامر (Restart, Shutdown, Power saving, Reconfiguration).</summary><div class="a">Actors: Employee، Technician. Use cases: <b>Report Weather Data</b>، <b>Report Station Status</b> (مرتبطان بـ Employee)، و<b>Issue Control Command</b> (مرتبط بـ Technician). حسب قاعدة الدكتورة (Manage بدل ثلاثة)، الأوامر الأربعة كلها في use case واحد، وممكن توضحها في الوصف. لو طلبت تفصيل أكتر اعمل 4 use cases بنفس actor.</div></details>
+<details><summary>الفرق بين include وextend مع مثال.</summary><div class="a">Include: إلزامي دائماً (Make Reservation ← Check Credit). Extend: اختياري بشرط (Change Reservation ← Check Credit فقط إذا تغير المبلغ)، والسهم يخرج من الـ extension إلى الـ base.</div></details>
+<details><summary>الفرق بين aggregation وcomposition.</summary><div class="a">Aggregation: HAS-A، الجزء يعيش مستقلاً عن الكل. Composition: WHOLE-PART، الجزء يعتمد على الكل ويُنشأ ويُدمّر معه.</div></details>
+<details><summary>ما أنواع الـ actors؟ وهل ممكن "الوقت" يكون actor؟</summary><div class="a">نعم. ثلاثة أنواع: مستخدمون (أشخاص)، أنظمة أخرى، والوقت عندما يؤدي مرور وقت معين إلى تشغيل حدث في النظام.</div></details>
+<details><summary>University registration (Registrar, Student, Professor, Billing System): ما الـ use cases؟</summary><div class="a">Maintain Curriculum (Registrar)، Register for Courses (Student)، Set Course Offerings وRequest Course Roster (Professor)، Manage Seminar، ونظام الـ Billing كـ actor خارجي يتم إشعاره بعد التسجيل. لاحظ: login ممكن يكون include.</div></details>
+
+<h2 id="l6">المحاضرة 6: Scrum I</h2>
+<div class="box"><b class="t">تنبيه Midterm</b>الميدتيرم 15 درجة، يغطي المحاضرات 1–5، أسئلة مقالية. تعليمات القاعة: تجي قبل الوقت، بطاقة جامعية أو قومية، ممنوع الموبايل، أدوات الكتابة، اكتب الاسم والـ ID والمستوى والقسم، وقّع الحضور مرة واحدة ولا تخرج قبل تسجيل الحضور.</div>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>Scrum:</b> framework يساعد الفرق على العمل معاً، يصف مجموعة اجتماعات وأدوات وأدوار. هو <b>subset من Agile</b>، lightweight، وأكثر إطار agile انتشاراً.</li>
+<li><b>فوائد Scrum (4):</b> رفع جودة المخرجات، التعامل مع التغيير (ونتوقعه)، تقديرات أفضل بوقت أقل، تحكم أكبر في الجدول وحالة المشروع.</li>
+<li><b>Scrum pillars</b> <span class="tag">معلومة عامة</span>: Transparency, Inspection, Adaptation (الشريحة صورة من Scrum Alliance، راجعها).</li>
+<li><b>Multilevel planning (4):</b> Portfolio (أي منتجات نعمل وبأي ترتيب)، Product (vision ثم product backlog ثم roadmap)، Release (scope/date/budget trade-offs)، Sprint (يخرج منه sprint backlog، تخطيط just-in-time).</li>
+<li><b>الأدوار:</b> Product Owner (الـ backlog)، Scrum Master (العملية)، Development Team، وCustomer/Stakeholder.</li>
+<li><b>الأدوار المجمّعة:</b> ScrumMaster + عضو فريق = تضارب مصالح. الأفضل SM لأكثر من فريق. Product Owner لأكثر من فريق ممكن. PO + عضو فريق أحياناً. <span class="hot">PO + SM على نفس الفريق فكرة سيئة</span> لأن الدورين يوازن بعضهما فيحدث conflict of interest.</li>
+<li><b>الفريق:</b> أعضاء بـ T-shaped skills مع بعض المتخصصين. <b>Musketeer attitude</b> ("الكل للواحد والواحد للكل"، يربحون أو يخسرون كفريق). <b>Focused:</b> multitasking بين المنتجات يقلل الإنتاجية، 3 مشاريع أو أكثر خيار اقتصادي سيئ، اثنين كفاية. <b>Sustainable pace.</b></li>
+<li><b>Sprint:</b> طول ثابت، عادة <b>2–4 أسابيع</b>. نقطة البداية product backlog. الـ <b>sprint goal لا يتغير</b> أثناء الـ sprint، والعناصر الملتزم بها تبقى ثابتة. الفريق معزول وكل التواصل عبر Scrum master الذي <b>يحميه من المشتتات</b>. في النهاية: review وعرض على stakeholders.</li>
+<li><b>Daily Scrum:</b> يومياً. <b>Sprint Review &amp; Retrospective:</b> في آخر يوم (أو قبله بيومين). <b>Sprint Planning:</b> أول يوم. <b>Backlog Refinement:</b> أثناء الـ sprint.</li>
+<li><b>Artifacts:</b> Product backlog، Sprint backlog، Potentially shippable product increment.</li>
+<li><b>Definition of Done:</b> قائمة تحقق: برمجة، بيانات اختبار، اختبار فعلي، قابلية النشر، توثيق (وليس "خلصت البرمجة" فقط).</li>
+<li><b>Customer involvement:</b> ممثل المستخدم متاح بدوام كامل، ويساعد في كتابة acceptance tests. المشكلة: قد لا يتوفر وقته. <b>Coding standards:</b> لا تعرف من كتب الكود، ويدعم collective ownership. <b>Continuous Integration:</b> دمج التغييرات فوراً وتشغيل كل الـ unit tests.</li>
+</ul>
+<h3>أسئلة متوقعة</h3>
+<details><summary>ما أسباب استخدام Scrum؟</summary><div class="a">رفع جودة المخرجات، تحمل التغيير، تقديرات أفضل بجهد أقل، تحكم أفضل في الجدول والحالة.</div></details>
+<details><summary>هل يجوز أن يكون شخص واحد Product Owner وScrum Master؟ ولماذا؟</summary><div class="a">لا، فكرة سيئة، لأن الدورين يوازن بعضهما (PO يهتم بالقيمة والـ scope، SM يحمي الفريق والعملية)، فالجمع يخلق conflict of interest.</div></details>
+<details><summary>اشرح دورة الـ Sprint.</summary><div class="a">يبدأ بالـ product backlog، ثم الفريق مع العميل يختار الـ features للـ sprint. بعد الالتزام تثبت العناصر، والفريق ينظم نفسه ويطور معزولاً بحماية الـ SM، وفي النهاية يُراجَع العمل ويُعرض على stakeholders ثم يبدأ الـ sprint التالي. الـ goal لا يتغير.</div></details>
+<details><summary>ما الفرق بين Portfolio وProduct وRelease وSprint planning؟</summary><div class="a">Portfolio: اختيار المنتجات وترتيبها. Product: vision وbacklog وroadmap. Release: scope/date/budget للتسليمات التدريجية. Sprint: المهام التفصيلية للـ sprint القادم (sprint backlog).</div></details>
+<details><summary>ما الـ Definition of Done ولماذا نحتاجه؟</summary><div class="a">قائمة تحقق بالأعمال التي يجب إكمالها قبل إعلان الـ feature "جاهزاً للتسليم"، لأن كلمة "done" غامضة (قد تعني فقط البرمجة).</div></details>
+
+<h2 id="l7">المحاضرة 7: Scrum II + User Stories + محاضرة الضيف</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>User story:</b> أصغر وحدة عمل في agile، تعبّر عن قيمة الـ feature للعميل. الصيغة: <b>As a [role], I want [feature] so that [benefit]</b>.</li>
+<li><b>3Cs (Jeffries):</b> <b>Card</b> (البطاقة)، <b>Conversation</b> (حوار مستمر يظهر منه sketch وقواعد عمل)، <b>Confirmation</b> (ظهر البطاقة: acceptance criteria).</li>
+<li><b>Acceptance criteria بصيغة GWT:</b> Given (سياق) ← When (فعل) ← Then (نتيجة ملاحظة). مثال: Given multiple categories exist, When I select a category, Then I should see only products in that category.</li>
+<li><b>Levels:</b> الـ <b>Epic</b> أكبر story (أشهر وقد تمتد لعدة releases).</li>
+<li><b>INVEST</b> <span class="tag">معلومة عامة للحروف</span>: Independent, Negotiable, Valuable, Estimable, <b>Small</b>, Testable. الشريحة تؤكد الـ Small: 6–10 stories تنتهي في sprint واحد، وما نعمل story بحجم الـ sprint كله.</li>
+<li><b>Knowledge acquisition stories (spike):</b> لما نفتقد المعرفة: prototype, proof of concept, experiment, study, spike. مخرجه عادة memo قصير.</li>
+<li><b>Product backlog:</b> قائمة مرتبة بالأولوية للوظائف المطلوبة. عناصره PBIs (غالباً user stories). <b>Feature creep:</b> إضافة features دون التأكد من فائدتها. أسبابه الثلاثة: المديرون لا يرفضون، المطورون يقلدون المنافسين، المنتج يخدم المبتدئين والخبراء.</li>
+<li><b>DEEP:</b> Detailed appropriately, <b>E</b>mergent, <b>E</b>stimated, <b>P</b>rioritized. (الشرائح تشرح Emergent وEstimated وPrioritized.)</li>
+<li><b>التقدير:</b> Planning Poker وT-shirt sizing. Story points مقابل ideal days. ماذا نقدر ومتى: Portfolio بـ XL/L/M/S، الـ PBI بـ story points أو ideal days، المهمة بـ ideal hours.</li>
+<li><b>Velocity:</b> كمية الشغل (story points) اللي الفريق ينجزها بالـ sprint. <b>عدد الـ sprints = مجموع النقاط ÷ velocity.</b> مثال: velocity = 20، backlog = 100 نقطة ← 5 sprints.</li>
+<li><b>Backlog grooming/refinement (3 أنشطة):</b> إنشاء وتحسين PBIs، تقديرها، ترتيب أولوياتها. صاحب القرار النهائي: <b>Product Owner</b>. يخصص الفريق حتى <b>10%</b> من وقته كل sprint.</li>
+<li><b>Definition of Ready:</b> checklist لحالة العنصر قبل دخول الـ sprint. <b>DoD vs Acceptance Criteria:</b> DoD عام لكل story ومعيار جودة موحد (كود مراجَع، اختبارات ناجحة، توثيق، لا bugs)، أما acceptance criteria فخاصة بكل story.</li>
+<li><b>الضيف (Ahmed Salah Elsisi، Senior BA):</b> شهادات BA وScrum، و"Scrum bites": pillars, team, size, artifacts, events, accountabilities. <span class="tag">معلومة عامة</span> من Scrum Guide: الفريق عادة ≤ 10 أشخاص، artifacts = Product Backlog + Sprint Backlog + Increment، events = Sprint + Planning + Daily Scrum + Review + Retrospective، accountabilities = Product Owner + Scrum Master + Developers. الشرائح صور، راجعها.</li>
+</ul>
+<h3>أسئلة متوقعة</h3>
+<details><summary>اكتب user story مع acceptance criteria لـ "Remove from cart".</summary><div class="a"><b>Story:</b> As a customer, I want to remove items from my cart so that I only pay for what I need.<br><b>AC:</b> Given I have items in my cart, When I remove an item, Then it should no longer appear in the cart and the total should be recalculated.</div></details>
+<details><summary>ما الفرق بين Definition of Done وAcceptance Criteria؟</summary><div class="a">DoD عام يُطبق على كل user story لضمان جودة موحدة (كود مدموج ومراجَع، unit tests ناجحة، توثيق، لا bugs، موافقة PO). Acceptance criteria محددة بكل story وتحوي سيناريوهات اختبار لتأكيد أن الوظيفة تعمل كما هو متوقع.</div></details>
+<details><summary>ما الـ 3Cs؟ وما الـ feature creep؟ وأسبابه؟</summary><div class="a">Card, Conversation, Confirmation. Feature creep: إضافة features بطلب المستخدمين دون النظر لفائدتها العامة. أسبابه: المديرون يترددون في قول لا، المطورون يحاكون المنافسين، والمنتج يخدم المبتدئين والخبراء.</div></details>
+<details><summary>الفريق عنده velocity = 20 وبقي 120 story point. كم sprint؟</summary><div class="a">120 ÷ 20 = <b>6 sprints</b>.</div></details>
+<details><summary>من يتخذ قرار ترتيب الـ backlog؟ وكم وقت الفريق للـ grooming؟</summary><div class="a">الـ Product Owner هو صاحب القرار، مع مشاركة الـ SM والفريق وstakeholders. الفريق يخصص حتى 10% من وقته كل sprint.</div></details>
+<details><summary>لماذا الـ story يجب أن تكون صغيرة؟</summary><div class="a">لأن المخاطرة بعدم إنهائها كبيرة لو كانت بحجم الـ sprint؛ المطلوب أن تنتهي 6–10 stories في الـ sprint.</div></details>
+
+<h2 id="l8">المحاضرة 8: Product Management</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>Product Manager:</b> يضمن نجاح المنتج محلياً ودولياً، يحدد الفجوات وفرص النمو، يقود التطوير من الفكرة للإطلاق، يحدد ويرتب أهداف المنتج قصيرة وطويلة المدى، يتقن user journey وstory mapping، يجمع المتطلبات من العملاء والمبيعات والتسويق وR&amp;D، ويدير الوثائق (PRDs، business requirements، use cases، user flows/stories، functional specs).</li>
+<li><b>Product Owner:</b> يعمل مع Product Management لإنشاء backlog حسب business value أو ROI، يرتب stories وepics، يكتب user stories وacceptance criteria، يقبل الـ features قبل UAT للعميل، ويدير change requests.</li>
+<li><b>Competitive analysis (4):</b> Customer analysis، Product analysis، Marketing analysis، <b>SWOT</b>.</li>
+<li><b>SWOT:</b> Strengths (ما نتميز به)، Weaknesses (عيوبنا مقارنة بالمنافسين)، Opportunities (عوامل خارجية للنمو)، Threats (مخاطر خارجية، لكن قد تكون داخلية مثل ارتفاع turnover).</li>
+<li><b>طرق الأولويات (7):</b> Kano، Value vs Complexity، Weighted Scoring، RICE، Eisenhower، Story Mapping، MoSCoW.</li>
+<li><b>Kano:</b> لذّة العميل مقابل الاستثمار؛ المنتج ليس وظيفة فقط بل مشاعر (الفرامل متوقعة، وparking-assist يبهر).</li>
+<li><b>Value vs Complexity:</b> محوران (Business Value وComplexity/Effort) وأربع خانات؛ <b>عالي القيمة، قليل الجهد</b> = low-hanging fruit تبدأ بها.</li>
+<li><b>RICE = Reach, Impact, Confidence, Effort.</b> Impact: 0.25 (minimal)، 0.5 (low)، 1 (medium)، 2 (high)، 3 (massive). Confidence: 100% عالية، 80% متوسطة، 50% منخفضة. Effort بـ person-months. <span class="tag">معلومة عامة</span> الصيغة: <b>RICE = (Reach × Impact × Confidence) ÷ Effort</b>.</li>
+<li><b>Eisenhower:</b> محور Urgent وImportant. الربع 1 (مهم+عاجل) = افعله الآن. الربع 2 (مهم، غير عاجل) = خطط له. الربع 3 (عاجل، غير مهم) = فوّضه. الربع 4 (لا مهم ولا عاجل) = لا يزاحم الأولويات.</li>
+<li><b>Story Mapping:</b> ترتيب الـ stories أفقياً على خطوات رحلة المستخدم زمنياً، وتحتها الـ stories.</li>
+<li><b>MoSCoW:</b> <b>Must</b> (لا غنى عنه، بدونه المنتج لا يعمل)، <b>Should</b> (أساسي لكن غير حيوي، يمكن تأجيله لـ release قادم)، <b>Could</b> (غير ضروري للـ core، أول ما يُلغى لو ضاق الوقت)، <b>Won't (this time)</b> (يمنع scope creep). مثال موقع المحامين: Must: برمجة بلا bugs، نظام تسجيل قوي، directory شخصي آمن. Should: سرعة، تصميم ممتاز، إشعارات إيميل. Could: custom menus، suggestions، blog. Won't: paid content، public members section، ads.</li>
+</ul>
+<h3>أسئلة متوقعة</h3>
+<details><summary>الفرق بين Product Manager وProduct Owner.</summary><div class="a">PM: رؤية واستراتيجية المنتج ومتطلبات السوق وجمع المتطلبات من المصادر المختلفة وأهداف قصيرة وطويلة المدى. PO: إدارة الـ backlog بحسب business value/ROI وكتابة user stories وacceptance criteria وقبول الـ features قبل UAT وإدارة change requests.</div></details>
+<details><summary>احسب RICE: Reach=2000، Impact=2، Confidence=80%، Effort=4 person-months.</summary><div class="a">(2000 × 2 × 0.8) ÷ 4 = 3200 ÷ 4 = <b>800</b>.</div></details>
+<details><summary>صنّف features لتطبيق عيادة بطريقة MoSCoW (مثال تدريبي).</summary><div class="a">Must: تسجيل المريض، حجز موعد، login آمن. Should: تذكير بالإيميل، تقارير. Could: dark mode، ربط تقويم. Won't (الآن): telemedicine، دفع إلكتروني متكامل.</div></details>
+<details><summary>اشرح SWOT وأعطِ أسئلة تساعد في كل عنصر.</summary><div class="a">S: ماذا يحب عملاؤنا؟ ماذا نفعل أفضل من غيرنا؟ W: ماذا يكرهون؟ لماذا يلغون؟ O: كيف نحسن المبيعات والدعم؟ T: منافسون جدد، تغير التشريعات، turnover عالٍ.</div></details>
+<details><summary>ما الـ Eisenhower matrix وماذا نفعل بكل ربع؟</summary><div class="a">محاور Urgent/Important. 1: do now. 2: schedule/plan. 3: delegate. 4: minimize/eliminate.</div></details>
+
+<h2 id="l9">المحاضرة 9: Software Design Specifications</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>SDD:</b> وثيقة مكتوبة فيها كل المعلومات المهمة عن تصميم البرمجية ومعماريتها وكيف تُصمَّم بما يحقق المواصفات التقنية. المواصفات الجيدة: simple, complete, unambiguous.</li>
+<li><b>SDD template (10 أقسام):</b> Introduction، System Architecture، Detailed Design، Database Design (ERD)، UI/UX Design، Security Design، External Interfaces، Design for Testing، Constraints &amp; Assumptions، Appendices.</li>
+<li><b>مقاييس جودة الـ module (3):</b> cohesion، coupling، fan-in/fan-out.</li>
+<li><b>Cohesion:</b> مدى ارتباط الأسطر داخل الـ module. نريدها <b>High</b>. <b>Functional cohesion</b> (كل العناصر لمهمة واحدة، الجيد)، <b>Coincidental</b> (لا علاقة بين الوظائف، الأسوأ). مزايا High cohesion: قراءة وفهم أفضل، عزل أفضل للأخطاء، reliability أعلى.</li>
+<li><b>Coupling:</b> درجة اعتماد module على آخر. نريدها <b>Low (loosely coupled)</b>: واجهات بسيطة ونظيفة وأقل بيانات مشتركة. مزايا Low coupling: maintainability، modularity، scalability. مثال High coupling: Customer يخزن قائمة Orders وOrder يخزن reference للـ Customer، فهما tightly coupled. <b>الحل:</b> اجعل الـ association في اتجاه واحد (تخلص من أحد المرجعين).</li>
+<li><b>Fan-in:</b> عدد control modules التي تستدعي module. <b>High fan-in = جيد</b> (إعادة استخدام). <b>Fan-out:</b> عدد الـ subordinates لـ control واحد. <b>تجنب high fan-out</b>، والقاعدة حوالي <b>7</b>.</li>
+<li><b>Program specification:</b> وثيقة مكتوبة فيها تعليمات تفصيلية لبرمجة module، واحدة لكل module. لا syntax رسمي. <b>4 مكونات:</b> Program information، Events، Inputs &amp; outputs، Pseudocode.</li>
+<li><b>Reliability (3 تقنيات):</b> Fault avoidance، Input validation، Failure management.</li>
+<li><b>أنواع التعقيد (4):</b> Reading، Structural، Data، Decision (Conditional).</li>
+<li><b>إرشادات تقليل التعقيد:</b> Structural: دالة تعمل شيئاً واحداً بلا side-effects، كل class مسؤولية واحدة (single responsibility)، قلّل عمق الوراثة، تجنب multiple inheritance والـ threads. Data: عرّف interfaces، تجنب floating-point، لا data aliases. Conditional: تجنب nested conditions والتعبيرات المعقدة.</li>
+<li><b>Refactoring:</b> تغيير البرنامج لتقليل تعقيده <b>دون تغيير سلوكه الخارجي</b>. <b>Code smells</b> (Martin Fowler): مؤشرات لمشكلة أعمق. أمثلة: Long methods، Duplicated code، Meaningless names، Unused/dead code.</li>
+<li><b>أمثلة refactoring لتقليل التعقيد:</b> Reading: إعادة تسمية. Data: دمج جداول DB المرتبطة. Decision: استبدال nested if-else بـ <b>guard clauses</b>.</li>
+<li><b>Input validation:</b> فحص أن المدخل بالصيغة والنطاق الصحيحين. حاسمة للأمان (SQL injection وbuffer overflow) والـ reliability. قواعد الاسم: طول 2–40 حرفاً، أحرف أبجدية (مع accents) وفواصل قليلة (hyphen وapostrophe)، يبدأ بحرف.</li>
+<li><b>طرق التنفيذ (3):</b> Built-in validation functions، Explicit comparisons (قوائم قيم مسموحة)، Regular expressions.</li>
+<li><b>Number checking</b> (تجنب overflow/underflow وافتراضات البرامج الأخرى) و<b>Range checks</b> (قراءة العداد ≥ السابقة ومتسقة مع الاستهلاك المعتاد).</li>
+<li><b>Failure categories (3):</b> Data failures (مخرجات غير صحيحة)، Program exceptions (حالة لا يمكن معها المتابعة، مثل ملف غير موجود IOException)، Timing failures (مكونات لا تستجيب في الوقت أو غير متزامنة).</li>
+</ul>
+<h3>أسئلة الدكتورة نفسها مع الأجوبة</h3>
+<details><summary>Replace with keyword(s): "Written documents that include explicit detailed instructions on how to program pieces of code."</summary><div class="a"><b>Program specification</b></div></details>
+<details><summary>"The measure of the independence of components... degree of dependency of each module on the other."</summary><div class="a"><b>Coupling</b></div></details>
+<details><summary>"The process of separating out a function from one module into a module of its own."</summary><div class="a"><b>Factoring</b> <span class="tag">من كتاب Valacich</span> (شبيهة بـ Extract Method في refactoring، تأكد من مصطلح الدكتورة).</div></details>
+<details><summary>"How well the lines of code within each module relate to each other."</summary><div class="a"><b>Cohesion</b></div></details>
+<details><summary>Describe: coupling types, cohesion types.</summary><div class="a">Coupling: High (tightly coupled، تعتمد على بعض كثيراً وتغيير واحد يؤثر على الباقي) وLow (loosely coupled، مستقلة تقريباً). Cohesion: Functional (كل العناصر لمهمة واحدة) وCoincidental (لا علاقة بين وظائف الـ module).</div></details>
+<details><summary>Describe: program specification components، complexity types، reliability techniques، failure categories.</summary><div class="a">كلها في "قبل ما تدخل": 4 مكونات، 4 أنواع تعقيد، 3 تقنيات، 3 فئات.</div></details>
+<details><summary>What is meant by: code smells، refactoring، fault avoidance، complexity reduction، regular expressions.</summary><div class="a">Code smells: مؤشرات في الكود على مشكلة أعمق. Refactoring: تغيير البرنامج لتقليل التعقيد دون تغيير السلوك الخارجي. Fault avoidance: البرمجة بطريقة تتجنب إدخال العيوب. Complexity reduction: إرشادات (دالة لشيء واحد، single responsibility، تجنب nested conditionals...). Regular expressions: طريقة لتعريف أنماط للبحث والتحقق من صحة المدخلات.</div></details>
+
+<div class="box warn"><b class="t">قبل اللابات</b>اللابات هي الـ practical (20 درجة) والـ quiz (5). الطريقة الوحيدة هنا: افتح Git Bash وشغّل الأوامر بإيدك. القراءة لوحدها ما بتكفي.</div>
+
+<h2 id="b1">Lab 1: Version Control باستخدام Git</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>VCS:</b> أداة تتبع التغييرات في الكود عبر الزمن وتسمح باسترجاع إصدارات سابقة. فوائده: الرجوع لنسخة سابقة، مقارنة الإصدارات، عمل عدة مطورين بالتوازي، معرفة من عدّل، branches، وهو backup للكود.</li>
+<li><b>Git = Distributed VCS:</b> كل نسخة عمل عند كل مطور هي repository فيها التاريخ كامل.</li>
+<li><b>الإعداد:</b> <code>git config --global user.name "Name"</code> و <code>git config --global user.email "mail"</code></li>
+<li><b>Commit:</b> "صورة" لحالة كل الملفات في لحظة معينة. لو ملف ما تغير يخزن Git رابطاً للنسخة السابقة فقط.</li>
+<li><b>3 مناطق:</b> Working directory ← Staging area ← .git directory (repository).</li>
+<li><b>4 حالات للملف:</b> Untracked, Staged, Modified, Unmodified/Committed.</li>
+<li><code>git init</code> ينشئ مجلداً مخفياً <code>.git</code>.</li>
+<li><b>نقطة مهمة:</b> Git يعمل stage للملف <u>كما هو لحظة git add</u>. لو عدّلته بعدها يظهر staged وmodified معاً، وتحتاج <code>git add</code> مرة ثانية.</li>
+<li>الـ commit يعطي hash مثل ef2d332، وعدد الملفات المتغيرة وإحصائيات الأسطر.</li>
+</ul>
+<pre><code>git init
+git status
+git add main.cpp        # أو git add .
+git commit -m "message"
+git log                 # git log -p -2 لآخر commitين مع التغييرات
+git restore --staged main.cpp   # unstage (يحتفظ بالتعديلات)
+git restore main.cpp            # يلغي التعديلات غير المضافة
+git checkout &lt;hash&gt;             # الانتقال لـ commit قديم (detached HEAD)
+git checkout main               # العودة لآخر commit
+git reset --hard &lt;hash&gt;         # يرجع ويمسح كل ما بعده نهائياً (خطر!)
+git tag -a V1.0 &lt;hash&gt; -m "desc"   # tag بدون hash = آخر commit
+git checkout V1.0</code></pre>
+<h3>أسئلة متوقعة</h3>
+<details><summary>ما الفرق بين <code>git restore --staged file</code> و <code>git restore file</code>؟</summary><div class="a">الأول يشيل الملف من staging area لكن يترك التعديلات في working directory. الثاني يلغي نهائياً التعديلات غير المضافة (unstaged).</div></details>
+<details><summary>عدّلت ملفاً بعد <code>git add</code> ثم عملت commit. هل تدخل التعديلات الجديدة؟</summary><div class="a">لا. يدخل الـ commit النسخة كما كانت وقت آخر git add. التعديل الأخير يبقى modified ويحتاج git add جديد.</div></details>
+<details><summary>ما الفرق بين <code>git checkout hash</code> و <code>git reset --hard hash</code>؟</summary><div class="a">checkout ينتقل لمشاهدة commit قديم دون مسح شيء (ثم ترجع بـ git checkout main). reset --hard يجعل ذلك الـ commit هو الأحدث ويمسح كل ما بعده نهائياً.</div></details>
+<details><summary>ما فائدة الـ tags؟</summary><div class="a">علامات على commits مهمة تغنيك عن استخدام الـ hash، وتستخدمها في checkout.</div></details>
+<details><summary>ما الأوامر لإنشاء repo جديد وعمل أول commit؟</summary><div class="a">git init ← إنشاء main.cpp ← git add main.cpp ← git status ← git commit -m "msg" ← git status (لا تغييرات معلقة).</div></details>
+
+<h2 id="b2">Lab 2: Branching &amp; Merge Types</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>.gitignore:</b> ملف نصي يحدد الملفات التي يتجاهلها Git (auto-generated, logs, temp, personal). يُعمل commit له ليستفيد كل الفريق. إنشاؤه: <code>npm install touch-cli -g</code> ثم <code>touch .gitignore</code>.</li>
+<li><b>Branch:</b> خط تطوير منفصل (مساحة معزولة)، وهو في الحقيقة <b>pointer خفيف متحرك</b> يشير لـ commit. الافتراضي main أو master.</li>
+<li><b>HEAD:</b> pointer خاص يبين أين أنت الآن. <code>git branch name</code> ينشئ الفرع عند HEAD <u>لكن HEAD لا يتحرك إليه</u>. يتحرك بـ <code>git checkout name</code>. إذا أشار HEAD لفرع = symbolic pointer، وإذا أشار لـ commit مباشرة = <b>detached HEAD</b>.</li>
+<li>عند commit جديد يتحرك الفرع الحالي وHEAD معاً. الفرع الحالي يظهر بـ <b>*</b> في <code>git branch</code>.</li>
+<li><b>Fast-forward merge:</b> يحدث لو فيه <u>مسار مباشر</u> من الفرع الحالي للفرع المدموج، فقط يحرك المؤشر (master ← dev). لا merge commit.</li>
+<li><b>3-way merge:</b> لو لا يوجد مسار مباشر (الفرعان تفرّعا وكلاهما فيه commits جديدة). Git ينظر لثلاثة commits: <b>base</b> وآخر commit في كل فرع، وينشئ <b>merge commit</b> جديداً.</li>
+<li><b>قاعدة الدمج:</b> <span class="hot">A change vs no-change → the change wins.</span> وليس كل 3-way فيه conflict.</li>
+<li>الفرع <u>الحالي</u> (checked out) هو الذي يتحدث، والفرع الهدف لا يتأثر.</li>
+</ul>
+<pre><code>git branch dev
+git branch math-feature
+git branch                              # عرض الفروع
+git log --all --decorate --oneline --graph
+git checkout master
+git merge dev                           # fast-forward لو في مسار مباشر
+git merge math-feature                  # 3-way merge</code></pre>
+<h3>أسئلة متوقعة</h3>
+<details><summary>MCQ: بعد <code>git checkout dev</code> يشير HEAD إلى: (dev / master / math-feature)</summary><div class="a"><b>dev</b>، ولو عملت commit فقط dev يتقدم.</div></details>
+<details><summary>متى يحدث fast-forward ومتى 3-way merge؟</summary><div class="a">FF: لو فيه direct path (الفرع الحالي لم يتقدم بعيداً عن الآخر). 3-way: لو الفرعان تباعدا فيحتاج merge commit.</div></details>
+<details><summary>ماذا يعني <code>HEAD -&gt; master</code> في الـ log؟</summary><div class="a">أن HEAD يشير حالياً إلى الفرع master، أي أنت عليه.</div></details>
+<details><summary>دمجت master في dev ثم master في math-feature، هل تشير كل الفروع لنفس الـ commit؟</summary><div class="a">نعم، كلها تحمل نفس الكود في النهاية. دمج master في dev = <b>fast-forward</b> (لأن dev خلف master ومسارهما مباشر)، ودمج master في math-feature = <b>3-way</b> (لأنهما تباعدا) وينتج merge commit.</div></details>
+<details><summary>لماذا نستخدم الـ branches؟</summary><div class="a">للتجريب وتطوير feature دون المخاطرة بالنسخة العاملة، وتسمح بعمل عدة أشخاص بالتوازي.</div></details>
+
+<h2 id="b3">Lab 3: Conflicts, Delete Branch, Rebase, Stash</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>Merge conflict:</b> يحدث عندما يغيّر فرعان <u>نفس الأسطر في نفس الملف</u> بشكل مختلف (change vs change). Git يتوقف ويطلب منك حذف غير المرغوب وإبقاء المطلوب. لتحديده كـ resolved: <b>stage + commit</b> للملفات.</li>
+<li><b>مثال المحاضرة:</b> master غيّرت <code>my_sum</code> لتأخذ 3 أرقام، وmath-feature غيّرت الاسم لـ <code>sum</code> ← conflict. الحل المطلوب: <code>int sum(int a, int b, int c)</code> (نبقي التغييرين).</li>
+<li><b>Delete:</b> <code>git branch -d name</code> آمن (يرفض لو فيه unmerged changes). <code>git branch -D name</code> إجباري ويحذف الـ commits نهائياً. لا يمكن حذف الفرع الحالي.</li>
+<li><b>Rebase:</b> ينقل commits فرعك فوق رأس الفرع الأساسي (ينسخها بـ <b>hash جديد</b>)، فيصبح التاريخ <b>خطياً</b>.</li>
+</ul>
+<pre><code>git checkout feature-branch
+git rebase base-branch        # لو conflict: حلّه ثم
+git rebase --continue
+git checkout base-branch
+git merge feature-branch      # الآن fast-forward</code></pre>
+<table>
+<tr><th></th><th>git merge</th><th>git rebase</th></tr>
+<tr><td>التاريخ</td><td>يحفظ كل شيء كما حدث (غير خطي)</td><td>يعيد كتابة التاريخ (خطي)</td></tr>
+<tr><td>commits جديدة</td><td>merge commit واحد</td><td>يعيد كتابة commits الموجودة (IDs جديدة)</td></tr>
+<tr><td>الأمان</td><td>آمن حتى على repos مشتركة</td><td>خطير لو تم push (يغير IDs ويكسر نسخ الآخرين)</td></tr>
+<tr><td>Conflicts</td><td>تحلها مرة واحدة</td><td>قد تحلها مع كل commit</td></tr>
+<tr><td>الاستخدام</td><td>دمج عمل عدة أشخاص، أو الفرع مدفوع push</td><td>أنت وحدك على feature محلي وتريد تاريخاً نظيفاً</td></tr>
+</table>
+<ul>
+<li><b>Stash:</b> يحفظ تغييراتك غير المُلتزَم بها مؤقتاً لتنتقل لفرع آخر. مثال Sarah: عندها feature نصف مكتمل وجاء bug عاجل.</li>
+</ul>
+<pre><code>git stash          # يحفظ ويُنظّف working directory
+git stash list
+git stash apply    # يرجّع آخر stash ويبقيه في القائمة
+git stash pop      # يرجّع ويحذفه من القائمة
+git stash drop     # يحذف بدون تطبيق</code></pre>
+<h3>الـ Hands-on (14 خطوة، تدرب عليها)</h3>
+<ol>
+<li>مجلد جديد، 2) <code>git init</code>، 3) <code>touch .gitignore</code>، 4) أنشئ comments.txt وضعه في .gitignore، 5) أنشئ ملف Main وcommit، 6) أنشئ فرعي dev وtesting، 7) احذف testing، 8) على master غيّر آخر cout إلى "git is fun edited by master" وcommit، 9) checkout dev، 10) غيّر نفس السطر "edited by dev" وcommit، 11) <code>git log --all --oneline --decorate --graph</code>، 12) على dev: <code>git rebase master</code> وحل الـ conflict ثم <code>git rebase --continue</code>، 13) على master: <code>git merge dev</code> ← النوع <b>fast-forward</b> (لأن بعد rebase صار فيه مسار مباشر)، 14) اعرض الـ graph (سيكون خطياً).</li>
+</ol>
+<h3>أسئلة متوقعة</h3>
+<details><summary>ما الفرق بين <code>-d</code> و <code>-D</code> عند حذف فرع؟</summary><div class="a">-d آمن ويمنع حذف فرع فيه تغييرات لم تُدمج. -D يفرض الحذف حتى مع تغييرات غير مدمجة ويفقدها نهائياً.</div></details>
+<details><summary>بعد rebase، ما نوع الـ merge التالي ولماذا؟</summary><div class="a">Fast-forward، لأن الـ rebase جعل الفرع مبنياً على رأس الـ base فصار فيه direct path.</div></details>
+<details><summary>متى لا نستخدم rebase؟</summary><div class="a">عندما يكون الفرع مدفوعاً (pushed) أو مشتركاً مع آخرين، لأنه يغير commit IDs ويكسر نسخهم.</div></details>
+<details><summary>كيف أحل مشكلة bug عاجل وأنا في منتصف feature؟</summary><div class="a">git stash ← git checkout main ← أصلح وcommit وpush ← git checkout feature ← git stash apply ← أكمل شغلك.</div></details>
+
+<h2 id="b4">Lab 4: Cherry-pick + GitHub Collaboration</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>Cherry-pick:</b> يأخذ commit محدداً (بالـ hash) من فرع آخر ويطبقه على فرعك الحالي <u>دون دمج الفرع كله</u>. الخطوات: <code>git log</code> لمعرفة الـ hash ← checkout للفرع الهدف ← <code>git cherry-pick hash</code>. الخيار <code>--no-commit</code> يطبق التغييرات ويضعها في staging دون commit.</li>
+<li><b>خدمات الاستضافة:</b> GitHub, BitBucket, GitLab. <b>مزايا GitHub:</b> Access control، Code reviews، Issues tracking، CI/CD (Actions)، Web hosting (Pages).</li>
+<li><code>git clone URL</code> ينسخ كل الريبو (ملفات وتاريخ وbranches). <code>git remote add origin URL</code> يربط ريبو محلي بـ remote. <code>git push -u origin main</code> (أول مرة). فقط المالك والـ collaborators يقدرون يعملون push.</li>
+<li><b>fetch vs pull:</b> <code>git fetch</code> يجلب التغييرات فقط ولا يطبقها (تراجعها أولاً)، ثم <code>git merge origin/Branch</code>. <code>git pull</code> = fetch + merge.</li>
+<li><b>فرع جديد على remote:</b> <code>git push --set-upstream origin BranchName</code>.</li>
+<li><b>Pull Request (PR):</b> طلب دمج فرع في base branch. فوائده: مراجعة الكود قبل الدمج، وتوثيق لسبب وكيفية التغيير. التعليق على الكود ممكن، والـ commits الجديدة تظهر تلقائياً في الـ PR.</li>
+<li><b>3 طرق الدمج في GitHub:</b> <b>Merge commit</b> (ينشئ merge commit ويحفظ التاريخ)، <b>Rebase and merge</b> (يعيد commits فوق الهدف، تاريخ خطي)، <b>Squash and merge</b> (يجمع كل commits الـ PR في commit واحد).</li>
+<li><b>حل conflicts في PR:</b> checkout main ← git pull ← checkout feature ← <code>git merge main</code> ← حل التعارضات ← stage وcommit ← <code>git push</code>.</li>
+<li><b>Fork:</b> نسخة شخصية من ريبو الغير، تعدل فيها وتقدم PR للأصل.</li>
+<li><b>GitHub workflow (8 خطوات):</b> create/fork، clone، feature branch، commits، push، open PR، discuss، owner يدمج أو يغلق.</li>
+<li><b>Best practices (5):</b> commit متكرر وصغير، حدّث نسختك بـ pull، رسائل commit واضحة، راجع عبر PRs، branch لكل feature.</li>
+</ul>
+<h3>أسئلة متوقعة</h3>
+<details><summary>متى نستخدم cherry-pick؟</summary><div class="a">لما نريد تطبيق commit واحد (مثل إصلاح bug حرج) على main دون دمج feature-branch غير الجاهز.</div></details>
+<details><summary>الفرق بين fetch وpull.</summary><div class="a">fetch يحدّث نسخة remote المحلية فقط دون تغيير فرعك الحالي. pull = fetch ثم merge تلقائياً.</div></details>
+<details><summary>قارن بين Merge commit وRebase and merge وSquash and merge.</summary><div class="a">Merge commit: يحفظ التفاصيل مع commit إضافي. Rebase: تاريخ خطي. Squash: يضغط عدة commits في واحد لتاريخ أنظف.</div></details>
+<details><summary>ما فائدة الـ Pull Request؟</summary><div class="a">مراجعة الكود قبل الدمج للإمساك بالمشاكل وتحسين الجودة، وتوثيق التاريخ وسبب التعديلات.</div></details>
+<details><summary>رتّب خطوات: إنشاء repo على GitHub وclone وتعديل وpush ثم PR ثم الدمج.</summary><div class="a">create repo ← git clone ← git checkout -b/branch ← add &amp; commit ← git push --set-upstream origin new-feature ← Create PR ← comment ← merge ← git checkout main ← git pull.</div></details>
+
+<h2 id="b5">Lab 5: CI/CD مع GitHub Actions</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>Production:</b> البيئة الحية التي يستخدمها المستخدمون الحقيقيون. <b>Deployment:</b> نقل الكود/التحديثات من بيئة الاختبار إلى production.</li>
+<li><b>المشكلة:</b> دمج commits دون تشغيل الاختبارات قد يكسر النظام (مثال: كل المنتجات صارت مجانية). الحل: <b>CI/CD</b>.</li>
+<li><b>CI:</b> دمج التغييرات بشكل متكرر في codebase مشترك مع اختبار آلي لكل تغيير لاكتشاف المشاكل مبكراً.</li>
+<li><b>Continuous Delivery:</b> بعد CI يُجهّز الكود تلقائياً ليكون جاهزاً للإصدار، وغالباً <u>موافقة يدوية نهائية</u> قبل production. <b>Continuous Deployment:</b> كل تغيير ينجح في الاختبارات يُنشر إلى production <u>تلقائياً دون تدخل بشري</u>.</li>
+<li><b>GitHub Actions:</b> منصة CI/CD تؤتمت build وtest وdeploy.</li>
+<li><b>Workflow:</b> عملية آلية تعمل عند وقوع <b>event</b> في الريبو (push, pull request). مكوناتها: event أو أكثر، job أو أكثر. كل job يعمل في <b>runner</b> (VM) خاص به وفيه steps. الـ step إما shell script (<code>run</code>) أو action (<code>uses</code>).</li>
+<li>الـ jobs افتراضياً <b>تعمل بالتوازي</b> ويمكن جعل job يعتمد على آخر. الـ steps <b>تعمل بالترتيب</b> على نفس الـ runner. الـ runner: Ubuntu / Windows / macOS، ويشغّل job واحداً في كل مرة في VM جديدة.</li>
+<li><b>Action:</b> إضافة قابلة لإعادة الاستخدام (مثل built-in functions)، مثل <code>actions/checkout@v4</code> الذي ينزل كود الريبو إلى الـ runner (ضروري لأن الـ VM لا يملك كودك).</li>
+<li>الـ workflow ملف <b>YAML</b> داخل <code>.github/workflows/</code> في جذر الريبو. الريبو يقدر يحوي عدة workflows.</li>
+<li><b>Context:</b> كائن فيه معلومات عن التشغيل، الصيغة <code>${{ runner.os }}</code>.</li>
+</ul>
+<pre><code>name: GitHub Actions Demo
+on: push                       # أو [push, pull_request]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the triggering event
+        run: echo "The job was triggered by ${{ github.event_name }}."
+      - name: Check out repository code action
+        uses: actions/checkout@v4
+      - name: List files in the repository
+        run: ls ${{ github.workspace }}</code></pre>
+<h3>مثال Java (Student) — مهم</h3>
+<p>الـ workflow يعمل عند <code>pull_request</code> على <code>main</code>، ويحتوي: checkout ← <code>gradle/gradle-build-action@v2</code> ← <code>./gradlew test</code>. الاختبار يتوقع أن 82 تعطي <b>"B"</b>. الكود الأصلي كان فيه bug: كان يرجع "C" عند ≥80 و"B" عند ≥70 (معكوسة). الإصلاح:</p>
+<pre><code>if (finalGrade &gt;= 90) return "A";
+else if (finalGrade &gt;= 80) return "B";   // كان "C"
+else if (finalGrade &gt;= 70) return "C";   // كان "B"
+else if (finalGrade &gt;= 60) return "D";
+else return "F";</code></pre>
+<p>بعد الإصلاح والـ push ينجح الـ workflow ويصبح الدمج آمناً.</p>
+<h3>أسئلة متوقعة</h3>
+<details><summary>الفرق بين Continuous Delivery وContinuous Deployment.</summary><div class="a">Delivery: كود جاهز للإصدار مع <b>موافقة يدوية</b> قبل production. Deployment: <b>نشر تلقائي كامل</b> لكل تغيير ينجح في الاختبارات.</div></details>
+<details><summary>ما مكونات الـ workflow؟ وما الفرق بين job وstep وrunner وaction؟</summary><div class="a">event + jobs. Job: مجموعة steps على نفس runner. Step: أمر shell (run) أو action (uses). Runner: سيرفر/VM ينفذ الـ job. Action: امتداد قابل لإعادة الاستخدام لمهمة متكررة.</div></details>
+<details><summary>ماذا يفعل <code>actions/checkout@v4</code> ولماذا هو ضروري؟</summary><div class="a">ينزّل كود المشروع إلى الـ runner لأن الـ VM لا يملكه تلقائياً، وبدونه لا تستطيع الخطوات التالية الوصول للكود.</div></details>
+<details><summary>أين يوضع ملف الـ workflow؟ وبأي صيغة؟</summary><div class="a">في <code>.github/workflows/</code> بصيغة YAML.</div></details>
+<details><summary>ما الـ trigger في workflow الـ Student؟ ولماذا فشل أول مرة؟</summary><div class="a">trigger = <code>pull_request</code> على الفرع <code>main</code>. فشل لأن في دالة calculateGrade bug (ترتيب B وC معكوس) فكسر الـ unit test.</div></details>
+
+<h2 id="b6">Lab 6: Trello</h2>
+<div class="box"><b class="t">ملاحظة</b>الـ quiz كان على Trello (يبدأ 15 نوفمبر)، وحضور الـ section الخاص بك إجباري.</div>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>Trello:</b> أداة إدارة عمل مرئية (boards، lists، cards) للتخطيط والتعاون. تحتاج حساب <b>Atlassian</b>.</li>
+<li><b>فوائده (5):</b> تنظيم بسيط ومرئي، مرونة لأي workflow، تعاون في الوقت الحقيقي، شفافية ومساءلة (الكل يعرف من مسؤول عن ماذا)، متاح في أي مكان (desktop/web/mobile).</li>
+<li><b>الهيكل:</b> Workspace ← Board ← Lists (مثل Front-End, Back-End, Testing أو To Do/In Progress/Done) ← Cards (مهام).</li>
+<li><b>خصائص الـ card:</b> Labels (تصنيف بصري ملوّن للحالة/النوع/الأولوية)، Dates، Checklist (مهام فرعية يمكن تأشيرها)، Members (تعيين مسؤول)، Attachments (ملفات/روابط/صور)، Activity log (سجل كل ما حدث على الكارت: من فعل ماذا ومتى).</li>
+<li><b>User story</b> تمثل كـ card، وفيها description وchecklist وlabels وattachments.</li>
+</ul>
+<h3>الـ Hands-on (جرّبه كله)</h3>
+<ol><li>Create board، 2) 3 lists، 3) add task، 4) label + attachment، 5) checklist، 6) mark checklist finished، 7) mark card finished، 8) track activity log، 9) add user story، 10) assign task to a developer.</li></ol>
+<h3>أسئلة متوقعة</h3>
+<details><summary>كيف تعيّن مهمة لعضو؟</summary><div class="a">افتح الـ card ← "Members" على اليمين ← اختر الشخص.</div></details>
+<details><summary>كيف تراجع كل ما حدث على مهمة؟</summary><div class="a">افتح الـ card ← قسم Activity لعرض الـ log.</div></details>
+<details><summary>ما الفرق بين label وchecklist؟</summary><div class="a">Label: تصنيف ملوّن سريع (حالة/نوع/أولوية). Checklist: عناصر فرعية داخل الكارت تؤشرها عند الإنجاز لتتبع التقدم.</div></details>
+
+<h2 id="b7">Lab 7: مقدمة Jira</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>Jira:</b> أداة #1 لإدارة مشاريع agile (Scrum وKanban): boards، backlogs، roadmaps، reports. من تطوير <b>Atlassian</b> الأسترالية. الاسم من <b>Gojira</b> (Godzilla بالياباني).</li>
+<li><b>منتجات Atlassian:</b> Jira Work Management (لفرق الأعمال غير التقنية)، Confluence (توثيق ومعرفة)، Trello.</li>
+<li><b>Jira vs Trello:</b> Jira للمشاريع المعقدة والكبيرة، دعم agile مدمج (sprints)، تقارير متقدمة (Burndown, Velocity)، يتوسع للمؤسسات، تتبع مفصل (Epics, Stories, Bugs). Trello للمشاريع البسيطة/الصغيرة، boards أساسية، تقارير بسيطة.</li>
+<li><b>Project:</b> مجموعة issues، له اسم و<b>key</b> (مثل SSP)، والـ key هو بداية issue key (SSP-15). <b>نوعان:</b> Team-managed (يديره الفريق، مرن) وCompany-managed (يديره الـ admins، قياسي للمؤسسات الكبيرة).</li>
+<li><b>Epic:</b> عمل كبير يتفكك لـ issues، يمتد لعدة sprints. <b>Issue types (5):</b> Story (من منظور المستخدم)، Task (عمل عام مثل setup database)، Bug (عيب)، Sub-task (جزء أصغر)، Epic.</li>
+<li><b>Priority (5):</b> Highest (blocker، فوري)، High، Medium (الافتراضي)، Low، Lowest.</li>
+<li><b>Status types:</b> To Do, In Progress, In Review, Done, Blocked, Reopened. وحقل <b>Resolution</b> مهم في الـ bugs (fixed, duplicate, incomplete, done).</li>
+<li><b>الحقول:</b> Project, Key, Summary, Type, Status, Priority, Resolution, Affects Version(s), Fix Version(s), Epic, Labels, Description, Links, Assignee (المسؤول)، Reporter (من أدخل الـ issue)، Votes, Watchers, Due, Created, Updated, Resolved, Estimate (الأصلي)، Remaining، Logged (الوقت المصروف).</li>
+<li><b>Board:</b> تمثيل مرئي للـ workflow. <b>Workflow:</b> مراحل ينتقل فيها الـ issue والـ transitions بينها (الافتراضي To Do → In Progress → Done). <b>Backlog:</b> قائمة الشغل غير البادئ وغير المخصص لـ sprint. <b>Sprint:</b> iteration محددة الزمن (1–4 أسابيع). <b>Version/Release:</b> مجموعة issues المنجزة التي تُنشر معاً (milestone مثل Q1 Release) وقد تشمل عدة sprints.</li>
+<li><b>Integrations:</b> GitHub/GitLab/Bitbucket (تتبع commits وbranches وPRs داخل الـ issue)، Jenkins (CI/CD)، Figma (ربط التصاميم)، <b>Xray</b> (إدارة الاختبارات: Test, Precondition, Test Set, Test Plan, Test Execution)، Slack (إشعارات).</li>
+<li><b>إضافة مستخدمين بنفس الإيميل:</b> أضف علامة <b>+</b> بعد اسم الإيميل ثم alias (email+dev@domain.com).</li>
+<li><b>ربط GitHub:</b> Apps ← "GitHub for Jira" ← Connect GitHub Organization ← authorize ← اختر الريبوهات. للتحقق: أنشئ branch من الـ issue وcommit وPR ثم راجع قسم <b>Development</b> في الـ issue.</li>
+</ul>
+<h3>أسئلة متوقعة</h3>
+<details><summary>قارن بين Jira وTrello.</summary><div class="a">انظر الجدول أعلاه: Jira أقوى للمشاريع المعقدة (Scrum/Kanban وreports)، وTrello أبسط للمشاريع الصغيرة.</div></details>
+<details><summary>ما الفرق بين Story وTask وBug وSub-task وEpic؟ أعطِ مثالاً.</summary><div class="a">Story: "As a user, I want to log in with email/password so I can access my account". Task: "Set up the database for user authentication". Bug: "Login button does not respond". Sub-task: "Design the login page layout" ضمن story. Epic: عمل كبير يجمع عدة issues.</div></details>
+<details><summary>ما الفرق بين Assignee وReporter؟ وAffects Version وFix Version؟</summary><div class="a">Assignee: المسؤول الحالي. Reporter: من أدخل الـ issue. Affects: الإصدار الذي ظهرت فيه المشكلة. Fix: الإصدار الذي أُصلحت/ستُصلح فيه.</div></details>
+<details><summary>ما الـ Xray وكيف تربط test بـ story؟</summary><div class="a">إضافة لإدارة الاختبارات داخل Jira. تنشئ issue من نوع Test وتربطه بالـ Story، ثم Test Execution لتنفيذه وتسجيل Pass/Fail، وTest Plan لمتابعة التقدم.</div></details>
+
+<h2 id="b8">Lab 8: العمل على Jira (Shop App)</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<table>
+<tr><th>الجانب</th><th>Scrum</th><th>Kanban</th></tr>
+<tr><td>النهج</td><td>Sprints محددة الزمن (1–4 أسابيع)</td><td>تدفق مستمر بلا حدود زمنية</td></tr>
+<tr><td>مناسب لـ</td><td>تطوير تكراري مخطط (software)</td><td>عمل مستمر (دعم، صيانة)</td></tr>
+<tr><td>WIP limits</td><td>اختيارية</td><td>تُطبق عادة لتجنب تحميل الفريق</td></tr>
+<tr><td>تعيين المهام</td><td>في بداية كل sprint</td><td>الأعضاء <b>يسحبون</b> العمل عند توفر طاقة</td></tr>
+<tr><td>التخطيط</td><td>متكرر (sprint planning)</td><td>قليل، حسب الحاجة</td></tr>
+</table>
+<ul>
+<li><b>Case study Shop App:</b> startup للـ e-commerce بـ AI، تبني MVP بثلاث features: User Signup، Order Creation، AI Product Recommendation. أنت الـ tech lead.</li>
+<li><b>Work plan (8 خطوات):</b> (1) Create project (2) Create epics (3) Populate backlog بـ issues (4) أضف description وتفاصيل لكل issue (5) Customize workflow (6) اختر issues للـ sprint وعيّنها وأضف story points (7) Create versions (8) Start sprint وتابع على الـ board.</li>
+<li><b>Acceptance criteria:</b> عبارات True/False واضحة قابلة للإجابة بـ نعم/لا، تعمل كـ validation للمطور.</li>
+<li><b>Workflow:</b> الافتراضي بلا قيود ("Any Status" تسمح بالقفز من To Do إلى Done مباشرة، وهذا غير كفء). نضيف statuses مثل Ready for Testing (نوع <b>To-do status</b>) وIn Testing (<b>In-progress status</b>)، ونحدد الـ transitions (مثلاً Ready for Testing يقبل فقط من In Progress). للـ story: Ready for Testing/UAT/Deployment (To Do) وIn Testing/UAT/Deployment (In Progress). اضغط <b>Update Workflow</b> بعد كل تعديل، واربط الـ statuses بالأعمدة (Columns).</li>
+<li><b>Story points:</b> وحدة ذاتية <u>لا ترتبط بزمن</u>، تعبّر عن الجهد (التعقيد والمخاطر والحجم)، يقررها الفريق جماعياً. تستخدم أرقام <b>Fibonacci المعدّل: 1, 2, 3, 5, 8, 13</b>. مثال: add login button = 1، payment gateway = 13.</li>
+<li><b>إكمال الـ sprint:</b> الـ issues في Done تنتقل إلى قسم Releases. <b>Versions</b> لتتبع الـ milestones.</li>
+<li><b>Reports:</b> <b>Burndown chart</b> (العمل المتبقي في الـ sprint مقابل الخط المثالي)، <b>Velocity report</b> (العمل المنجز في كل sprint ويتنبأ بقدرة الفريق)، <b>Cumulative Flow Diagram</b> (حالة العناصر عبر الزمن لاكتشاف الـ bottlenecks).</li>
+</ul>
+<h3>أسئلة متوقعة</h3>
+<details><summary>ما الفرق بين Scrum وKanban projects؟</summary><div class="a">الجدول أعلاه. باختصار: Scrum = sprints ثابتة وتخطيط متكرر. Kanban = تدفق مستمر مع WIP limits وسحب للعمل.</div></details>
+<details><summary>لماذا نخصّص workflow؟</summary><div class="a">لأن الافتراضي بلا قيود ويسمح بنقل issue من To Do إلى Done مباشرة؛ التخصيص يفرض مسار العمل الصحيح (مثل المرور بالاختبار) ويزامن بين الفرق.</div></details>
+<details><summary>ما الـ story points ولماذا Fibonacci؟</summary><div class="a">وحدة نسبية للجهد لا ترتبط بالوقت. Fibonacci لأن اختيار بين 5 و8 أسهل من بين 4 و5 (تقديرات متمايزة غير دقيقة).</div></details>
+<details><summary>ماذا يوضح Burndown chart؟</summary><div class="a">العمل المتبقي مقابل الخط المثالي لتتبع التقدم وتوقع إكمال الـ sprint وكشف التأخير.</div></details>
+<details><summary>ما خطوات إعداد sprint في Jira؟</summary><div class="a">حدد التواريخ والمدة، اسحب issues من backlog للـ sprint، عيّنها للأعضاء، أضف story points، اربطها بـ versions، ثم Start sprint وتابع الـ board.</div></details>
+
+<h2 id="b9">Lab 9: Refactoring</h2>
+<div class="box warn"><b class="t">ملاحظة</b>أمثلة الكود في شرائح هذا اللاب صور (C#)، وما قدرت أقراها، فالشرح هنا للأنواع التسعة بتعريفها المعروف <span class="tag">معلومة عامة</span> مع ربطها بوصف المهام. راجع الصور في الشرائح 12–31.</div>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li><b>Clean code:</b> واضح لبقية المبرمجين، بلا تكرار، أقل عدد من الـ classes والأجزاء المتحركة، يجتاز كل الاختبارات، أسهل وأرخص صيانة.</li>
+<li><b>Refactoring:</b> تغيير الكود الحالي ليصبح أسهل قراءة وتعديل <b>مع الحفاظ على الوظيفة</b>؛ عملية <b>مستمرة</b> وبـ <b>خطوات صغيرة متزايدة</b>.</li>
+<li><b>لماذا؟ Technical debt.</b> أسباب تحول الكود النظيف إلى غير نظيف: ضغط business، عدم فهم عواقب technical debt، coupling قوي بين المكونات، قلة الاختبارات، قلة التوثيق، ضعف التواصل، تطوير طويل في عدة branches، تأخير refactoring، قلة المراقبة، عدم الكفاءة.</li>
+<li><b>متى؟ Rule of Three:</b> أول مرة تنفذ فقط، ثاني مرة تتضايق وتكرر، <b>ثالث مرة ابدأ refactoring</b>. أيضاً: عند إضافة feature، عند إصلاح bug، أثناء code review.</li>
+<li><b>أهدافه:</b> تصميم أفضل، تعقيد أقل، readability، maintainability، معمارية أفضل. لو تم بشكل سيء قد يغير الوظيفة أو يضيف bugs.</li>
+<li><b>SOLID:</b> <b>S</b>ingle Responsibility (class واحد لمسؤولية واحدة)، <b>O</b>pen-Closed (مفتوح للتوسعة، مغلق للتعديل)، <b>L</b>iskov Substitution (الـ subclass يحل محل الـ superclass دون كسر النظام)، <b>I</b>nterface Segregation (لا نجبر client على الاعتماد على methods لا يستخدمها)، <b>D</b>ependency Inversion (high-level لا يعتمد على low-level، كلاهما على abstractions).</li>
+</ul>
+<table>
+<tr><th>نوع الـ Refactoring</th><th>المعنى</th></tr>
+<tr><td>Introduce Explaining Variable</td><td>ضع نتيجة تعبير معقد في متغير باسم يشرح معناه</td></tr>
+<tr><td>Split Temporary Variable</td><td>متغير مؤقت يُستخدم لأغراض متعددة ← متغيرات منفصلة لكل غرض</td></tr>
+<tr><td>Replace With Constant</td><td>استبدل الرقم/النص السحري (magic value) بـ constant باسم واضح</td></tr>
+<tr><td>Replace Conditional With Guard Clause</td><td>بدل nested if-else استخدم شروط مبكرة (early return) تعالج الحالات الخاصة أولاً</td></tr>
+<tr><td>Introduce Parameter Object</td><td>اجمع parameters المترابطة في object واحد</td></tr>
+<tr><td>Extract Method</td><td>انقل جزءاً من الكود في method مستقلة باسم واضح (مثال: get words / get common words)</td></tr>
+<tr><td>Extract Interface</td><td>اصنع interface للـ methods المشتركة بين عدة classes (مثال: 3 notification services)</td></tr>
+<tr><td>Extract Class</td><td>قسّم class له مسؤوليات متعددة إلى classes (مثال: Email class وLog class)</td></tr>
+<tr><td>Extract Super Class</td><td>كود مكرر عبر classes متشابهة ← انقله إلى superclass (مثال: SalaryEmployee)</td></tr>
+</table>
+<h3>الـ Hands-on</h3>
+<ul>
+<li>الريبو: <code>EngMohamedRaafat/CodeRefactoring</code> (C#، افتح <code>CodeRefactoring.sln</code>). مشروعان: <b>CodeRefactoring</b> (للممارسة، كل task في ملف .cs) و<b>CodeRefactoring.nUnitTest</b> (لا تغيّره). قبل ما تعدّل شغّل <b>Test Explorer</b>: كل الاختبارات تنجح إلا Task4 (فيها bugs).</li>
+<li><b>Task 1:</b> نظام login بحد أقصى 3 محاولات، بعد الخطأ تبقى محاولتان ثم يُقفل الحساب. (المرجّح: constants، guard clauses، explaining variable). فرع: <code>task1-cr</code>.</li>
+<li><b>Task 2:</b> EmailService وSmsService وPushNotificationService (المرجّح: Extract Interface). فرع: <code>task2-cr</code>.</li>
+<li><b>Task 3:</b> نظامان (متجر كتب online ومكتبة) وclass واحد اسمه Book يتولى كل الوظائف المتعلقة بالكتب (المرجّح: Extract Class لفصل المسؤوليات). فرع: <code>task3-cr</code>.</li>
+<li><b>Task 4:</b> Fibonacci فيه logical errors؛ تصلحه. فرع: <code>task4-fix</code>.</li>
+<li><b>الخطوات لكل task:</b> فرع جديد من master ← طبّق الـ refactoring ← شغّل الاختبار (لازم ينجح) ← commit ← دمج في master. في النهاية: أنشئ repo على GitHub وادفع master.</li>
+</ul>
+<h3>أسئلة متوقعة</h3>
+<details><summary>ما هو الـ refactoring ولماذا يجب أن تبقى الوظيفة كما هي؟ وكيف نتأكد؟</summary><div class="a">تحسين بنية الكود بدون تغيير سلوكه. نتأكد بالـ unit tests؛ تنجح قبل التعديل وبعده.</div></details>
+<details><summary>ما هو Rule of Three؟</summary><div class="a">أول مرة: نفذ. ثاني مرة: كرر مع الضيق. ثالث مرة: ابدأ refactoring.</div></details>
+<details><summary>اذكر مبادئ SOLID مع تعريف كل منها.</summary><div class="a">انظر القائمة أعلاه (S, O, L, I, D).</div></details>
+<details><summary>ما الـ technical debt؟ وما أسبابه؟</summary><div class="a">تراكم قرارات سريعة أو كود غير نظيف يجعل التعديل لاحقاً أصعب. أسبابه: ضغط الـ business، قلة الاختبارات والتوثيق، تأخير refactoring...</div></details>
+<details><summary>أي refactoring تستخدم لـ: (أ) كود مكرر في 3 classes (ب) if متداخلة (ج) رقم 3 ظاهر في الكود (د) class يرسل email ويسجل log؟</summary><div class="a">(أ) Extract Superclass (ب) Guard Clause (ج) Replace With Constant (د) Extract Class.</div></details>
+
+<h2 id="b10">Lab 10: Use Case &amp; Class Diagrams</h2>
+<h3>قبل ما تدخل لازم تعرف</h3>
+<ul>
+<li>الأداة: <b>draw.io</b> (مجانية). <b>SDLC في الشرائح (7):</b> Requirements Collection، Requirements Analysis، System Design، System Development، System Testing، System Deployment، System Maintenance.</li>
+<li><b>Use case diagram:</b> الـ actor كيان خارجي يتفاعل مع النظام (فرد، مجموعة، شركة)، والـ use case وظيفة/خدمة. العلاقات: association (actor↔use case فقط)، include/extend (بين use cases فقط)، generalization (بين actors فقط).</li>
+<li><b>الأخطاء الشائعة (مهم!):</b>
+ <ul>
+ <li><b>الـ actor هو من يستخدم النظام مباشرة.</b> لو الطالب يطلب grade report من موظف شؤون الطلاب، الـ actor هو <b>الموظف</b> وليس الطالب.</li>
+ <li>لا use cases بخطوات ("select seat") أو بأسماء غامضة ("manage data"/"save data").</li>
+ <li>لا association بين actors (إلا inheritance) ولا بين use cases (إلا include/extend).</li>
+ <li>العلاقات لا تعطي معنى تسلسلياً.</li>
+ <li><b>extend لا يُستخدم لتمثيل خيارات</b> (مثل Search by name / by ID كـ extends، وهذا خطأ).</li>
+ </ul></li>
+</ul>
+<h3>حلول التمارين (تدرب على رسمها)</h3>
+<details><summary>E-commerce: Registered Users وGuest Users وAdministrators</summary><div class="a"><b>Actors:</b> Guest User، Registered User (يرث من Guest بحسب وصف "نفس الصلاحيات + إضافية")، Administrator.<br><b>Use cases:</b> Browse Products، Place Order <b>&lt;&lt;include&gt;&gt;</b> Browse Products، View Order History وUpdate Profile (Registered فقط)، Add Products to Inventory وMonitor Orders (Administrator).</div></details>
+<details><summary>Library: Member وSpecial Member وLibrarian</summary><div class="a"><b>Actors:</b> Library Member، Special Member (generalization من Member)، Librarian.<br><b>Use cases:</b> Search Books، Borrow Books، Return Books، <b>Pay Fine &lt;&lt;extend&gt;&gt; Return Books</b> (فقط لو متأخر عن الموعد)، Request Rare Editions (Special Member)، Manage Inventory، Generate Reports <b>&lt;&lt;include&gt;&gt;</b> View Borrowing History (Librarian).</div></details>
+<h3>Class Diagram</h3>
+<ul>
+<li>Class: الاسم، attributes، operations، مع Access modifiers: <b>Public (+)، Private (-)، Protected (#)</b>.</li>
+<li><b>العلاقات الأربع:</b>
+ <ol>
+ <li><b>Association:</b> فئة تعرف الـ public attributes/operations لأخرى. Bidirectional أو Unidirectional أو Reflexive (فئة مع نفسها).</li>
+ <li><b>Dependency:</b> فئة تشير لأخرى لكن <u>بدون attribute</u>: إما تُنشأ كمتغير محلي في operation، أو تُمرّر كـ parameter.</li>
+ <li><b>Aggregation:</b> علاقة كل وأجزاء (reflexive: مكون يتكون من مكونات من نفس النوع، مثل المكونات في الطبخ).</li>
+ <li><b>Generalization:</b> وراثة، الـ subclass يرث الـ public والـ protected من الـ superclass.</li>
+ </ol></li>
+<li>ترتيب الرسم: (1) Classes (2) Data members and methods (3) Relations.</li>
+</ul>
+<details><summary>Banking System (7 classes): كيف أرسمه؟</summary><div class="a">
+<ul>
+<li><b>Customer</b> (name, address, dob, cardNumber, pin; verifyPassword()) — يملك <b>1..*</b> Accounts.</li>
+<li><b>Bank</b> (code, address; manages(), maintains()) — تدير <b>1..*</b> ATMs.</li>
+<li><b>ATM</b> (location, managedBy; identifies(), makeTransactions()) — مرتبط بـ Accounts.</li>
+<li><b>Account</b> (number, balance; deposit(), withdraw(), createTransaction()) — superclass لـ <b>Current Account</b> (withdrawLimit) و<b>Saving Account</b> (interestRate) بـ generalization.</li>
+<li><b>ATM Transactions</b> (id, date, type, amount, postBalance; modifies()) — مرتبط بـ Account.</li>
+<li>علاقة <b>Savings-Checking</b> بين Current وSaving: 1 إلى 1.</li>
+</ul></div></details>
+<details><summary>Online shopping: User وCustomer وSeller وItem وOrder وPayment وTransaction</summary><div class="a">
+<ul>
+<li><b>User</b> (email, password, firstName, lastName, address, phone; login(), register(), logout()) ← <b>Customer</b> و<b>Seller</b> يرثان منه.</li>
+<li><b>Seller</b> (ID, itemName, itemID, discount, category; addItem(), updateItem(), removeItem(), viewOrders()).</li>
+<li><b>Item</b> (itemID, name, price, stockQuantity, discount, category; updateStock(), applyDiscount()).</li>
+<li><b>Customer</b> (customerID, shipName, shipAddress, numberOfItems; makePayment(), addToCart(), checkout(), cancelOrder()).</li>
+<li><b>Payment</b> (cardNumber, issueDate, expiryDate; verifyCard()) ← <b>Transaction</b> (id, date, amount, comments; commit(), rollback()).</li>
+<li><b>Cart</b> (cartNumber, itemID, amount, category) و<b>Order</b> (customerID, customerName, cardNumber, billingAddress, items).</li>
+<li>العلاقات: Customer يملك Cart وOrders، Order يحوي Items، إلغاء الـ order يرجع المخزون ويعمل refund.</li>
+</ul>
+<p class="lead">الحل الرسمي ملف draw.io رابطه في الشريحة 38، قارن رسمك به.</p></div></details>
+<h3>أسئلة متوقعة</h3>
+<details><summary>الطالب يطلب grade report من موظف الشؤون، من هو الـ actor؟</summary><div class="a">الموظف (Employee) لأنه هو من يستخدم النظام مباشرة.</div></details>
+<details><summary>هل نستخدم extend في Search by name / by ID؟</summary><div class="a">لا. extend لا يمثل الخيارات. تُوضع كـ options داخل use case "Search" نفسه.</div></details>
+<details><summary>الفرق بين association وdependency في class diagram.</summary><div class="a">Association: فئة تحتفظ بمرجع للأخرى (attribute). Dependency: تعرف بها مؤقتاً فقط (متغير محلي أو parameter).</div></details>
+
+<h2 id="devops">ملحق: DevOps و CI/CD في العالم الحقيقي (ملف CI_CD in Real World)</h2>
+<ul>
+<li><b>قبل DevOps:</b> فريقان منفصلان. Developers (مشكلتهم: "It works on my machine!")، وOps (مشكلتهم: "I didn't write this code!"). النتيجة: نشر بطيء ومليء بالأخطاء وفجوة طويلة في الـ feedback.</li>
+<li><b>DevOps = Development + Operations.</b> أهدافه: سد الفجوة، أتمتة كل شيء (test/build/deploy)، إصدارات صغيرة ومستمرة، بيئات موحدة (Docker)، مراقبة مستمرة وتغذية راجعة.</li>
+<li><b>CI</b> يحل مشكلة المطورين (تحقق مبكر ومتكرر). <b>CD</b> يحل مشكلة الـ Ops (نشر آمن وآلي ومتكرر).</li>
+<li><b>خطوات العملية:</b> Development (Git/GitHub) ← CI (GitHub Actions: build + tests؛ إذا فشل أي test يتوقف الـ workflow ويُشعَر المطورون) ← Containerization (Docker) ← CD (GitHub Actions) ← Orchestration (Kubernetes) ← Monitoring &amp; Feedback.</li>
+<li><b>أنواع الاختبارات:</b> <b>Unit</b> (دوال منفردة)، <b>Integration</b> (عدة أجزاء معاً)، <b>Smoke</b> (فحص سريع أساسي: هل التطبيق يشتغل؟ login؟ الصفحة الرئيسية؟). الاختبارات يصممها الـ testers وGitHub Actions فقط يشغّلها آلياً.</li>
+<li><b>Docker:</b> container خفيف وثابت البيئة يشغّل التطبيق بنفس السلوك على أي جهاز. الـ Docker image يُرفع إلى <b>container registry</b> (Docker Hub / GitHub Container Registry).</li>
+<li><b>Continuous Delivery:</b> يبني ويخزن الـ image وينتظر الموافقة (مدير/team lead). <b>Continuous Deployment:</b> ينشر تلقائياً على cloud (AWS/Azure/Google Cloud).</li>
+<li><b>Kubernetes (K8s):</b> orchestration، يتحكم تلقائياً في إنشاء الـ containers وتوسيعها (scaling) وإصلاحها (healing)، مع load balancing.</li>
+<li><b>Monitoring:</b> Prometheus، CloudWatch؛ logs وmetrics تعود لدورة DevOps؛ عند المشاكل alerts تؤدي لـ rollback أو إصلاح.</li>
+</ul>
+<details><summary>ما الفرق بين unit وintegration وsmoke tests؟</summary><div class="a">Unit يفحص دالة منفردة، Integration يفحص عدة أجزاء تعمل معاً، Smoke فحص سريع أن الوظائف الأساسية تعمل (التطبيق يفتح، login، الصفحة الرئيسية).</div></details>
+<details><summary>ما دور Docker وKubernetes؟</summary><div class="a">Docker يغلّف التطبيق وبيئته في container ثابت. Kubernetes يدير عدداً كبيراً من الـ containers: scaling وload balancing وhealing.</div></details>
+
+<h2 id="cheat">ملحق: Git Cheat Sheet (أوامر خارج اللابات أيضاً)</h2>
+<table>
+<tr><th>الأمر</th><th>الوظيفة</th></tr>
+<tr><td><code>git config --global user.name/user.email</code></td><td>الاسم والإيميل (<code>color.ui auto</code> لتلوين الإخراج)</td></tr>
+<tr><td><code>git init</code> / <code>git clone [url]</code></td><td>تهيئة ريبو / جلب ريبو كامل</td></tr>
+<tr><td><code>git status</code></td><td>الملفات المعدلة والـ staged</td></tr>
+<tr><td><code>git add [file]</code></td><td>stage</td></tr>
+<tr><td><code>git reset [file]</code></td><td>unstage مع الاحتفاظ بالتعديلات</td></tr>
+<tr><td><code>git diff</code> / <code>git diff --staged</code></td><td>الفرق غير المضاف / الفرق المضاف وغير المُلتزَم</td></tr>
+<tr><td><code>git commit -m "msg"</code></td><td>commit</td></tr>
+<tr><td><code>git branch</code> / <code>git branch [name]</code></td><td>عرض الفروع / إنشاء فرع</td></tr>
+<tr><td><code>git checkout</code> / <code>git merge [branch]</code></td><td>تبديل فرع / دمج فرع في الحالي</td></tr>
+<tr><td><code>git log</code>, <code>git log branchB..branchA</code></td><td>التاريخ / commits في A وليست في B</td></tr>
+<tr><td><code>git log --follow [file]</code></td><td>commits ملف حتى عبر إعادة التسمية</td></tr>
+<tr><td><code>git diff branchB...branchA</code></td><td>ما في A وليس في B</td></tr>
+<tr><td><code>git show [SHA]</code></td><td>عرض كائن بصيغة مقروءة</td></tr>
+<tr><td><code>git rm [file]</code> / <code>git mv [old] [new]</code></td><td>حذف ملف مع stage / تغيير مسار مع stage</td></tr>
+<tr><td><code>git remote add [alias] [url]</code></td><td>إضافة remote</td></tr>
+<tr><td><code>git fetch [alias]</code> ثم <code>git merge [alias]/[branch]</code></td><td>جلب ثم دمج</td></tr>
+<tr><td><code>git push [alias] [branch]</code> / <code>git pull</code></td><td>رفع / fetch+merge</td></tr>
+<tr><td><code>git rebase [branch]</code> / <code>git reset --hard [commit]</code></td><td>إعادة كتابة التاريخ</td></tr>
+<tr><td><code>git stash</code> / <code>list</code> / <code>pop</code> / <code>drop</code></td><td>حفظ مؤقت وإدارته</td></tr>
+</table>
+<p>نمط الـ ignore: يوضع في <code>.gitignore</code> (مثل <code>logs/</code> و<code>*.notes</code>)، و<code>git config --global core.excludesfile [file]</code> لنطاق كل الريبوهات.</p>
+
+<h2 id="plan">خطة مذاكرة مقترحة (7 أيام)</h2>
+<table>
+<tr><th>اليوم</th><th>المحتوى</th></tr>
+<tr><td>1</td><td>L1 + L2. احفظ القوائم وحل أسئلة L2 بصوت عالي.</td></tr>
+<tr><td>2</td><td>L3 + L4 (قوائم كثيرة، استخدم mnemonics). حل أسئلة الدكتورة.</td></tr>
+<tr><td>3</td><td>L5: ارسم use case وclass diagrams بيدك 5 مرات (weather station وregistration وhospital).</td></tr>
+<tr><td>4</td><td>L6 + L7 + L8 (Scrum كله وuser stories وprioritization). اكتب 5 user stories مع GWT.</td></tr>
+<tr><td>5</td><td>L9 + Lab 9 (refactoring وSOLID).</td></tr>
+<tr><td>6</td><td>Labs 1–4 على Git Bash فعلياً: كل hands-on من الصفر بدون النظر. ثم Lab 5 (اكتب YAML من الذاكرة).</td></tr>
+<tr><td>7</td><td>Labs 6–8 (Trello وJira) + Lab 10 (diagrams) + مراجعة شاملة. ثم "ليلة الامتحان" تحت.</td></tr>
+</table>
+
+<h2 id="night">ليلة الامتحان: القوائم اللي لازم تحفظها بالعدد</h2>
+<table>
+<tr><th>الموضوع</th><th>العدد</th><th>العناصر</th></tr>
+<tr><td>SDLC phases</td><td>6</td><td>Planning, Analysis, Design, Implementation, Testing, Maintenance</td></tr>
+<tr><td>Core concepts (BABOK)</td><td>6</td><td>Need, Change, Solution, Stakeholder, Value, Context</td></tr>
+<tr><td>Pricing factors</td><td>5</td><td>Contractual terms, Cost estimate uncertainty, Financial health, Market opportunity, Requirements volatility</td></tr>
+<tr><td>Project plan sections</td><td>7</td><td>Introduction, Organization, Risk analysis, HW/SW resources, Work breakdown, Schedule, Monitoring</td></tr>
+<tr><td>Plan supplements</td><td>5</td><td>Configuration, Deployment, Maintenance, Quality, Validation</td></tr>
+<tr><td>Requirement types</td><td>4</td><td>Business, Stakeholder, Solution, Transition</td></tr>
+<tr><td>NFR types</td><td>3</td><td>Product, Organisational, External</td></tr>
+<tr><td>FURPS</td><td>5</td><td>Functionality, Usability, Reliability, Performance, Supportability (+ design constraints, implementation, interface, physical)</td></tr>
+<tr><td>Traditional elicitation</td><td>5</td><td>Individual interviews, group interviews, survey, ethnography, documents</td></tr>
+<tr><td>Modern elicitation</td><td>3</td><td>JAD, CASE tools, Prototyping</td></tr>
+<tr><td>UML perspectives</td><td>4</td><td>External, Interaction, Structural, Behavioral</td></tr>
+<tr><td>Use case relationships</td><td>4</td><td>Association, Include, Extend, Generalization</td></tr>
+<tr><td>Scrum events</td><td>4+</td><td>Sprint planning, Daily Scrum, Sprint review, Retrospective (+ backlog refinement)</td></tr>
+<tr><td>User story 3Cs</td><td>3</td><td>Card, Conversation, Confirmation</td></tr>
+<tr><td>Prioritization techniques</td><td>7</td><td>Kano, Value vs Complexity, Weighted scoring, RICE, Eisenhower, Story mapping, MoSCoW</td></tr>
+<tr><td>Module quality measures</td><td>3</td><td>Cohesion, Coupling, Fan-in/Fan-out</td></tr>
+<tr><td>Program spec components</td><td>4</td><td>Program info, Events, Inputs/Outputs, Pseudocode</td></tr>
+<tr><td>Complexity types</td><td>4</td><td>Reading, Structural, Data, Decision</td></tr>
+<tr><td>Reliability techniques</td><td>3</td><td>Fault avoidance, Input validation, Failure management</td></tr>
+<tr><td>Failure categories</td><td>3</td><td>Data, Program exceptions, Timing</td></tr>
+<tr><td>Git areas / file states</td><td>3 / 4</td><td>Working dir, Staging, .git / Untracked, Staged, Modified, Committed</td></tr>
+<tr><td>GitHub merge types</td><td>3</td><td>Merge commit, Rebase and merge, Squash and merge</td></tr>
+<tr><td>Jira issue types</td><td>5</td><td>Story, Task, Bug, Sub-task, Epic</td></tr>
+<tr><td>Jira reports</td><td>3</td><td>Burndown, Velocity, Cumulative Flow</td></tr>
+<tr><td>SOLID</td><td>5</td><td>Single responsibility, Open-closed, Liskov, Interface segregation, Dependency inversion</td></tr>
+</table>
+<div class="box ok"><b class="t">قبل ما تدخل القاعة</b>راجع الجدول فوق، ورسم use case واحد وclass diagram واحد من الذاكرة، وأوامر الـ Git الأساسية (init, add, commit, branch, checkout, merge, rebase, stash, push, pull). وبالتوفيق إن شاء الله.</div>
+
+</div>
+</body>
+</html>
