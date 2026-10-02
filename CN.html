@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>دليل المذاكرة - (A+)</title>
+<style>
+:root{--ink:#1d2733;--mut:#5b6672;--bg:#f6f7f4;--card:#fff;--acc:#0f6b63;--acc2:#e8f3f1;--warn:#9a5b00;--warnbg:#fff4e0;--line:#d9ded8;--code:#14202b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;line-height:1.85;font-size:17px}
+main{max-width:860px;margin:0 auto;padding:28px 18px 80px}
+h1{font-size:2rem;margin:.2em 0 .1em}
+h2{font-size:1.45rem;margin:2.2em 0 .6em;padding:.45em .8em;background:var(--acc);color:#fff;border-radius:6px}
+h3{font-size:1.12rem;margin:1.5em 0 .4em;color:var(--acc);border-bottom:2px solid var(--acc2);padding-bottom:.15em}
+p,li{max-width:75ch}
+.sub{color:var(--mut);margin-top:0}
+.box{background:var(--card);border:1px solid var(--line);border-right:5px solid var(--acc);border-radius:6px;padding:.7em 1em;margin:1em 0}
+.box.warn{background:var(--warnbg);border-right-color:var(--warn)}
+.box.know{background:var(--acc2)}
+.box b.t{display:block;color:var(--acc);margin-bottom:.2em}
+.box.warn b.t{color:var(--warn)}
+table{border-collapse:collapse;width:100%;margin:.8em 0;background:var(--card);font-size:.93rem}
+th,td{border:1px solid var(--line);padding:.35em .6em;text-align:right;vertical-align:top}
+th{background:var(--acc2)}
+.tw{overflow-x:auto}
+code,pre,.en{direction:ltr;unicode-bidi:embed;font-family:Consolas,"Courier New",monospace}
+pre{background:var(--code);color:#e6edf3;padding:.8em 1em;border-radius:6px;overflow-x:auto;text-align:left;font-size:.88rem;line-height:1.55;direction:ltr}
+code{background:#eaeeea;padding:0 .3em;border-radius:3px;font-size:.9em}
+pre code{background:none;padding:0}
+details{background:var(--card);border:1px solid var(--line);border-radius:6px;margin:.5em 0;padding:.4em .9em}
+summary{cursor:pointer;font-weight:600}
+details[open] summary{margin-bottom:.4em;color:var(--acc)}
+.q{color:var(--ink)}
+ul,ol{padding-inline-start:1.4em}
+.toc a{color:var(--acc);text-decoration:none}
+.toc li{margin:.15em 0}
+.tag{display:inline-block;font-size:.78rem;background:var(--acc2);color:var(--acc);border-radius:10px;padding:0 .6em;margin-inline-start:.4em}
+.hot{background:#ffe9e9;color:#a11}
+@media print{body{background:#fff;font-size:12.5pt}h2{break-after:avoid}details{break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body>
+<main>
+<h1>دليل المذاكرة: Computer Networks</h1>
+<h2><a href="SAAD.html">SAAD Content</a></h2>
+<h2><a href="SAAD.html">SAAD Content</a></h2>
+<h2><a href="SAAD.html">SAAD Content</a></h2>
+<p class="sub">مبني على 10 محاضرات (Dr. Dina Fawzy) + 9 لابات (Huawei HCIA / eNSP) + ملف تسجيل Huawei Academy. كل حاجة هنا مستخرجة من الملفات ديك.</p>
+
+<div class="box warn"><b class="t">قبل ما تبدأ: كلمة أمانة</b>
+أنا ما شفت امتحانات سابقة، فما بقدر أضمن لك أسئلة بعينها. الأسئلة "المتوقعة" هنا طالعة من مصدرين: (1) أسئلة المراجعة والتمارين الموجودة جوه السلايدات نفسها، (2) نوع المسائل اللي السلايدات بتدرّب عليها. وأي إجابة ما موجودة في السلايدات كتبتها من عندي، وعلّمتها بعلامة <span class="tag">إضافة مني</span>. اسأل الدكتورة أو الـ TA عن شكل الامتحان (MCQ؟ مقالي؟ حسابات؟) وطابق عليه.
+</div>
+
+<div class="box"><b class="t">التقييم (من Lab 1 + إعلانات المحاضرات)</b>
+أعمال السنة 50 درجة: <b>Midterm + Lab Quiz 1 + Lab Quiz 2 + Practical Exam</b>.<br>
+Quiz 1: يغطي Labs 1–3، مدته 15 دقيقة. Quiz 2: يغطي Labs 4–7، مدته 15 دقيقة. ما في حضور خارج السكشن بتاعك.<br>
+المحاضرات 1–10 لحد Lecture 10 (Data Link) هي المحتوى النظري. المنهج المرجعي: Kurose &amp; Ross الطبعة 6.
+</div>
+
+<h3>الخريطة العامة: كل محاضرة مربوطة بأي لاب</h3>
+<div class="tw"><table>
+<tr><th>الموضوع</th><th>المحاضرة</th><th>اللاب المرتبط</th></tr>
+<tr><td>أنواع الشبكات، Internet، Access Networks</td><td>L1, L2</td><td>Lab 1 (Transmission media)</td></tr>
+<tr><td>Delay / Loss / Throughput، Security، Layers (TCP/IP و OSI)</td><td>L3</td><td>Lab 1 (Ethernet framing + OSI + Wireshark)</td></tr>
+<tr><td>Application layer: HTTP، Cookies، Cache، Email، DNS، Streaming</td><td>L4, L5, L6</td><td>Lab 8 (FTP, DHCP) + Lab 3-4 (Telnet)</td></tr>
+<tr><td>Transport: TCP/UDP، Checksum، rdt، Flow/Congestion</td><td>L7, L8</td><td>Lab 4 (TCP/UDP + ports + Telnet)</td></tr>
+<tr><td>Network layer: Routing/Forwarding، Router، IP، Subnets، CIDR</td><td>L9</td><td>Lab 2 (IP addressing)، Lab 6 (routing + static)، Lab 7 (OSPF)</td></tr>
+<tr><td>Data Link: Framing، Errors، Parity، CRC</td><td>L10</td><td>Lab 1 (Ethernet frame)، Lab 3 (switch)، Lab 5 (ARP + switching)</td></tr>
+</table></div>
+
+<h3>خطة مذاكرة للـ A+ (ترتيب مقترح)</h3>
+<ol>
+<li><b>أولوية قصوى (الحسابات):</b> Delay/Throughput (L3)، RTT في HTTP (L5)، Checksum (L7)، CRC و Parity (L10)، Subnetting و VLSM و Longest Prefix (L9 + Lab 2). دي مسائل بتتحل بخطوات ثابتة، ولو اتدربت عليها بتجيب فيها الدرجة كاملة. في آخر الملف عندك تمارين بحلولها.</li>
+<li><b>الحفظ المنظّم:</b> جداول المقارنات (Circuit vs Packet، Client-Server vs P2P، TCP vs UDP، HTTP vs SMTP، Flow vs Congestion، POP vs IMAP). الدكتورة حاطّة معظمها في جداول جاهزة، وهي أكتر حاجة بتجي كـ "قارن بين".</li>
+<li><b>اللابات:</b> احفظ الأوامر في قسم "Cheat Sheet" آخر الملف، وبعدين طبّقها في eNSP بإيدك أكتر من مرة. الـ Practical Exam غالباً بيطلب تبني وتضبط topology، والحفظ بدون تطبيق ما بكفي.</li>
+<li><b>راجع أسئلة "Quiz Time" و "Review Questions"</b> في آخر كل جزء في اللابات. هي أقرب شيء لأسئلة الكويز الحقيقية.</li>
+<li><b>قبل كل امتحان:</b> اقرأ قسم "غلطات شائعة" في آخر كل جزء. معظم الدرجات الضايعة بتكون من أخطاء صغيرة (نسيان -2 في الـ hosts، خلط بين Transmission و Propagation...).</li>
+</ol>
+
+<h3>فهرس</h3>
+<ul class="toc">
+<li><a href="#lec">الجزء الأول: المحاضرات 1–10</a></li>
+<li><a href="#labs">الجزء الثاني: اللابات 1–9</a></li>
+<li><a href="#drill">الجزء الثالث: تمارين محلولة للتدريب</a></li>
+<li><a href="#cheat">الجزء الرابع: Cheat Sheet للأوامر + جداول الحفظ السريع</a></li>
+</ul>
+<h2 id="lec">الجزء الأول: المحاضرات</h2>
+<p>في كل محاضرة: (أ) إيه اللي لازم تكون عارفه قبل ما تدخل، (ب) أهم النقاط اللي لازم تحفظها، (ج) أسئلة متوقعة مع إجاباتها. اضغط على السؤال عشان تشوف الإجابة، وحاول تجاوب في دماغك الأول.</p>
+
+<!-- ================= L1 ================= -->
+<h3>Lecture 1: مقدمة، أنواع الشبكات، Internet، Access Networks</h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+ما في متطلبات. بس خلي في بالك: الدكتورة بتقيس على تعريفات دقيقة وجداول، فقراءة السلايدات قبل المحاضرة بتفرق كتير.</div>
+<b>احفظ:</b>
+<ul>
+<li><b>Computer network:</b> نظام بيربط أجهزة مستقلة (بكيبل أو لاسلكي) عشان تتشارك المعلومات والموارد.</li>
+<li><b>الأنواع الخمسة</b> (من الأصغر للأكبر): PAN ← LAN ← CAN ← MAN ← WAN.</li>
+</ul>
+<div class="tw"><table>
+<tr><th></th><th>PAN</th><th>LAN</th><th>CAN</th><th>MAN</th><th>WAN</th></tr>
+<tr><td>المدى</td><td>1–100 m</td><td>حتى 2 km</td><td>1–5 km</td><td>5–50 km</td><td>فوق 50 km</td></tr>
+<tr><td>التقنية</td><td>Bluetooth, Zigbee</td><td>Ethernet &amp; WiFi</td><td>Ethernet &amp; WiFi</td><td>FDDI, CDDI</td><td>Dial-up</td></tr>
+<tr><td>السرعة</td><td>Very high</td><td>Very high</td><td>High</td><td>Average</td><td>Low</td></tr>
+<tr><td>الملكية</td><td>Private</td><td>Private</td><td>Private</td><td>Private/Public</td><td>Private/Public</td></tr>
+<tr><td>الصيانة</td><td>Very easy</td><td>Easy</td><td>Moderate</td><td>Difficult</td><td>Very difficult</td></tr>
+<tr><td>التكلفة</td><td>Very low</td><td>Low</td><td>Moderate</td><td>High</td><td>Very high</td></tr>
+</table></div>
+<ul>
+<li><b>Internet</b> = network of networks، وهو WAN، بيربط مليارات الأجهزة.</li>
+<li><b>مكونات الإنترنت (6):</b> Network edges (hosts/end systems) – Links &amp; physical media – Network core (routers/switches) – Protocols – Applications – Hardware &amp; Software.</li>
+<li><b>Host / end system:</b> أي جهاز فيه microprocessor ومتوصل بالشبكة (حتى الساعة والتلفزيون والعربية).</li>
+<li><b>Packet:</b> الـ end system بيقسّم الداتا لـ segments ويضيف header لكل واحد = packet. الـ receiver بيعيد تجميعها.</li>
+<li><b>Switch vs Router:</b> الـ switch بيحوّل الـ packets <u>داخل نفس الشبكة</u>، والـ router بين <u>شبكات مختلفة</u>. الاتنين اسمهم packet switches.</li>
+<li><b>Route/path:</b> سلسلة الـ links والـ switches اللي الـ packet بيعدّي عليها من المرسل للمستقبل.</li>
+<li><b>ISP:</b> بيوصّل الـ end systems بالإنترنت، وكل ISP نفسه شبكة، والـ ISPs لازم تكون متوصلة ببعض.</li>
+<li><b>Protocol:</b> بيحدد <u>format</u> و <u>order</u> الرسائل المتبادلة + الإجراءات اللي بتتعمل عند الإرسال/الاستقبال. أهم اتنين: TCP و IP.</li>
+<li><b>التاريخ:</b> 1961 Kleinrock (queueing theory يثبت فعالية packet switching) – 1964 Baran (packet switching في الشبكات العسكرية) – 1982 SMTP – 1983 DNS – 1983 نشر TCP/IP.</li>
+<li><b>Access networks (3 أنواع):</b> DSL – Enterprise Ethernet – Mobile.
+ <ul><li><b>DSL:</b> نفس خط التلفون بيشيل صوت وداتا. الداتا (digital) بتروح للإنترنت عن طريق DSLAM في الـ central office، والصوت (analog) بيروح لشبكة التلفون. بيستخدم <b>FDM</b> (قنوات في ترددات مختلفة).</li>
+ <li><b>Ethernet:</b> المستخدم عادة 100 Mbps أو 1 Gbps للـ switch. الـ switches ممكن تشيل firewall و proxy.</li>
+ <li><b>Mobile:</b> الأجهزة بتتوصل لاسلكياً بـ base station.</li></ul></li>
+</ul>
+<b>أسئلة متوقعة</b>
+<details><summary>قارن بين LAN و MAN و WAN من ناحية المدى والتكلفة والصيانة.</summary>استخدم الجدول فوق: LAN حتى 2km، تكلفة قليلة وصيانة سهلة. MAN من 5 إلى 50km، تكلفة عالية وصيانة صعبة. WAN فوق 50km، تكلفة عالية جداً وصيانة صعبة جداً وسرعة قليلة.</details>
+<details><summary>ما الفرق بين الـ switch والـ router؟</summary>الـ switch بيحوّل الـ packets بين الأجهزة داخل نفس الشبكة، والـ router بيحوّلها بين شبكات مختلفة. (الاتنين packet switches).</details>
+<details><summary>كيف الـ DSL بينقل الصوت والداتا في نفس الخط؟</summary>بـ Frequency Division Multiplexing: كل نوع في band تردد مختلف. عند الـ DSLAM الداتا بتروح للإنترنت والصوت لشبكة التلفون.</details>
+<details><summary>عرّف الـ Protocol وأعطِ مثالين.</summary>Protocol يحدد format وترتيب الرسائل بين كيانين أو أكتر والإجراءات عند الإرسال والاستقبال. أمثلة: TCP, IP, HTTP, SMTP.</details>
+<details><summary>ليش الإنترنت اسمه "network of networks"؟ وهل هو WAN؟</summary>لأنه مجموعة شبكات (ISPs وشبكات مؤسسات ومنازل) متوصلة ببعض. وأيوه، السلايد بيصنّفه WAN.</details>
+
+<!-- ================= L2 ================= -->
+<h3>Lecture 2: Wireless، Physical media، Circuit vs Packet switching</h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+مفهوم الـ host والـ router والـ packet من Lecture 1. وتعرف إن الـ transmission rate بتتقاس بـ bits/second.</div>
+<b>احفظ:</b>
+<ul>
+<li><b>Wireless:</b> WLAN (زي Wi-Fi، مدى قصير، بيت/مكتب) و WWAN (cellular 3G/4G/5G، مدى كبير، تقدمه شركات الاتصالات).</li>
+<li><b>Physical media:</b> <b>Guided</b> (الإشارة في وسط صلب: twisted pair, coaxial, fiber) و <b>Unguided</b> (radio waves).
+<ul><li><b>Coaxial:</b> موصّلين نحاس متحدين المركز، الداتا كهرباء.</li>
+<li><b>Fiber:</b> ألياف زجاج بتحمل نبضات ضوء (كل نبضة bit)، سرعة 10–100 Gbps، error rate قليل.</li>
+<li><b>Twisted pair:</b> سلكين نحاس معزولين. Cat 5 (100 Mbps – 1 Gbps) و Cat 6 (10 Gbps) حسب السلايد.</li>
+<li><b>Radio:</b> عيوبه: عوائق (obstruction) وتداخل (interference).</li></ul></li>
+<li><b>طريقتان لنقل الداتا في الـ core:</b> Circuit switching و Packet switching.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Circuit switching</th><th>Packet switching</th></tr>
+<tr><td>محتاج مسار مخصص قبل الإرسال (call setup)</td><td>ما محتاج مسار مخصص ولا setup</td></tr>
+<tr><td>بيحجز كل الـ bandwidth مقدماً</td><td>ما بيحجز bandwidth مقدماً</td></tr>
+<tr><td>الموارد dedicated (ما بتتشارك)</td><td>الموارد بتتشارك بين المستخدمين</td></tr>
+<tr><td>كل البيانات تمشي نفس المسار</td><td>كل packet ممكن يمشي مسار مختلف</td></tr>
+<tr><td>في bandwidth wastage (الدائرة فاضية لو ما استُخدمت)</td><td>ما في wastage، كفاءة أعلى</td></tr>
+<tr><td>التلفون التقليدي، الصوت</td><td>الإنترنت</td></tr>
+</table></div>
+<ul>
+<li><b>FDM vs TDM:</b> طريقتان لتقسيم الدائرة بين مستخدمين: FDM بالتردد، TDM بالزمن.</li>
+<li><b>Transmission delay</b> = L / R (L طول الـ packet بالـ bits، R معدل الـ link بالـ bps). تتحسب <u>لكل hop</u>. مثال السلايد: L=7.5 Mbit، R=1.5 Mbps → 5 ثواني للـ hop الواحد، وعلى hopين = 10 ثواني.</li>
+<li><b>Store and forward:</b> الـ router لازم يستلم الـ packet كامل قبل ما يبعته للـ link الجاية.</li>
+<li><b>Queuing &amp; loss:</b> لو معدل الوصول أكبر من معدل الإرسال، الـ packets بتنتظر في queue، ولو الـ buffer امتلى الـ packets بتتفقد (dropped).</li>
+<li><b>وظيفتا الـ core:</b> <b>Routing</b> (تحديد المسار من المصدر للوجهة بخوارزميات routing) و <b>Forwarding</b> (نقل الـ packet من input الـ router لـ output المناسب باستخدام forwarding table بناءً على الـ header).</li>
+<li><b>Internet structure:</b> ربط ملايين الـ access ISPs ببعض مباشرة (كل واحد بكل واحد) ما بيتوسع (doesn't scale)، فنحتاج global transit ISP في النص.</li>
+</ul>
+<b>أسئلة متوقعة</b>
+<details><summary>قارن بين Circuit switching و Packet switching (5 نقاط).</summary>استخدم الجدول فوق. أهم نقطة: Circuit بيحجز bandwidth ومخصص لكن فيه wastage. Packet بيتشارك ومن غير setup ومن غير wastage.</details>
+<details><summary>الفرق بين Routing و Forwarding؟</summary>Routing: تحديد المسار الكامل (network-wide) بخوارزميات. Forwarding: قرار محلي في الـ router، بينقل الـ packet من input لـ output حسب الـ forwarding table.</details>
+<details><summary>مسألة: packet حجمه 10 Mbit، الـ link 2 Mbps، والمسار فيه 3 hops (store-and-forward). كم الـ transmission time الكلي؟</summary>L/R = 10/2 = 5 ثواني للـ hop. على 3 hops = 15 ثانية (بإهمال الـ propagation والـ queuing). <span class="tag">إضافة مني</span> المسألة بنفس منطق مثال السلايد.</details>
+<details><summary>ما عيوب الـ radio waves كـ medium؟</summary>العوائق (obstruction by objects) والتداخل (interference).</details>
+
+<!-- ================= L3 ================= -->
+<h3>Lecture 3: Performance، Security، Layers <span class="tag hot">حسابات مؤكدة</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+معنى packet و link و router و L/R من Lecture 2. وحدات: 1 kbps = 10³ bps، 1 Mbps = 10⁶، 1 Gbps = 10⁹. و1 byte = 8 bits (مهم جداً في المسائل).</div>
+<b>احفظ:</b>
+<ul>
+<li><b>Performance parameters:</b> Loss, Delay, Throughput.</li>
+<li><b>Congestion</b> بيسبب delay (الـ queue كبيرة) و loss (الـ queue وصلت أقصى سعة). الـ packet المفقود ممكن يتعاد إرساله من الـ node السابقة أو من المصدر.</li>
+<li><b>أنواع الـ delay الأربعة:</b>
+<div class="tw"><table>
+<tr><th>النوع</th><th>التعريف</th><th>الصيغة</th></tr>
+<tr><td>Processing</td><td>الـ router يقرأ الـ header (source, destination, length) ويفحص الأخطاء</td><td>قيمة صغيرة جداً</td></tr>
+<tr><td>Queuing</td><td>الانتظار في الـ queue</td><td class="en">D_queue(N) = (N−1) × L/R</td></tr>
+<tr><td>Transmission</td><td>وقت دفع كل bits الـ packet على الـ link</td><td class="en">d_trans = L / R</td></tr>
+<tr><td>Propagation</td><td>وقت سفر bit واحد على طول السلك</td><td class="en">d_prop = d / s (s ≈ 3×10⁸ m/s)</td></tr>
+</table></div>
+الأكبر تأثيراً: Queuing و Transmission. الـ Processing و Propagation صغار. <b>Transmission تعتمد على L، وPropagation تعتمد على طول السلك</b> (دي من أكتر نقاط الخلط).</li>
+<li><b>Throughput:</b> معدل نقل الـ bits بين المرسل والمستقبل. Instantaneous (لحظي) أو Average. الـ link ذو الـ rate الأقل هو الـ bottleneck: <span class="en">throughput = min(Rs, Rc)</span>.</li>
+<li><b>Security:</b>
+<ul><li><b>Virus:</b> بيحتاج تفاعل المستخدم + بيحتاج host program. <b>Worm:</b> ما بيحتاج تفاعل، stand-alone، أسرع وأعنف انتشاراً.</li>
+<li><b>Spyware:</b> بيسجل الـ keystrokes والمواقع ويرفعها.</li>
+<li><b>DDoS:</b> (1) اختيار السيرفر الهدف (2) اختراق أجهزة حول الشبكة (3) إرسال packets للهدف من الأجهزة المخترقة.</li>
+<li><b>Packet sniffing:</b> interface في وضع promiscuous بيقرأ كل الـ packets في broadcast media.</li></ul></li>
+<li><b>Internet protocol stack (5 layers):</b>
+<div class="tw"><table>
+<tr><th>Layer</th><th>الوظيفة</th><th>أمثلة</th><th>PDU</th></tr>
+<tr><td>Application</td><td>supporting user applications</td><td>FTP, SMTP, HTTP</td><td>message</td></tr>
+<tr><td>Transport</td><td>process-to-process transfer</td><td>TCP, UDP</td><td>segment</td></tr>
+<tr><td>Network</td><td>routing من المصدر للوجهة</td><td>IP, routing protocols</td><td>datagram</td></tr>
+<tr><td>Link</td><td>نقل بين العقد المتجاورة</td><td>Ethernet, 802.11 (WiFi)</td><td>frame</td></tr>
+<tr><td>Physical</td><td>bits "on the wire"</td><td></td><td>bits</td></tr>
+</table></div></li>
+<li><b>OSI (7 layers):</b> يضيف طبقتين فوق Transport: <b>Presentation</b> (تفسير الداتا: encryption، compression) و <b>Session</b> (synchronization، checkpointing، recovery). الترتيب: Application, Presentation, Session, Transport, Network, Data link, Physical.</li>
+<li><b>Encapsulation:</b> كل layer بتضيف header: Ht (transport) ثم Hn (network) ثم Hl (link). الـ switch بيشتغل لحد Link، والـ router لحد Network.</li>
+</ul>
+<b>أسئلة متوقعة</b>
+<details><summary>مسألة (من السلايد): A و B بينهم 1000 km، link بسرعة 2 Mbps، سرعة الانتشار 2.5×10⁸ m/s. احسب propagation delay وtransmission delay لـ packet حجمه 2000 bytes.</summary>
+Propagation = d/s = 1,000,000 / 2.5×10⁸ = <b>0.004 s</b>.<br>
+Transmission = L/R = (2000×8) / (2×10⁶) = 16000 / 2×10⁶ = <b>0.008 s</b>.</details>
+<details><summary>مسألة (من السلايد): 45 packet دخلوا الـ queue في نفس اللحظة، كل واحد 3 Kbit، والـ link rate 1.3 kbps. كم الـ queuing delay للـ packet رقم 19؟</summary>D = (N−1)×L/R = 18 × (3000/1300) = <b>41.5 s</b>.</details>
+<details><summary>الفرق بين Virus و Worm؟</summary>الـ virus يحتاج تفاعل المستخدم (مثلاً فتح attachment) ويحتاج host program. الـ worm ما يحتاج تفاعل ولا host program، وينتشر أسرع.</details>
+<details><summary>اشرح هجوم DDoS في 3 خطوات.</summary>(1) اختيار سيرفر الهدف (2) اختراق أجهزة كتيرة حول الشبكة (3) أمر الأجهزة المخترقة بإرسال traffic وهمي للهدف لحد ما الموارد (السيرفر أو الـ bandwidth) تنهار وما تخدم المستخدمين الحقيقيين.</details>
+<details><summary>ما الـ PDU في كل layer وما الـ headers اللي بتتضاف؟</summary>Application: message. Transport: segment (Ht + M). Network: datagram (Hn Ht M). Link: frame (Hl Hn Ht M). Physical: bits.</details>
+<details><summary>ما الفرق بين TCP/IP و OSI؟</summary>TCP/IP 5 طبقات، وOSI 7 طبقات. OSI يضيف Presentation (encryption/compression/تفسير الداتا) و Session (synchronization/checkpointing/recovery) بين Application و Transport.</details>
+<div class="box warn"><b class="t">غلطات شائعة</b>• نسيان تحويل bytes إلى bits (×8). • استعمال kbps كـ 1024 بدل 1000. • خلط Transmission مع Propagation. • في الـ queuing للـ packet رقم N استعمل (N−1) مش N.</div>
+
+<!-- ================= L4 ================= -->
+<h3>Lecture 4: مقدمة Application Layer</h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+الـ layers (L3) وبالذات Application و Transport. وإن الـ routers والـ switches ما بتشغل تطبيقات المستخدم، التطبيقات بتشتغل في الـ end systems بس.</div>
+<b>احفظ:</b>
+<ul>
+<li><b>أمثلة تطبيقات:</b> E-mail, Web, Text messaging, File sharing, multi-user games, streaming (YouTube/Netflix). <b>بروتوكولات:</b> HTTP, FTP, SMTP.</li>
+<li><b>Client-Server vs P2P:</b>
+<div class="tw"><table>
+<tr><th></th><th>Client-Server</th><th>Peer-to-Peer</th></tr>
+<tr><td>الأدوار</td><td>Server وClient منفصلين</td><td>كل node هو client وserver</td></tr>
+<tr><td>الداتا</td><td>مخزنة مركزياً في السيرفر</td><td>كل peer عنده داتاه</td></tr>
+<tr><td>التكلفة</td><td>أغلى</td><td>أرخص</td></tr>
+<tr><td>الحجم المناسب</td><td>صغير وكبير</td><td>صغير (أقل من 10 أجهزة)</td></tr>
+<tr><td>Server</td><td>Always online، IP ثابت، يدعم scaling</td><td>الـ peers متقطعة الاتصال، IP متغير، إدارة معقدة</td></tr>
+<tr><td>Client</td><td>متقطع، IP ديناميكي، ما بتتواصل مع بعض مباشرة</td><td>Self-scalability: كل peer جديد يضيف سعة وطلب جديد</td></tr>
+</table></div></li>
+<li><b>Process:</b> برنامج شغال داخل host. الـ client process هو اللي يبدأ الاتصال، والـ server process هو اللي ينتظر.</li>
+<li><b>Socket:</b> الباب اللي الـ process تبعت وتستقبل منه. معرّف الـ socket = <b>IP address (32-bit) + port number</b>. أمثلة: HTTP = 80، mail server (SMTP) = 25.</li>
+<li><b>خصائص الرسائل (Messaging properties):</b> أنواعها (request/response)، الـ syntax، الـ semantics، والقواعد (rules).</li>
+<li><b>متطلبات التطبيقات (4):</b> Data integrity (file transfer لازم 100%، الفيديو يتحمل فقد)، Timing (الألعاب تحتاج delay قليل)، Throughput (الـ multimedia يحتاج كبير)، Security (تشفير).</li>
+<li><b>TCP:</b> reliable transport، flow control، congestion control. <u>ما بيوفر</u>: timing, throughput guarantee, security.<br>
+<b>UDP:</b> unreliable، ما فيه reliability ولا flow control ولا congestion control ولا security ولا connection setup.</li>
+<li>الاتنين ما بيشفّروا. الحل: <b>SSL</b> في الـ application layer: بيوفر TCP connection مشفر + data integrity + end-point authentication. الموقع اللي يستخدمه URL بتاعه <b>HTTPS</b>.</li>
+</ul>
+<b>أسئلة متوقعة</b>
+<details><summary>قارن بين Client-Server و P2P.</summary>استخدم الجدول فوق. أهم نقاط: التمييز بين الأدوار، المركزية، التكلفة، والـ scalability.</details>
+<details><summary>ما هو الـ socket؟ وما الذي يحدده؟</summary>واجهة بين الـ process والشبكة. يتحدد بـ IP address + port number. مثلاً سيرفر ويب: IP 128.119.245.12 + port 80.</details>
+<details><summary>أي خدمات يوفرها TCP ولا يوفرها UDP؟ وهل أي منهما آمن؟</summary>TCP يوفر reliability وflow control وcongestion control وconnection setup. لا TCP ولا UDP يوفر encryption. للأمان نستخدم SSL (HTTPS).</details>
+<details><summary>لكل تطبيق من الآتي، حدد المتطلب الأهم: نقل ملف، لعبة تفاعلية، فيديو streaming.</summary>نقل ملف: data integrity (لازم 100% reliable). لعبة تفاعلية: timing (delay قليل). فيديو: throughput عالي ويتحمل بعض الفقد. <span class="tag">استنتاج من السلايد</span></details>
+
+<!-- ================= L5 ================= -->
+<h3>Lecture 5: HTTP، Connections، Cookies، Web Cache <span class="tag hot">حسابات مؤكدة</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+الـ client-server، الـ socket والـ port، وإن TCP بيحتاج connection. وإن RTT = الوقت اللي packet صغير بياخده من الـ client للـ server ويرجع.</div>
+<b>احفظ:</b>
+<ul>
+<li><b>Web page</b> = base HTML file + objects مرجعية (صور، audio...). كل object له <b>URL</b>: <span class="en">www.someschool.edu/someDept/pic.gif</span> (host name + path name). الـ host name يتحول لـ IP بالـ DNS.</li>
+<li><b>HTTP:</b> application layer، port 80، بيستخدم TCP. <b>Stateless</b>: السيرفر ما بيحتفظ بمعلومات عن الطلبات السابقة.</li>
+<li><b>TCP 3-way handshake</b> (في سياق HTTP): الـ client يبدأ connection على port 80، السيرفر يقبل، ثم يتبادلوا HTTP messages.</li>
+<li><b>RTT = 2 × propagation time</b>. وقت الطلب الأول = <b>2 RTT</b> (واحد للـ TCP connection وواحد للـ base HTML).</li>
+<li><b>Non-persistent:</b> connection جديد لكل object (2 RTT لكل object). مزاياه: ما يضيع موارد، وأأمن. عيبه: CPU overhead أعلى.<br>
+<b>Persistent:</b> connection واحد لكل الـ objects. مزاياه: CPU/memory أقل، congestion أقل، latency أقل. عيبه: ممكن يحجز موارد لو ما احتاجها. معظم المتصفحات (Chrome/Firefox) تستعمله.</li>
+</ul>
+<div class="box know"><b class="t">قوانين RTT (بتنزل بالتأكيد: N = عدد الصور/objects)</b>
+<div class="tw"><table>
+<tr><th>الحالة</th><th>المعادلة (حسب السلايد)</th><th>مثال N=30</th></tr>
+<tr><td>Non-persistent بدون parallel</td><td class="en">2 + 2N</td><td>62 RTT</td></tr>
+<tr><td>Non-persistent مع k parallel</td><td class="en">2 + 2×(N/k)</td><td>k=10: 2+6 = 8 RTT</td></tr>
+<tr><td>Persistent بدون pipelining</td><td class="en">2 + N</td><td>32 RTT</td></tr>
+<tr><td>Persistent مع pipelining</td><td class="en">2 + 1</td><td>3 RTT</td></tr>
+</table></div>
+الـ "2" الأولى = TCP connection + الـ base file. التزم بنفس منطق السلايد حتى لو الكتاب بيحسب بشكل مختلف شوية.</div>
+<ul>
+<li><b>HTTP request message:</b> ASCII. سطر الطلب: <span class="en">method sp URL sp version cr lf</span> ثم header lines ثم سطر فاضي ثم entity body.<br>
+<b>Methods:</b> GET (فتح صفحة)، POST (إرسال form في الـ body)، HEAD (اطلب الـ headers بدون الـ object)، DELETE (حذف الملف). HTTP/1.0: GET, POST, HEAD. HTTP/1.1: يضيف DELETE.</li>
+<li><b>HTTP response:</b> status line (protocol + code + phrase) + header lines + data.<br>
+<b>Codes:</b> <span class="en">200 OK</span> – <span class="en">301 Moved Permanently</span> (الموقع الجديد في Location:) – <span class="en">400 Bad Request</span> – <span class="en">404 Not Found</span> – <span class="en">505 HTTP Version Not Supported</span>.</li>
+<li><b>Cookies</b> (حل مشكلة الـ stateless): السيرفر يرسل <span class="en">Set-Cookie</span> في الـ response header، ويخزن ID في backend database، الـ browser يخزن الـ cookie file عند المستخدم ويضيف <span class="en">Cookie:</span> header في الطلبات الجاية. مثال: ID = 1678 لموقع Amazon.</li>
+<li><b>Web cache (Proxy server):</b> بيرد على الطلب بدون الرجوع للـ origin server. لو الـ object في الـ cache يرجعه، وإلا يطلبه من الـ origin ثم يرجعه. الـ cache هو client للـ origin وserver للمستخدم. بيركبه الـ ISP.<br>
+<b>فايدته:</b> يقلل زمن الاستجابة، يقلل الـ traffic على access link، ويمنع المهاجمين من دخول شبكة خاصة.</li>
+</ul>
+<b>أسئلة متوقعة</b>
+<details><summary>ملف فيه 30 صورة، كل شيء صغير. كم RTT في كل حالة من الأربع؟</summary>62 RTT / 8 RTT (10 parallel) / 32 RTT / 3 RTT. الشرح: ابدأ بـ 2 RTT، ثم أضف: 2×30=60، أو 2×(30/10)=6، أو 30، أو 1.</details>
+<details><summary>لماذا HTTP يوصف بأنه stateless؟ وكيف تحل Cookies المشكلة؟</summary>السيرفر ما يحتفظ بأي معلومة عن الطلبات السابقة. الـ cookie ID يعطيه السيرفر للمتصفح في أول زيارة، والمتصفح يرجعه في كل طلب، فالسيرفر يربط الطلبات بالمستخدم عن طريق الـ backend database.</details>
+<details><summary>ما الفرق بين GET و POST و HEAD؟</summary>GET يفتح الصفحة. POST يرسل مدخلات form في الـ entity body. HEAD يطلب من السيرفر عدم إرسال الـ object في الرد.</details>
+<details><summary>ما معنى 404 و 301 و 200؟</summary>404: المستند غير موجود. 301: الـ object انتقل بشكل دائم والموقع الجديد في Location. 200: نجح الطلب والـ object في الرسالة.</details>
+<details><summary>اذكر 3 فوائد لـ Web caching.</summary>تقليل زمن الاستجابة، تقليل الـ traffic على access link المؤسسة، وحماية الشبكة الخاصة من المهاجمين.</details>
+<details><summary>ما الفرق بين Persistent و Non-persistent (مزايا وعيوب)؟</summary>Non-persistent: لا يهدر الموارد وأأمن، لكن CPU overhead أعلى. Persistent: CPU وmemory أقل، congestion وlatency أقل، لكن قد يحتفظ بموارد دون حاجة.</details>
+<div class="box warn"><b class="t">غلطات شائعة</b>• نسيان الـ 2 RTT الأولى في الحسابات. • قسمة الـ N على k وبعدين نسيان الضرب في 2 في الـ non-persistent parallel. • الخلط بين الـ pipelining والـ parallel connections.</div>
+<!-- ================= L6 ================= -->
+<h3>Lecture 6: Email، DNS، Streaming</h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+HTTP والـ ports (L5)، والفرق بين pull و push (تقدر تفهمه من السؤال: مين بيبدأ نقل الداتا). وإن TCP بيوفر reliable transfer.</div>
+<b>احفظ:</b>
+<ul>
+<li><b>مكونات الإيميل (3):</b> User agents (كتابة وقراءة الرسائل، مثل Outlook أو المتصفح) – Mail servers (فيها الـ mailbox وطابور الرسائل الصادرة) – <b>SMTP</b>.</li>
+<li><b>SMTP:</b> application layer، بين الـ mail servers، بيستخدم TCP على <b>port 25</b>. السيرفر المرسل هو الـ client، والمستقبل هو الـ server. اتصال persistent. الرسائل بـ 7-bit ASCII. نهاية الرسالة: سطر فيه نقطة فقط ".".</li>
+<li><b>سيناريو Alice → Bob (6 خطوات):</b> (1) Alice تكتب بـ UA (2) UA يرسل لـ mail server بتاعها والرسالة تدخل الـ queue (3) الـ SMTP client يفتح TCP مع mail server بتاع Bob (4) يرسل الرسالة (5) server Bob يضعها في mailbox (6) Bob يقرأها بالـ UA.</li>
+<li><b>مراحل SMTP:</b> handshaking ← transfer ← closure.</li>
+<li><b>أوامر SMTP:</b> HELO, MAIL FROM, RCPT TO, DATA, QUIT. <b>أكواد الرد:</b> 220 (service ready)، 250 (OK)، 354 (Enter mail, end with ".")، 221 (closing).</li>
+</ul>
+<pre><code>S: 220 hamburger.edu
+C: HELO crepes.fr
+S: 250 Helo crepes.fr, pleased to meet you
+C: MAIL FROM: &lt;alice@crepes.fr&gt;
+S: 250 alice@crepes.fr... Sender ok
+C: RCPT TO: &lt;bob@hamburger.edu&gt;
+S: 250 bob@hamburger.edu ... Recipient ok
+C: DATA
+S: 354 Enter mail, end with "." on a line by itself
+C: Do you like ketchup?
+C: .
+S: 250 Message accepted for delivery
+C: QUIT
+S: 221 hamburger.edu closing connection</code></pre>
+<div class="tw"><table>
+<tr><th>HTTP</th><th>SMTP</th></tr>
+<tr><td>صفحات الويب</td><td>خدمة الإيميل</td></tr>
+<tr><td>port 80</td><td>port 25</td></tr>
+<tr><td><b>Pull</b> protocol</td><td><b>Push</b> protocol</td></tr>
+<tr><td>بين web server وweb client</td><td>بين mail servers</td></tr>
+<tr><td>persistent أو non-persistent</td><td>persistent</td></tr>
+</table></div>
+<ul>
+<li><b>Email access protocols</b> (لجلب الرسائل من السيرفر، لأن SMTP للإرسال والتخزين عند السيرفر المستقبل): <b>POP</b> (authorization، stateless عبر الـ sessions)، <b>IMAP</b> (يحتفظ بكل الرسائل في السيرفر، يسمح بـ folders، يحتفظ بـ state عبر الـ sessions)، أو HTTP (Gmail, Hotmail).</li>
+<li><b>DNS:</b> يحول domain name (www.amazon.com) إلى IP (192.0.2.44). في application layer. موزع هرمياً. <b>ليش مش مركزي؟</b> single point of failure، حجم traffic ضخم، صعوبة الصيانة.</li>
+<li><b>ترتيب الـ DNS servers:</b> Resolver ← Root ← TLD ← Authoritative.
+<ul><li><b>Resolver:</b> أول من يستلم الطلب ويعمل الشغل الكتير.</li>
+<li><b>Root:</b> يرد بعنوان الـ TLD server (.com/.net/.org/.edu).</li>
+<li><b>TLD:</b> يرد بعنوان الـ authoritative name server.</li>
+<li><b>Authoritative:</b> يعطي الـ IP الفعلي.</li></ul></li>
+<li><b>Streaming:</b> الفيديو = صور بمعدل ثابت (مثلاً 24 صورة/ثانية). Encoding = ضغط وتغيير الصيغة. <b>CBR</b> (rate ثابت) و <b>VBR</b> (rate متغير). الفيديو أكبر مستهلك للـ bandwidth: Netflix 37% وYouTube 16% من الـ downstream (حسب السلايد).</li>
+<li><b>DASH</b> (Dynamic Adaptive Streaming over HTTP): <u>السيرفر</u> يقسم الفيديو لـ chunks بمعدلات ترميز مختلفة (مخزنة في CDNs) + <b>manifest file</b> فيه URLs. <u>الـ client</u> يقيس الـ bandwidth دورياً ويختار أعلى rate مناسب.</li>
+<li><b>CDN:</b> يخزن نسخ المحتوى في nodes قريبة من المستخدمين. مثال Netflix: Amazon cloud تحفظ النسخ وترفعها لسيرفرات CDN؛ المستخدم يتصفح ← يرجع manifest ← DASH streaming من CDN.</li>
+</ul>
+<b>أسئلة متوقعة</b>
+<details><summary>اشرح خطوات إرسال Alice لإيميل إلى Bob.</summary>استخدم الخطوات الست فوق. نقطة مهمة: الـ SMTP client يفتح TCP مع سيرفر Bob مباشرة (direct transfer)، وBob يقرأ الرسالة بعد ذلك بـ POP/IMAP/HTTP.</details>
+<details><summary>ما الفرق بين SMTP و HTTP؟ وما الفرق بين POP و IMAP؟</summary>HTTP pull لصفحات الويب port 80، وSMTP push للإيميل port 25. POP يستعمل authorization وstateless، وIMAP يحتفظ بالرسائل على السيرفر وبـ folders وبالـ state.</details>
+<details><summary>رتّب خطوات DNS resolution لـ www.amazon.com.</summary>Resolver ← Root (يعطي TLD لـ .com) ← TLD (يعطي authoritative لـ amazon.com) ← Authoritative (يعطي IP).</details>
+<details><summary>ليش DNS لازم يكون distributed؟</summary>لتفادي single point of failure، وتوزيع حجم الـ traffic، وتسهيل الصيانة.</details>
+<details><summary>اشرح DASH والـ CDN.</summary>DASH يقسم الفيديو لـ chunks بمعدلات مختلفة مع manifest file، والـ client يقيس الـ bandwidth ويختار أعلى rate مناسب. الـ CDN يخزن نسخاً قريبة من المستخدمين لتقليل delay وتخفيف الضغط.</details>
+
+<!-- ================= L7 ================= -->
+<h3>Lecture 7: Transport Layer، Mux/Demux، UDP، Checksum <span class="tag hot">حسابات مؤكدة</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+الـ socket (IP+port)، الفرق بين TCP وUDP من L4، والجمع الثنائي (binary addition) مع carry.</div>
+<b>احفظ:</b>
+<ul>
+<li><b>Transport vs Network:</b> الـ Network layer = اتصال منطقي بين <u>hosts</u>. الـ Transport layer = اتصال منطقي بين <u>processes</u>. <b>تشبيه السلايد:</b> البيوت = hosts، الأطفال = processes، الرسائل = app messages، Ann وBill = transport protocol، البريد = network layer.</li>
+<li>الـ transport protocols بتشتغل في الـ end systems فقط. المرسل بيقسم الرسائل لـ segments، والمستقبل بيجمعها.</li>
+<li><b>وظائف Transport:</b> multiplexing/demultiplexing، reliable data transfer، flow control، congestion control.</li>
+<li><b>Connection-oriented (TCP):</b> بيعمل handshake، reliable، ترتيب محفوظ، وبيتأكد من وصول كل الـ packets بدون أخطاء. <b>Connectionless (UDP):</b> بدون connection، كل packet وحدة مستقلة.</li>
+<li><b>TCP:</b> reliable، in-order، congestion control، flow control، connection setup. <b>UDP:</b> unreliable، unordered. الاتنين ما بيضمنوا delay محدد ولا security.</li>
+<li><b>Multiplexing</b> (عند المرسل): تجميع الرسائل من sockets متعددة وإضافة transport header. <b>Demultiplexing</b> (عند المستقبل): تسليم الـ segment للـ socket الصحيح باستخدام الـ header.</li>
+<li>كل segment فيه: source port, dest port (+ IP addresses من الـ network layer).</li>
+<li><b>Connectionless demux (UDP):</b> بيعتمد على <u>destination port</u> فقط. نفس الـ server socket يستقبل من عدة clients.</li>
+<li><b>Connection-oriented demux (TCP):</b> الـ socket يتحدد بـ <b>4-tuple</b>: source IP، source port، dest IP، dest port. الـ web server يعمل socket منفصل لكل client.</li>
+<li><b>UDP header (8 bytes):</b> source port, dest port, length (header + data بالـ bytes), checksum.</li>
+<li><b>Checksum:</b> لاكتشاف الأخطاء (bits مقلوبة).</li>
+</ul>
+<div class="box know"><b class="t">خطوات الـ Checksum (احفظها بالترتيب)</b>
+<b>عند المرسل:</b> (1) قسّم الداتا لكلمات 16-bit. (2) اجمعها كلها. (3) أي carry خارج من أعلى bit يترجع يتجمع على الناتج (wrap-around). (4) اعمل <b>1's complement</b> (اقلب كل bit). الناتج هو الـ checksum.<br>
+<b>عند المستقبل:</b> احسب الـ checksum للـ segment المستلم وقارنه بالمخزن. تطابق = ما في خطأ مكتشف. عدم تطابق = في خطأ.</div>
+<p><b>مثال السلايد (كلمتين 16-bit):</b></p>
+<pre><code>  1110 0110 0110 0110
++ 1101 0101 0101 0101
+= 1 1011 1011 1011 1100   (فيه carry خارج)
+  wrap carry:  1011 1011 1011 1100
+  complement:  0100 0100 0100 0011   &larr; الـ checksum</code></pre>
+<b>أسئلة متوقعة</b>
+<details><summary>ما الفرق بين Network layer و Transport layer؟ استعمل التشبيه.</summary>Network: اتصال بين hosts (خدمة البريد بين البيوت). Transport: اتصال بين processes (Ann وBill بيوزعوا الرسائل على الأطفال داخل البيتين).</details>
+<details><summary>قارن بين UDP و TCP demultiplexing.</summary>UDP: بيعتمد على dest port، وsocket واحد لكل الـ clients. TCP: 4-tuple (source IP/port + dest IP/port)، وكل connection له socket منفصل.</details>
+<details><summary>ما الحقول الأربعة في UDP header؟ وما حجمه؟</summary>Source port, destination port, length, checksum. الحجم 8 bytes (2 bytes لكل حقل).</details>
+<details><summary>احسب الـ checksum للكلمتين 0110011011110000 و 1010101000001111 (16-bit).</summary>
+<pre><code>  0110 0110 1111 0000
++ 1010 1010 0000 1111
+= 1 0001 0000 1111 1111   (فيه carry خارج)
+  wrap carry:  0001 0000 1111 1111 + 1 = 0001 0001 0000 0000
+  complement:  1110 1110 1111 1111   &larr; الـ checksum</code></pre>
+<span class="tag">مثال تدريبي من عندي، بنفس طريقة السلايد</span></details>
+<details><summary>كيف يكتشف المستقبل وجود خطأ بالـ checksum؟</summary>يحسب الـ checksum للـ segment المستلم ويقارنه بالقيمة في حقل الـ checksum. إن اختلفا فهناك خطأ.</details>
+<div class="box warn"><b class="t">غلطات شائعة</b>• نسيان إعادة جمع الـ carry. • عمل complement قبل الجمع. • الخلط بين 4-tuple (TCP) و dest port فقط (UDP).</div>
+
+<!-- ================= L8 ================= -->
+<h3>Lecture 8: Reliable Data Transfer، Flow Control، Congestion Control</h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+الـ checksum (L7)، وTCP vs UDP، وفكرة الـ finite state machine (state + event + action).</div>
+<b>احفظ:</b>
+<ul>
+<li><b>Reliability</b> = لا فقد بيانات ولا أخطاء bits. نفترض دالة <span class="en">rdt</span>، ونبنيها تدريجياً بـ <b>FSM</b> (event يسبب انتقال state + actions).</li>
+<li><b>rdt1.0:</b> channel موثوق تماماً (لا أخطاء ولا فقد). Sender: ينتظر <span class="en">rdt_send(data)</span> ← <span class="en">make_pkt</span> ← <span class="en">udt_send</span>. Receiver: <span class="en">rdt_rcv</span> ← extract ← <span class="en">deliver_data</span>.</li>
+<li><b>rdt2.0:</b> channel ممكن يقلب bits. الإضافات: error detection (checksum) + feedback من المستقبل: <b>ACK</b> (استلمت سليم) و <b>NAK</b> (فيه أخطاء). المرسل يعيد الإرسال عند NAK.</li>
+<li><b>الخلل القاتل في rdt2.0:</b> ماذا لو الـ ACK/NAK نفسه تلف؟ المرسل ما يعرف ما حدث عند المستقبل، وإعادة الإرسال ممكن تنتج <b>duplicate</b>.</li>
+<li><b>rdt2.1 (الحل):</b> المرسل يضيف <b>sequence number</b> (0 أو 1) لكل packet، ويعيد إرسال الـ packet الحالي لو ACK/NAK تالف، والمستقبل يتجاهل (ما يسلّم لفوق) الـ duplicate. هذا هو <b>stop-and-wait</b>: المرسل يبعت packet واحد وينتظر الرد.</li>
+<li>المحاضرة وقفت عند rdt2.1.</li>
+<li><b>TCP flow control:</b> المستقبل يتحكم بالمرسل عشان المرسل ما يطغى على الـ receive buffer. المستقبل يعلن المساحة الفاضية بقيمة <b>rwnd</b> في الـ TCP header. المرسل يحد الـ unacked ("in-flight") data بقيمة rwnd.<br>
+طريقتان بسيطتان: <b>Stop-and-Wait</b> (ACK لكل frame) و <b>Sliding Window</b> (ACK بعد إرسال عدد معين حتى تمتلئ النافذة اللي حددها المستقبل).</li>
+<li><b>Congestion:</b> "مصادر كتير بتبعت داتا كتير وبسرعة أكبر مما الشبكة تتحمل". مظاهره: فقد packets (overflow في buffers الـ routers) وتأخير طويل (queueing). <b>مختلف عن flow control.</b></li>
+<li><b>TCP congestion control (3 مراحل):</b> (1) <b>Slow Start:</b> تبدأ ببطء والزيادة أسية (exponential) لحد الـ threshold. (2) <b>Congestion Avoidance:</b> بعد الوصول للـ threshold. (3) <b>Congestion Detection:</b> المرسل يرجع لـ Slow Start.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Flow control</th><th>Congestion control</th></tr>
+<tr><td>يحمي <b>المستقبل</b> البطيء من الـ overload</td><td>يحمي <b>الشبكة</b> من الازدحام</td></tr>
+<tr><td>بين المرسل والمستقبل</td><td>بتقليل معدل الـ packets الداخلة للشبكة</td></tr>
+<tr><td>في Transport و Data link</td><td>في Network و Transport</td></tr>
+<tr><td>المرسل يتصرف حسب feedback من المستقبل (rwnd)</td><td>خوارزميات تحدد سلوك الـ endpoints</td></tr>
+</table></div>
+<b>أسئلة متوقعة</b>
+<details><summary>لماذا rdt2.0 فيه خلل؟ وكيف يعالجه rdt2.1؟</summary>لأن ACK/NAK ممكن يتلف فالمرسل لا يعرف مصير الـ packet، وإعادة الإرسال قد تسبب duplicate. rdt2.1 يضيف sequence numbers (0/1) فالمستقبل يميز الـ duplicate ويرميه، والمرسل يعيد الإرسال عند ACK/NAK تالف.</details>
+<details><summary>ما الفرق بين ACK و NAK؟</summary>ACK: المستقبل يخبر المرسل أن الـ packet وصل سليماً. NAK: وصل به أخطاء فالمرسل يعيد إرساله.</details>
+<details><summary>ما هو rwnd وما فائدته؟</summary>المساحة الفاضية في buffer المستقبل، يرسلها في الـ TCP header. المرسل يحد الـ in-flight data بها فيضمن أن الـ buffer ما يفيض.</details>
+<details><summary>اشرح مراحل TCP congestion control.</summary>Slow start: زيادة أسية للـ window لحد الـ threshold. Congestion avoidance: بعد الـ threshold (زيادة أبطأ). Congestion detection: عند اكتشاف ازدحام يرجع المرسل لـ slow start.</details>
+<details><summary>قارن بين Flow control و Congestion control.</summary>استخدم الجدول. الجملة المفتاحية: Flow يحمي المستقبل، وCongestion يحمي الشبكة.</details>
+<details><summary>ما الفرق بين Stop-and-Wait و Sliding Window؟</summary>Stop-and-Wait: ACK لكل frame قبل إرسال التالي. Sliding window: المرسل يرسل عدة frames حتى تمتلئ النافذة (اللي حددها المستقبل) ثم ينتظر ACK.</details>
+
+<!-- ================= L9 ================= -->
+<h3>Lecture 9: Network Layer، Router، IP Addressing <span class="tag hot">حسابات مؤكدة</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+التحويل بين binary و decimal (128، 64، 32، 16، 8، 4، 2، 1)، والفرق بين routing و forwarding (L2)، ومعنى الـ datagram.</div>
+<b>احفظ:</b>
+<ul>
+<li><b>Network layer:</b> يحمل الـ segment من المرسل للمستقبل. عند المرسل بيغلّفه في <b>datagram</b>، وعند المستقبل يسلمه للـ transport. موجود في <u>كل host وrouter</u>. الـ router يفحص header كل IP datagram يمر عليه.</li>
+<li><b>وظيفتان:</b> <b>Forwarding</b> (يستخدم data plane) و <b>Routing</b> (يستخدم control plane).</li>
+<li><b>Data plane vs Control plane:</b>
+<div class="tw"><table>
+<tr><th>Data plane</th><th>Control plane</th></tr>
+<tr><td>وظيفة <b>محلية</b> في الـ router</td><td>منطق على مستوى <b>الشبكة كلها</b></td></tr>
+<tr><td>يحدد كيف الـ datagram الواصل على input port يتحول لـ output port</td><td>يحدد المسار end-to-end من المصدر للوجهة</td></tr>
+<tr><td>يعتمد على قيم الـ header</td><td>طريقتان: <b>Per-router</b> (كل router فيه خوارزمية routing تتفاعل مع غيرها) أو <b>Logically centralized</b> (controller بعيد يتفاعل مع control agents CAs)</td></tr>
+</table></div></li>
+<li><b>Router architecture:</b> routing processor (control plane، software، بمقياس millisecond) + input ports + switching fabric (data plane، hardware، بمقياس nanosecond) + output ports.</li>
+<li><b>Input port:</b> physical layer (bit-level reception) ← data link (Ethernet) ← lookup/forwarding بالـ forwarding table ← switch fabric. فيه input buffer لو الـ datagrams أسرع من الـ fabric. أسلوب الـ forwarding: <b>destination-based</b> (تقليدي، بالـ destination IP فقط) أو generalized.</li>
+<li><b>Longest prefix matching:</b> لما أكتر من entry يطابق، استعمل الأطول prefix مطابقة.</li>
+</ul>
+<div class="box know"><b>مثال السلايد (حله):</b>
+<pre><code>Prefix                          Interface
+11001000 00010111 00010***      0
+11001000 00010111 00011000      1
+11001000 00010111 00011***      2
+otherwise                       3
+
+DA = 11001000 00010111 00010110 10100001 -> يطابق الأول فقط  -> Interface 0
+DA = 11001000 00010111 00011000 10101010 -> يطابق الثاني والثالث، الثاني أطول (24 bit) -> Interface 1</code></pre></div>
+<ul>
+<li><b>Switching fabrics (3 أنواع):</b> <b>Memory</b> (الجيل الأول، تحت تحكم CPU، السرعة محدودة بـ memory bandwidth)، <b>Bus</b> (bus مشترك، bus contention، محدود بـ bus bandwidth)، <b>Crossbar/Interconnection network</b> (يتخطى حد الـ bus). الأمثلة: Cisco 5600 (32 Gbps bus)، Cisco 12000 (60 Gbps crossbar).</li>
+<li><b>Input port queuing:</b> لو الـ fabric أبطأ من مجموع الـ inputs يحصل queueing. <b>HOL blocking</b> (Head-of-the-Line): الـ datagram في أول الـ queue يمنع اللي وراه من التحرك.</li>
+<li><b>Output ports:</b> لازم buffering لما الـ datagrams تصل أسرع من الإرسال، والـ packets ممكن تضيع. <b>Scheduling:</b> FIFO، Priority، Round Robin. <b>Discard policy</b> (لو الـ queue ممتلئ): tail drop (ارمِ الواصل)، priority، random.</li>
+<li><b>IP datagram format (32 bits في الصف):</b> version – header length – type of service – total length – 16-bit identifier – flags – fragment offset – <b>time to live</b> (أقصى hops، يتناقص عند كل router) – upper layer protocol – header checksum – 32-bit source IP – 32-bit dest IP – options – data.</li>
+<li><b>IP address:</b> معرّف 32-bit لـ <b>interface</b> (مش للجهاز). الـ router عنده interfaces كتير، والـ host عادة واحد أو اثنين. مثال: 223.1.1.1 = 11011111 00000001 00000001 00000001.</li>
+<li><b>Subnet:</b> الأجهزة اللي لها نفس الـ subnet part (high-order bits) وتقدر تتواصل بدون router. <b>وصفة تحديد الـ subnets:</b> افصل كل interface عن الـ host/router لتحصل على "جزر" شبكات معزولة، كل جزيرة subnet. (شبكة السلايد 223.1.x فيها 3 subnets: 223.1.1.0/24 و 223.1.2.0/24 و 223.1.3.0/24. شكل "how many?" التالي في Kurose فيه 6 subnets.)</li>
+<li><b>CIDR:</b> <span class="en">a.b.c.d/x</span> حيث x = عدد bits الـ subnet portion. مثال: <span class="en">200.23.16.0/23</span>.</li>
+<li><b>طرق الحصول على IP:</b> يدوي من الـ admin (Windows: control panel...، UNIX: <span class="en">/etc/rc.config</span>) أو DHCP (شوف Lab 8).</li>
+</ul>
+<b>أسئلة متوقعة</b>
+<details><summary>قارن بين Data plane و Control plane.</summary>استخدم الجدول فوق. الجملة المفتاحية: data plane محلي (forwarding) وcontrol plane على مستوى الشبكة (routing).</details>
+<details><summary>ما هو HOL blocking؟ ولماذا يحدث؟</summary>يحصل عند الـ input port: datagram في مقدمة الـ queue ينتظر output port مشغول فيمنع باقي الـ datagrams خلفه من التحرك حتى لو outputs ديالهم فاضية.</details>
+<details><summary>اذكر أنواع switching fabrics ومحدودية كل نوع.</summary>Memory (محدود بـ memory bandwidth)، Bus (محدود بـ bus bandwidth)، Crossbar (يتخطى حد الـ bus).</details>
+<details><summary>أي interface للـ DA التالي: 11001000 00010111 00011000 10101010؟</summary>Interface 1 (longest prefix match: 24 bit).</details>
+<details><summary>ما الفرق بين scheduling: FIFO و Priority و Round Robin؟</summary>FIFO حسب ترتيب الوصول. Priority: يرسل الأعلى أولوية أولاً (حسب class). Round Robin: يمسح الـ class queues دورياً ويرسل packet كامل من كل class.</details>
+<details><summary>ما الـ TTL ولماذا نحتاجه؟</summary>أقصى عدد hops، يتناقص عند كل router. (نحتاجه عشان الـ packet ما يدور للأبد في loop). <span class="tag">الجزء الأخير إضافة مني</span></details>
+
+<!-- ================= L10 ================= -->
+<h3>Lecture 10: Data Link Layer، Error Detection <span class="tag hot">حسابات مؤكدة</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+الـ datagram (L9)، وXOR: 0⊕0=0، 1⊕1=0، 0⊕1=1، 1⊕0=1. وإن الـ checksum بيعتمد على الجمع (L7).</div>
+<b>احفظ:</b>
+<ul>
+<li><b>مصطلحات:</b> nodes = hosts + routers. links = قنوات الاتصال بين العقد المتجاورة (سلكية أو لاسلكية). الـ data link layer مسؤول عن نقل الـ datagram بين node وأقرب node متجاور عبر link.</li>
+<li>بيحول stream الداتا لإشارات bit-by-bit ويرسلها. عند المستقبل يستلم الإشارات ويجمعها في <b>frames</b> ويسلمها لفوق.</li>
+<li>موجودة في كل host، ومنفذة في الـ <b>NIC / adapter</b> أو chip (Ethernet card، 802.11 card). الـ datagram ممكن يعدي على بروتوكولات link مختلفة (Ethernet على link و802.11 على أخرى).</li>
+<li><b>وظائف (4):</b> <b>Framing</b> (تغليف packets الـ network في frames)، <b>Addressing</b> (hardware address، unique على الـ link)، <b>Error control</b> (detection: بسبب attenuation و noise. correction: المستقبل يصحح الـ bits بدون إعادة إرسال)، <b>Flow control</b>.</li>
+<li><b>Protocols:</b> Ethernet و PPP (سلكي)، 802.11 (لاسلكي).</li>
+<li><b>Sublayers:</b> <b>LLC</b> (multiplexing، تدفق الداتا، error messages، acknowledgments) و <b>MAC</b> (hardware addressing + التحكم في الوصول للـ physical media).</li>
+<li><b>أنواع الأخطاء:</b> <b>Single-bit</b> (bit واحد اتغير) و <b>Burst</b> (2 bits أو أكتر اتغيروا؛ مش لازم متتالية).</li>
+<li><b>طرق الاكتشاف:</b> Checksum – 1D parity – 2D parity – CRC.</li>
+<li><b>1D (simple) parity:</b> بنضيف bit واحد (parity bit) لكل data unit بحيث عدد الـ 1s يصير <b>even</b>. <b>عيوبه:</b> يكتشف single-bit error فقط، ولو تغير bitين (مثلاً interchange) ما يكتشف.</li>
+<li><b>2D parity:</b> نرتب الـ bits في جدول، نحسب parity لكل <u>صف</u> ولكل <u>عمود</u>، ونرسلهم مع الداتا. يكتشف <b>ويصحح</b> (single-bit error).</li>
+<li><b>CRC:</b> الأقوى وسهل التنفيذ. مبني على <b>القسمة الثنائية</b> (modulo-2) مش الجمع. نضيف R بتات للداتا D بحيث الناتج يقبل القسمة على الـ generator G. المستقبل يقسم على G: <b>باقي صفر = سليم</b>، وإلا يُرفض.</li>
+</ul>
+<div class="box know"><b class="t">خطوات CRC (n = طول الداتا، k = طول G)</b>
+1) أضف (k−1) أصفار للداتا. 2) اعمل قسمة modulo-2 (XOR) على G. 3) الباقي = CRC (لازم k−1 بت). 4) Codeword = الداتا + CRC، طوله n+k−1.<br>
+<b>مثال السلايد:</b> D = 101110، G = 1001 (k=4):<br>
+1) 101110<b>000</b> &nbsp; 2) قسمة XOR &nbsp; 3) R = <b>011</b> &nbsp; 4) Codeword = <b>101110011</b>.
+<pre><code>101110000 / 1001  (modulo-2: لو أول bit = 1 اعمل XOR، لو 0 اكتفِ بالنزول)
+1011 xor 1001 = 0010   -> نزّل bit  -> 0101 -> أول bit 0 -> شيله -> 101 + نزّل -> 1010
+1010 xor 1001 = 0011   -> نزّل       -> 0110 -> شيله -> 110 + نزّل -> 1100
+1100 xor 1001 = 0101   -> نزّل       -> 1010
+1010 xor 1001 = 0011   -> R = 011</code></pre></div>
+<b>أسئلة متوقعة</b>
+<details><summary>اذكر وظائف الـ data link layer الأربع.</summary>Framing, Addressing, Error control (detection وcorrection), Flow control.</details>
+<details><summary>ما الفرق بين LLC و MAC sublayers؟</summary>LLC: multiplexing وتدفق الداتا وأخطاء وacknowledgments. MAC: hardware addressing والتحكم في الوصول للـ media.</details>
+<details><summary>ما عيوب simple parity check؟ وكيف يحسنها 2D parity؟</summary>الـ simple parity يكتشف single-bit فقط ولا يكتشف تغير bitين. 2D parity يحسب parity للصفوف والأعمدة، فيكتشف ويصحح single-bit error.</details>
+<details><summary>احسب CRC لـ D = 101110 و G = 1001.</summary>R = 011، والـ codeword = 101110011. (الخطوات في الصندوق فوق).</details>
+<details><summary>كيف يتحقق المستقبل من CRC؟</summary>يقسم الـ codeword المستلم على G. باقي صفر = سليم ويقبل. أي باقي = تالف ويرفض.</details>
+<details><summary>ما الفرق بين Single-bit و Burst error؟</summary>Single-bit: bit واحد يتغير. Burst: bitين أو أكتر يتغيروا (مش لازم متتاليين).</details>
+<h2 id="labs">الجزء الثاني: اللابات (Huawei HCIA + eNSP)</h2>
+<div class="box"><b class="t">قبل أي لاب</b>
+ثبّت eNSP بالترتيب ده بالضبط (من صورة التنبيه في الملف): <b>1) WinPcap ← 2) Wireshark ← 3) VirtualBox ← 4) eNSP</b>. لو غيّرت الترتيب غالباً الأجهزة ما بتشتغل أو Wireshark ما يفتح.<br>
+أسهل طريقة تتأكد إنك جاهز: ابني topology من راوترين، اضبط IP، وابعت ping. لو نجح كل حاجة تمام.
+<br>تذكير: تسجيل Huawei ICT Academy (Lecture 5 + الملف الأخير): سجّل كـ student، اختر Academy: <i>Faculty of Computer and Information Sciences - Ain Shams University</i>، وانضم لفصل الـ TA بتاعك.</div>
+
+<!-- ================= LAB 1 ================= -->
+<h3>Lab 1: Transmission Media + Ethernet Framing + eNSP/Wireshark <span class="tag">Quiz 1</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+الـ physical media من L2 (twisted pair, fiber, coax)، والـ layers (TCP/IP و OSI) من L3، وفكرة الـ MAC address.</div>
+<b>احفظ:</b>
+<div class="tw"><table>
+<tr><th>الوسط</th><th>المعيار</th><th>الكيبل</th><th>أقصى مسافة</th></tr>
+<tr><td rowspan="2">Coaxial</td><td>10Base2</td><td>Thin coax</td><td>185 m</td></tr>
+<tr><td>10Base5</td><td>Thick coax</td><td>500 m</td></tr>
+<tr><td rowspan="3">Twisted pair (Ethernet)</td><td>10Base-T</td><td>2 pairs Cat 3/4/5</td><td>100 m</td></tr>
+<tr><td>100Base-TX</td><td>2 pairs Cat 5</td><td>100 m</td></tr>
+<tr><td>1000Base-T</td><td>4 pairs Cat 5e</td><td>100 m</td></tr>
+<tr><td rowspan="4">Fiber</td><td>10Base-F</td><td>two-strand fiber</td><td>2000 m</td></tr>
+<tr><td>100Base-FX</td><td>two-strand multimode</td><td>2000 m</td></tr>
+<tr><td>1000Base-LX</td><td>single-mode</td><td>316–5000 m</td></tr>
+<tr><td>1000Base-SX</td><td>multi-mode</td><td>275–550 m</td></tr>
+<tr><td rowspan="2">Serial</td><td>RS-232</td><td>يعرّف حتى 20000 bps، ويمكن يوصل 1 Mbit/s</td><td></td></tr>
+<tr><td>RS-422</td><td>100 Kbit/s – 10 Mbit/s+</td><td></td></tr>
+</table></div>
+<ul>
+<li><b>Collision domain:</b> الشبكات المشتركة (shared) عرضة للـ collisions، وتُكتشف بآلية collision detection. <b>Duplex:</b> Half (اتجاه واحد في الوقت) و Full (الاتجاهين معاً).</li>
+<li><b>Layered models في اللاب:</b> TCP/IP (Network Interface, Network, Transport, Application) و OSI السبع. وظائف OSI حسب سلايد الـ Lab: 7 App (اتصال بين التطبيقات) – 6 Presentation (formatting وencryption/decryption) – 5 Session (إنشاء وإدارة sessions) – 4 Transport (end-to-end connection) – 3 Network (addressing وrouting) – 2 Data link (media access وlink management) – 1 Physical (تدفق bits).</li>
+<li><b>Encapsulation:</b> الـ Data تنزل من Layer 7 لـ 1 وكل layer تضيف header. الـ frame = Header + Data + Trailer.</li>
+</ul>
+<h3 style="font-size:1rem">Frame formats (مهم جداً للكويز)</h3>
+<div class="tw"><table>
+<tr><th></th><th>Ethernet II</th><th>IEEE 802.3</th></tr>
+<tr><td>الحقل المميز</td><td><b>Type</b> (2 bytes)</td><td><b>Length</b> (2 bytes)</td></tr>
+<tr><td>القيمة</td><td>≥ 1536 (0x0600)</td><td>≤ 1500 (0x05DC)</td></tr>
+<tr><td>الحقول</td><td>D.MAC (6) + S.MAC (6) + Type (2) + Data (46–1500) + FCS (4)</td><td>D.MAC (6) + S.MAC (6) + Length (2) + <b>LLC</b> (DSAP, SSAP, Control: 1+1+1 bytes) + <b>SNAP</b> (Org code 3 + Type 2) + Data (38–1492) + FCS (4)</td></tr>
+<tr><td>أمثلة Type</td><td colspan="2"><b>IP = 0x0800 (2048)</b>، <b>ARP = 0x0806 (2054)</b></td></tr>
+</table></div>
+<ul>
+<li><b>MAC address:</b> 48 bit = 24 bit <b>OUI</b> (للشركة المصنعة) + 24 bit مخصص من الشركة. أنواع الـ forwarding: <b>Unicast</b> (bit الـ I/G = 0)، <b>Broadcast</b> (FF-FF-FF-FF-FF-FF)، <b>Multicast</b> (bit = 1).</li>
+<li><b>Carrier sense:</b> المضيف يسمع الشبكة قبل ما يرسل؛ لو مشغولة يستنى.</li>
+<li><b>Frame processing:</b> المستقبل يقرأ الـ frame، يعالج الـ header ويشيله، وبعد كده يسلّم الـ Data للبروتوكول اللي في Type (مثلاً 0x0800 ← IP).</li>
+</ul>
+<b>خطوات eNSP (Lab 1) رتّبها في دماغك:</b>
+<ol>
+<li>افتح eNSP ← <b>New</b> لبدء topology.</li>
+<li>من <b>End Device</b> اسحب Laptop (مرتين) للـ canvas.</li>
+<li>من <b>Connections</b> اختر Copper (Ethernet)، اضغط على كل جهاز واختر <b>GE 0/0/1</b>.</li>
+<li>كليك يمين على الجهاز ← <b>Settings</b> (4 tabs: Basic Config, Command, Multicast, UDP).</li>
+<li>في <b>Basic Config</b>: Host name، IPv4 = <b>Static</b>، <b>IP 192.168.1.1</b> (والتاني 192.168.1.2) و mask <b>255.255.255.0</b> ← Apply.</li>
+<li><b>Start</b> للأجهزة (كليك يمين أو تحديد متعدد). الـ link يتحول من نقطة حمراء لخضراء.</li>
+<li>كليك يمين على جهاز ← <b>Capture Data</b> ← اختر الـ interface (يفتح Wireshark).</li>
+<li>في tab <b>Command</b>: <span class="en">ping 192.168.1.2</span> لتوليد traffic.</li>
+<li>في Wireshark استعمل filter بكتابة اسم البروتوكول بحروف صغيرة، مثلاً <span class="en">icmp</span> أو <span class="en">arp</span>.</li>
+</ol>
+<b>أسئلة متوقعة (من نهاية الأقسام + استنتاج)</b>
+<details><summary>أي كيبلات تدعم Gigabit Ethernet في enterprise network؟</summary>1000Base-T (4 pairs من Cat 5e، حتى 100 m)، و 1000Base-LX (single-mode fiber)، و 1000Base-SX (multi-mode fiber).</details>
+<details><summary>ما هو الـ collision domain؟</summary>مقطع من الشبكة المشتركة (shared medium) حيث لو جهازين أرسلوا في نفس الوقت تحصل collision. <span class="tag">تعريف مني</span></details>
+<details><summary>ما غرض CSMA/CD؟</summary>التحكم في الوصول للـ shared medium: Carrier Sense (استمع قبل الإرسال)، Multiple Access (كل الأجهزة تشارك)، Collision Detection (اكتشاف الـ collision ثم إعادة الإرسال بعد انتظار عشوائي). <span class="tag">الشرح مني؛ الاسم والفكرة (carrier sense + collision detection) من السلايد</span></details>
+<details><summary>كيف يحدد Ethernet البروتوكول الذي يُسلَّم له الـ frame المعالج؟</summary>من حقل <b>Type</b> في Ethernet II (مثلاً 0x0800 ← IP، 0x0806 ← ARP).</details>
+<details><summary>كيف يتحدد هل يعالج الجهاز الـ frame أم يتجاهله؟</summary>يقارن الـ <b>Destination MAC</b> بالـ MAC الخاص به (أو يتأكد أنه broadcast/multicast مناسب). لو ما تطابق يتجاهله، ولو تطابق يعالجه ويتحقق من الـ FCS. <span class="tag">إضافة مني</span></details>
+<details><summary>كيف تفرّق بين Ethernet II و 802.3 من الـ frame؟</summary>بالقيمة في الحقل ذو الـ 2 bytes بعد S.MAC: ≥ 1536 (0x0600) = Type (Ethernet II)، و ≤ 1500 (0x05DC) = Length (802.3).</details>
+
+<!-- ================= LAB 2 ================= -->
+<h3>Lab 2: IP Addressing <span class="tag hot">حسابات</span> <span class="tag">Quiz 1</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+Binary ↔ Decimal بسرعة (جدول 128 64 32 16 8 4 2 1)، وإن الـ IP 32-bit (L9)، والـ Type 0x0800 من Lab 1. <b>تدرّب على التحويل بدون آلة حاسبة.</b></div>
+<b>احفظ:</b>
+<ul>
+<li><b>IP header:</b> 20 bytes ثابتة (حتى 60 مع options). حقول: Version، header length، DS field، Total length، Identification، Flags، Fragment offset، TTL، Protocol، Header checksum، Source IP، Destination IP، Options.</li>
+<li><b>الـ IP address:</b> 32 bit = Network ID + Host ID. نفس الـ network ID = تواصل مباشر. لو مختلف تحتاج gateway (router). ممكن يتعطى يدوياً أو من DHCP.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Class</th><th>المدى</th><th>البداية (bits)</th><th>Network / Host</th><th>Default mask</th></tr>
+<tr><td>A</td><td>1.0.0.0 – 126.255.255.255</td><td>0</td><td>8 / 24</td><td>255.0.0.0</td></tr>
+<tr><td>B</td><td>128.1.0.0 – 191.254.255.255</td><td>10</td><td>16 / 16</td><td>255.255.0.0</td></tr>
+<tr><td>C</td><td>192.0.1.0 – 223.255.254.255</td><td>110</td><td>24 / 8</td><td>255.255.255.0</td></tr>
+<tr><td>D</td><td>224.0.0.0 – 239.255.255.255</td><td>1110</td><td colspan="2">Multicast</td></tr>
+<tr><td>E</td><td>240.0.0.0 – 255.255.255.254</td><td>1111</td><td colspan="2">Experimental</td></tr>
+</table></div>
+<ul>
+<li><b>Private ranges:</b> A: 10.0.0.0 – 10.255.255.255 | B: 172.16.0.0 – 172.31.255.255 | C: 192.168.0.0 – 192.168.255.255.</li>
+<li><b>Special:</b> 127.0.0.0 – 127.255.255.255 (diagnostic/loopback)، 0.0.0.0 (any network)، 255.255.255.255 (network broadcast).</li>
+<li>أول عنوان في الشبكة (الـ host bits كلها 0) = <b>Network address</b>. آخر عنوان (كلها 1) = <b>Broadcast address</b>. فلا يتعطيان لـ host.</li>
+<li><b>الحساب:</b> عدد العناوين = <b>2ⁿ</b>، والـ hosts الصالحة = <b>2ⁿ − 2</b> (n = عدد bits الـ host). مثال: 192.168.1.7/24 ← 256 عنوان، 254 host، network = 192.168.1.0.</li>
+<li><b>Hex في الشبكات:</b> 0–F (16 رمز). مثال: 10 = 0A، 15 = 0F، 255 = FF.</li>
+<li><b>Subnetting:</b> نستلف bits من الـ host part لنوسّع الـ network ID. مثال: 208.147.66.0/26 (استلفنا 2 bits) ← 4 subnets: .0 و .64 و .128 و .192، وكل واحد 62 host.</li>
+<li><b>VLSM:</b> subnets بأحجام مختلفة حسب عدد الـ hosts في كل segment. <b>القاعدة:</b> ابدأ بالأكبر، ثم الأصغر.</li>
+<li><b>Gateway:</b> يستعمل IP لتمرير الـ packets بين الشبكات. الـ host ممكن يعمل كـ gateway.</li>
+<li><b>TTL:</b> يتناقص 1 عند كل router (السلايد: 255 ← 254 ← 253). الصفر = يُرمى الـ packet.</li>
+<li><b>Fragmentation:</b> يُستخدم عندما الـ packet أكبر من الـ MTU، وحقول Identification/Flags/Fragment Offset هي اللي تُستخدم لإعادة التجميع.</li>
+<li><b>Protocol field:</b> <b>0x06 = TCP</b>، <b>0x11 = UDP</b>، <b>0x01 = ICMP</b>.</li>
+</ul>
+<div class="box know"><b class="t">طريقة سريعة لحل أي مسألة subnetting</b>
+1) حوّل الـ mask لـ /x (عدد الـ 1s). 2) n = 32 − x (عدد bits الـ host). 3) Hosts = 2ⁿ − 2. 4) <b>Block size</b> = 256 − (قيمة الـ octet الذي فيه الـ mask المتغير). 5) الـ network address = أكبر مضاعف للـ block size ≤ قيمة الـ octet في الـ IP. 6) الـ broadcast = (الـ network التالي − 1). 7) أول host = network + 1، وآخر host = broadcast − 1.<br>
+<b>لـ "كم subnet"؟</b> 2^(عدد bits المستلفة من الـ default mask).</div>
+<b>أسئلة وتمارين (حلولها محسوبة ومتأكد منها)</b>
+<details><summary>لماذا نحتاج Subnet mask؟ ما غرض TTL؟ كيف تُستخدم الـ gateways؟ (أسئلة السلايد)</summary>Mask: يفصل bits الـ network عن bits الـ host. TTL: يمنع الـ packet من الدوران للأبد (يتناقص عند كل router). Gateway: يمرر الـ packets بين شبكات IP مختلفة.</details>
+<details><summary>Case: IP 172.16.1.7، mask 255.255.0.0. حدد الـ network و عدد العناوين و الـ hosts.</summary>Class B. n = 16. Network address = <b>172.16.0.0</b>. العناوين = 2¹⁶ = <b>65,536</b>. Hosts الصالحة = 2¹⁶ − 2 = <b>65,534</b>.</details>
+<details><summary>Hands-on 1: IP 172.165.21.5 و mask 255.255.192.0. (أ) كم subnet ممكن؟ (ب) الـ subnet address؟ (ج) كم host؟ (د) أول وآخر IP؟</summary>
+192 = 11000000 ← /18، يعني استلفنا 2 bits من الـ default /16.<br>
+(أ) 2² = <b>4 subnets</b> (السلايد كاتب "22" وهي 2² مكتوبة غلط التنسيق).<br>
+(ب) 21 = 00010101 والـ mask = 11000000 ← AND = 00000000، فالـ subnet = <b>172.165.0.0</b>.<br>
+(ج) n = 14، فـ 2¹⁴ − 2 = <b>16,382</b> host.<br>
+(د) أول: <b>172.165.0.1</b>، آخر: <b>172.165.63.254</b> (والـ broadcast 172.165.63.255).</details>
+<details><summary>Hands-on 2: الشبكة 200.1.2.0/24 ولازم تعزل 6 مباني. (أ) subnet address لكل مبنى؟ (ب) كم host لكل مبنى؟ (ج) أول وآخر IP والـ mask للمبنى الثاني؟</summary>
+نحتاج 6 subnets ← 3 bits (2³ = 8 ≥ 6) ← <b>/27 = 255.255.255.224</b>. Block size = 32.<br>
+(أ) 200.1.2.<b>0</b> – 200.1.2.<b>32</b> – 200.1.2.<b>64</b> – 200.1.2.<b>96</b> – 200.1.2.<b>128</b> – 200.1.2.<b>160</b> (كلها /27).<br>
+(ب) 2⁵ − 2 = <b>30 host</b> لكل مبنى.<br>
+(ج) المبنى الثاني (200.1.2.32/27): أول <b>200.1.2.33</b>، آخر <b>200.1.2.62</b> (broadcast = .63)، mask = <b>255.255.255.224</b>.</details>
+<details><summary>VLSM: استعمل 192.168.1.0/24 لثلاث شبكات: 30 host و 10 host و 20 host.</summary>
+نرتب من الأكبر: 30 host يحتاج 32 ← <b>/27</b>، و 20 host يحتاج 32 ← <b>/27</b>، و 10 hosts يحتاج 16 ← <b>/28</b>.<br>
+• شبكة 30 host: <b>192.168.1.0/27</b> (hosts .1–.30، broadcast .31)<br>
+• شبكة 20 host: <b>192.168.1.32/27</b> (hosts .33–.62، broadcast .63)<br>
+• شبكة 10 host: <b>192.168.1.64/28</b> (hosts .65–.78، broadcast .79)<br>
+<span class="tag">الحل مني بتطبيق القاعدة؛ السلايد عرض السؤال ومثال حساب على /25</span> المهم أن الـ ranges ما تتداخل وأن كل شبكة تكفي عدد الـ hosts.</details>
+<details><summary>ما الفرق بين Class A و B و C من ناحية الـ default mask وعدد الـ hosts؟</summary>A: /8، 2²⁴−2 host. B: /16، 2¹⁶−2 = 65,534. C: /24، 2⁸−2 = 254.</details>
+<div class="box warn"><b class="t">غلطات شائعة</b>• نسيان −2 (network و broadcast). • عدّ الـ subnets الخاطئ: الصيغة 2^(المستلف) مش 2^(الـ host bits). • في الـ VLSM: البدء بالأصغر (يسبب تداخل). • الـ 127.x.x.x مش للاستخدام العادي (loopback).</div>
+
+<!-- ================= LAB 3 ================= -->
+<h3>Lab 3: VRP Foundation + CLI Basics <span class="tag">Quiz 1 ينتهي هنا</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+الفرق بين switch و router (L1)، وmask والـ /24 (Lab 2). والـ collision domain (Lab 1). وتجربة eNSP من Lab 1.</div>
+<b>احفظ (نظرياً):</b>
+<ul>
+<li><b>Switches</b> تخلق <b>multiple collision domains</b> (كل port = collision domain). <b>Routers</b> تخلق <b>broadcast domains</b> (الـ router ما يمرر broadcast).</li>
+<li><b>VRP</b> (Versatile Routing Platform) = نظام تشغيل أجهزة Huawei (switching, routing, security, WLAN...). الإصدارات الحالية: <b>VRP 5</b> (2000–الآن) و <b>VRP 8</b> (2009–الآن). (VRP 1/2/3 قديمة).</li>
+<li><b>طرق الوصول للجهاز:</b> <b>Console</b> (كيبل console من COM port للـ console interface) و <b>Mini USB</b> (قد يحتاج driver). أول دخول يطلب password للـ console (حد أقصى 16 حرف).</li>
+<li><b>أوضاع الـ CLI (Views):</b> <b>User view</b> <span class="en">&lt;Huawei&gt;</span> (عرض الحالة والإحصائيات) – <b>System view</b> <span class="en">[Huawei]</span> (ضبط معاملات النظام) – <b>Interface view</b> <span class="en">[Huawei-GigabitEthernet0/0/0]</span> – <b>Protocol view</b> (routing protocols).</li>
+<li><b>اختصارات:</b> Ctrl+A (بداية السطر)، Ctrl+C (يوقف الوظيفة الحالية)، <b>Ctrl+Z</b> (يرجع لـ user view)، Ctrl+] (يوقف incoming connections)، Ctrl+B/← و Ctrl+F/→ (تحريك المؤشر)، Backspace، <b>Tab</b> (إكمال تلقائي)، <b>?</b> (مساعدة: <span class="en">d?</span> يعرض كل الأوامر اللي تبدأ بـ d، و <span class="en">display ?</span> يعرض المعاملات).</li>
+</ul>
+<div class="tw"><table>
+<tr><th>User level</th><th>Command level</th><th>الاسم</th></tr>
+<tr><td>0</td><td>0</td><td>Visit</td></tr>
+<tr><td>1</td><td>0, 1</td><td>Monitoring</td></tr>
+<tr><td>2</td><td>0, 1, 2</td><td>Configuration</td></tr>
+<tr><td>3–15</td><td>0, 1, 2, 3</td><td>Management</td></tr>
+</table></div>
+<ul>
+<li><b>User interfaces:</b> <b>Console 0</b> (واحد فقط) و <b>VTY 0–4</b> (5 اتصالات Telnet/SSH، ممكن توسّع لـ 0–14).</li>
+</ul>
+<b>الأوامر (احفظها جيداً، دي أساس الـ practical):</b>
+<pre><code>&lt;Huawei&gt;system-view                         # دخول system view
+[Huawei]sysname R1                          # تغيير اسم الجهاز
+&lt;R1&gt;clock timezone Local add 08:00:00       # المنطقة الزمنية (add شرق UTC، minus غرب)
+&lt;R1&gt;clock datetime 12:00:00 2016-03-11      # الوقت والتاريخ (في user view)
+&lt;R1&gt;display clock
+[R1]header login information "Please enter password."          # قبل الدخول
+[R1]header shell information "Welcome to the Huawei lab."      # بعد الدخول
+[R1]user-interface console 0
+[R1-ui-console0]authentication-mode password
+[R1-ui-console0]set authentication password cipher huawei      # (أو يسألك Enter Password)
+[R1-ui-console0]idle-timeout 20 0                              # 20 دقيقة 0 ثانية
+[R1-ui-console0]history-command max-size 20
+[R1]user-interface vty 0 4
+[R1-ui-vty0-4]user privilege level 2
+[R1]interface GigabitEthernet 0/0/0
+[R1-GigabitEthernet0/0/0]ip address 10.0.13.1 24              # أو 255.255.255.0
+[R1-GigabitEthernet0/0/0]description This interface connects to R3-G0/0/0
+[R1-GigabitEthernet0/0/0]display this                          # يعرض config الحالية للـ view
+[R1]interface loopback 0
+[R1-LoopBack0]ip address 1.1.1.1 32
+&lt;R1&gt;ping 10.0.13.3
+&lt;R1&gt;display version      &lt;R1&gt;display interface GigabitEthernet0/0/0
+&lt;R1&gt;dir                  # ملفات flash
+&lt;R1&gt;save                 # حفظ الـ config (y للتأكيد)
+&lt;R1&gt;display saved-configuration      # المحفوظة
+&lt;R1&gt;display current-configuration    # التي تعمل الآن
+&lt;R1&gt;display startup                  # ملف الإقلاع التالي
+&lt;R1&gt;reset saved-configuration         # يمسح المحفوظة من flash
+&lt;R1&gt;reboot</code></pre>
+<ul>
+<li><b>الفرق المهم:</b> <b>current-configuration</b> = ما يعمل الآن (في الـ RAM) وبيضيع لو أعدت التشغيل بدون save. <b>saved-configuration</b> = المحفوظة في flash (<span class="en">vrpcfg.zip</span>).</li>
+<li>عند الـ reboot يسألك: هل تحفظ الـ config؟ ثم تأكيد الـ reboot.</li>
+<li>لو الـ ping ما جاوب (Request timeout) = ما في reachability (interface غير مضبوط أو down). لو رد = مضبوط (UP UP).</li>
+<li>حالة الـ interface: <b>current state UP</b> (physical) و <b>Line protocol current state UP</b> (data link).</li>
+</ul>
+<b>أسئلة متوقعة</b>
+<details><summary>لو حصل Ethernet broadcast زي ARP والوجهة محلية، ما رد الـ gateway؟</summary>الـ gateway/router ما يمرر الـ broadcast خارج الـ broadcast domain، فما يرد ولا يعيد إرساله لشبكات تانية. (الـ broadcast يبقى داخل الـ LAN، والـ router حد الـ broadcast domain). <span class="tag">الصياغة مني بناءً على سلايدات Application of Routing Devices</span></details>
+<details><summary>أي إصدارات VRP تدعمها منتجات Huawei حالياً؟</summary>VRP 5 و VRP 8.</details>
+<details><summary>كم مستخدم يقدر يتصل عبر الـ console في نفس الوقت؟</summary>واحد فقط (console 0). بينما VTY يسمح بـ 5 (0–4) وممكن توسّع.</details>
+<details><summary>ما حالة الـ loopback interface 0 عند تنفيذ أمر interface loopback 0؟</summary>الأمر ينشئ الـ loopback interface ويدخلك لـ interface view الخاص به، وهو interface منطقي (logical) يكون UP طالما الجهاز شغال. <span class="tag">إضافة مني</span></details>
+<details><summary>ما الفرق بين switch و router من ناحية collision و broadcast domains؟</summary>الـ switch يفصل الـ collision domains (domain لكل port) لكن كل الـ ports في نفس broadcast domain. الـ router يفصل الـ broadcast domains.</details>
+<details><summary>كيف تعمل أول ping بين راوترين متوصلين مباشرة (R1 و R3) في 10.0.13.0/24؟</summary>R1: <span class="en">interface G0/0/0 → ip address 10.0.13.1 24</span>. R3: <span class="en">ip address 10.0.13.3 24</span>. ثم <span class="en">ping 10.0.13.3</span> من R1.</details>
+
+<!-- ================= LAB 4 ================= -->
+<h3>Lab 4: TCP/UDP + Telnet <span class="tag">Quiz 2 يبدأ من هنا (Labs 4–7)</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+TCP vs UDP (L4، L7)، handshake (L5)، الـ ports، وأوامر interface و ip address (Lab 3).</div>
+<b>احفظ:</b>
+<ul>
+<li><b>TCP:</b> connection يُنشأ قبل الإرسال. أشهر ports: <b>FTP 20–21، HTTP 80، Telnet 23، SMTP 25</b>. مثال: Client port 1027 ← Server port 80.</li>
+<li><b>TCP header:</b> 20 bytes. الحقول: Source Port، Destination Port، Sequence Number، Acknowledge Number، Header Length، Reserved، <b>flags</b> (URG, ACK, PSH, RST, SYN, FIN + NS, CWR, ECE)، Window، Checksum، Urgent Pointer، Options، Padding.</li>
+<li><b>Three-way handshake:</b>
+<pre><code>1) Host A -> Server : SYN        (seq = a)
+2) Server -> Host A : SYN, ACK   (seq = b, ack = a+1)
+3) Host A -> Server : ACK        (seq = a+1, ack = b+1)</code></pre></li>
+<li><b>Transmission:</b> الـ ACK يخبر المرسل بالـ sequence number المتوقع بعد ذلك (مثلاً إرسال 1,2,3 ثم ACK 4). لو ما وصل ACK، يعيد الإرسال.</li>
+<li><b>Flow control (window):</b> الـ ACK يحمل <span class="en">window</span> (مثلاً ack 2049 window 2048) فالمرسل يحد الداتا حسب النافذة.</li>
+<li><b>Termination (4 خطوات):</b> FIN ← ACK ← FIN ← ACK، ثم الطرف اللي بدأ ينتظر <b>TIME_WAIT = 2×MSL</b> (MSL = 2 دقيقة حسب السلايد) ثم Closed.</li>
+<li><b>UDP:</b> بدون connection. header = <b>8 bytes</b> (Source port, Dest port, Length, Checksum). لا ACKs فلا إعادة إرسال للـ packets المفقودة، وهذا مفيد للـ voice/video الحساس للتأخير. معرّض للـ duplication وعدم الترتيب.</li>
+<li><b>Telnet:</b> برنامج terminal emulation نصي ثنائي الاتجاه للإدارة عن بُعد (فروع بعيدة). بيستخدم TCP (port 23). الـ client يتصل بالـ server.</li>
+<li><b>Authentication modes على VTY:</b> <b>None</b> (بدون authentication)، <b>AAA</b>، <b>Password</b> (باسورد على الـ terminal interface).</li>
+</ul>
+<pre><code># Telnet server (الجهاز اللي بنتصل به): 10.1.1.1/24
+[Huawei]interface Ethernet 0/0/0
+[Huawei-Ethernet0/0/0]ip address 10.1.1.1 24
+[Huawei]user-interface vty 0 4
+[Huawei-ui-vty0-4]authentication-mode password
+[Huawei-ui-vty0-4]set authentication password cipher
+Enter Password(&lt;8-128&gt;): huawei12
+
+# Telnet client (10.1.1.2/24)
+&lt;Host&gt;telnet 10.1.1.1
+Login authentication
+Password:        # بعد الدخول: &lt;Huawei&gt; + رسالة "max number of VTY users is 5"</code></pre>
+<b>أسئلة متوقعة</b>
+<details><summary>ما غرض الـ acknowledgement field في TCP header؟</summary>يحدد رقم الـ sequence التالي الذي يتوقعه المستقبل، وبهذا يؤكد استلام كل البيانات قبله (ويدل على استلام الـ segments).</details>
+<details><summary>أي TCP code bits تشارك في three-way handshake؟</summary><b>SYN</b> و <b>ACK</b> (SYN في الخطوة 1، SYN+ACK في الخطوة 2، ACK في الخطوة 3).</details>
+<details><summary>الـ Telnet service مفعّل لكن المستخدم ما يقدر يتصل. ما الأسباب المحتملة؟</summary>(1) ما اتضبط authentication-mode على الـ VTY أو ما اتحط password (الأكتر شيوعاً). (2) ما في reachability للـ IP (interface down أو IP غلط). (3) الـ VTY كلها مستخدمة (الحد 5). (4) مستوى الصلاحية <span class="en">user privilege level</span> غير مناسب. (5) فلتر/ACL يمنع port 23. <span class="tag">إضافة مني؛ أول 3 تقريباً مباشرة من السلايدات</span></details>
+<details><summary>قارن بين TCP و UDP من ناحية الـ header size والاعتمادية.</summary>TCP: header 20 bytes، reliable (sequence/ACK/retransmission)، connection-oriented. UDP: header 8 bytes، unreliable، بدون connection، مناسب للـ voice/video.</details>
+<details><summary>اشرح termination في TCP ولماذا TIME_WAIT؟</summary>FIN ← ACK ← FIN ← ACK. الطرف الأول ينتظر 2×MSL ليتأكد أن الـ ACK الأخير وصل (وأن أي segments متأخرة اختفت) قبل أن يغلق.</details>
+
+<!-- ================= LAB 5 ================= -->
+<h3>Lab 5: ARP + Switching <span class="tag">Quiz 2</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+MAC address و broadcast FF-FF-FF-FF-FF-FF (Lab 1)، الـ switch وcollision domains (Lab 3)، وإن Ethernet type لـ ARP = 0x0806.</div>
+<b>احفظ:</b>
+<ul>
+<li><b>ARP:</b> يحول IP إلى MAC. الـ data link forwarding يحتاج MAC الوجهة. ARP يعمل داخل حدود الـ data link layer (ما في IP header؛ Type = 0x0806). الحقول: Hardware type/length، Protocol type/length، Operation code، Source/Destination hardware address، Source/Destination protocol address.</li>
+<li><b>ARP cache:</b> جدول مؤقت يعرض بـ <span class="en">arp -a</span> (في الـ PC). الجهاز <b>يفحص الـ cache أولاً</b> قبل ما يرسل ARP request.</li>
+<li><b>ARP Request:</b> <b>broadcast</b> (Dest MAC = FF-FF-FF-FF-FF-FF في الـ frame، و 00-00-00-00-00-00 في حقل الـ destination hardware address داخل ARP)، Operation = Request. <b>ARP Reply:</b> <b>unicast</b> للمرسل، Operation = Reply. الـ receiver يتعلم MAC المرسل ويحطه في cache (Type = Dynamic).</li>
+<li><b>Proxy ARP:</b> الـ router/proxy يرد على ARP request بـ MAC الخاص بـ interface بتاعه بالنيابة عن الـ host في شبكة تانية (يتيح data link discovery بين الشبكات).</li>
+<li><b>Gratuitous ARP:</b> ARP request حيث Source IP = Destination IP (عنوان الجهاز نفسه). يُستخدم لـ <b>اكتشاف تعارض الـ IP (IP conflict)</b>، ويُرسل عند ضبط/تغيير الـ IP أو تشغيل الواجهة.</li>
+</ul>
+<b>الـ Switch يعمل كده:</b>
+<ol>
+<li>البداية: الـ MAC table <b>فاضية</b>.</li>
+<li><b>Learning:</b> يسجل الـ <u>source MAC</u> لأي frame داخل ومعه رقم الـ port.</li>
+<li><b>Flooding:</b> لو الـ destination MAC غير معروف أو broadcast، يرسل الـ frame لكل الـ ports ما عدا الـ port الذي جاء منه.</li>
+<li><b>Forwarding:</b> لو الـ destination موجود في الجدول، يرسله للـ port المحدد فقط (unicast).</li>
+</ol>
+<pre><code>&lt;SWA&gt;system-view
+[SWA]interface GigabitEthernet 0/0/1
+[SWA-GigabitEthernet0/0/1]undo negotiation auto     # ألغِ التفاوض التلقائي
+[SWA-GigabitEthernet0/0/1]duplex full
+[SWA-GigabitEthernet0/0/1]speed 100
+[SWA]display interface GigabitEthernet 0/0/1        # يظهر Speed: 100, Duplex: FULL, Negotiation: DISABLE
+[SWA]display mac-address                            # MAC table (إضافة مني)</code></pre>
+<b>أسئلة متوقعة</b>
+<details><summary>قبل إنشاء ARP request، ما الذي يجب أن يفعله الـ end station؟</summary>يفحص ARP cache لمعرفة هل MAC الوجهة معروف أصلاً. فقط لو ما لقيه يرسل ARP request.</details>
+<details><summary>متى تُنشأ وتنتشر رسائل gratuitous ARP؟</summary>عندما يريد الجهاز اكتشاف تعارض IP أو إعلان عنوانه (مثلاً عند ضبط/تغيير IP أو بدء تشغيل الـ interface). الرسالة broadcast، وSource IP = Destination IP. <span class="tag">الجزء بين القوسين إضافة مني</span></details>
+<details><summary>لو سجّل الـ switch الـ source MAC لـ host على port، ثم نُقل الـ host لـ port آخر. ماذا يفعل الـ switch؟</summary>عندما يستلم أول frame من الـ host على الـ port الجديد يحدّث الـ MAC table ويربط نفس الـ MAC بالـ port الجديد (يستبدل الـ entry القديم). <span class="tag">إضافة مني</span></details>
+<details><summary>اشرح عملية ARP كاملة: Host A (10.0.0.1) يريد إرسال لـ Host C (10.0.0.3).</summary>A يفحص cache ← ما فيه ← يرسل <b>ARP request broadcast</b> (Dest MAC FF-FF-FF-FF-FF-FF، Dest IP 10.0.0.3) ← كل الأجهزة تستلم، لكن C فقط يرد ← C يرسل <b>ARP reply unicast</b> بـ MAC بتاعه (00-01-02-03-04-CC) ← A يخزنه في الـ cache (Dynamic) ثم يرسل frame البيانات.</details>
+<details><summary>ما الفرق بين ARP request و ARP reply (cast type)؟</summary>Request = broadcast. Reply = unicast.</details>
+<b>Hands-on (آخر سلايد في Lab 5):</b>
+<div class="box">الـ topology: Switch1 + PC1 + PC2 + R1 (LAN 1 = 1.1.1.0/24)، وSwitch2 + PC3 + PC4 (LAN 2 = 2.2.2.0/24). R1 فيه GE0/0/1 و GE0/0/2. المطلوب: (1) غيّر اسم الراوتر لـ R1 (2) اضبط clock و timezone (3) IP لكل physical interface UP في R1 (4) تأكد من reachability بين PC1 و default GW (5) نفس الشيء من PC4.
+<pre><code>&lt;Huawei&gt;system-view
+[Huawei]sysname R1
+[R1]quit
+&lt;R1&gt;clock timezone Local add 02:00:00      # مثلاً (UTC+2 لمصر)
+&lt;R1&gt;clock datetime 12:00:00 2025-12-01
+&lt;R1&gt;system-view
+[R1]interface GigabitEthernet 0/0/1
+[R1-GigabitEthernet0/0/1]ip address 1.1.1.1 24      # .1 = الـ gateway للـ LAN 1
+[R1-GigabitEthernet0/0/1]quit
+[R1]interface GigabitEthernet 0/0/2
+[R1-GigabitEthernet0/0/2]ip address 2.2.2.1 24      # .1 = الـ gateway للـ LAN 2
+# PC1: IP 1.1.1.2 mask 255.255.255.0 gateway 1.1.1.1  ... PC4: IP 2.2.2.3 gateway 2.2.2.1
+# ثم من PC1:  ping 1.1.1.1    ومن PC4:  ping 2.2.2.1</code></pre>
+خُد في اعتبارك: أرقام الـ interfaces والـ host IDs تأكد منها في الرسم عندك لأن الصورة ما انقرأت بالكامل من الملف (الـ ".1" و ".2" و ".3" على الأجهزة). <span class="tag">الأرقام تقديرية مني</span></div>
+<!-- ================= LAB 6 ================= -->
+<h3>Lab 6: IP Routing + Static Routes <span class="tag hot">أهم لاب في الـ practical</span> <span class="tag">Quiz 2</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+IP addressing و subnets (Lab 2)، ضبط interfaces و loopback (Lab 3)، longest prefix match (L9)، وفكرة الـ routing vs forwarding (L2، L9).</div>
+<b>احفظ (نظرياً):</b>
+<ul>
+<li><b>Autonomous System (AS):</b> شبكة (أو شبكات) IP تحت تحكم مشغّل أو أكثر بسياسة واضحة لقرارات الـ routing.</li>
+<li>كل LAN = <b>broadcast domain</b> منفصل، والـ router يربطها. الـ router يحدد المسار الذي تعدّي منه الـ packets.</li>
+<li><b>IP routing table:</b> أمر العرض <span class="en">display ip routing-table</span>. الأعمدة: Destination/Mask، Proto، Pre، Cost، Flags، NextHop، Interface. الـ packet <b>ما له route = يُرمى</b>.</li>
+<li><b>ترتيب قرارات الـ routing (أهم سؤال):</b>
+<ol><li><b>Longest match</b> أولاً (الـ prefix الأطول).</li>
+<li>لو نفس الـ prefix: أقل <b>Preference</b> (الأقل = الأفضل).</li>
+<li>لو نفس الـ preference: أقل <b>Metric/Cost</b>.</li></ol></li>
+</ul>
+<div class="tw"><table>
+<tr><th>مصدر الـ route</th><th>Preference</th></tr>
+<tr><td>Direct</td><td><b>0</b></td></tr>
+<tr><td>OSPF</td><td><b>10</b></td></tr>
+<tr><td>Static</td><td><b>60</b></td></tr>
+<tr><td>RIP</td><td><b>100</b></td></tr>
+</table></div>
+<ul>
+<li><b>Preference</b> تمثل "مصداقية" مصدر الـ route (الأقل أوثق). <b>Metric</b> يقارن الـ routes من نفس البروتوكول.</li>
+<li>الـ forwarding يحتاج: الوجهة + الـ interface الصادر + الـ next hop.</li>
+<li><b>Static routes:</b> يدوية. تعطي تحكماً كاملاً لكن ما تتأقلم تلقائياً مع الأعطال.
+<ul><li><b>Serial (point-to-point) interface:</b> حدد الـ <b>outbound interface</b>. <b>Ethernet (broadcast):</b> لازم تحدد الـ <b>next-hop</b>.</li>
+<li><b>Load balancing:</b> routes لنفس الوجهة بنفس الـ cost/preference.</li>
+<li><b>Floating static route:</b> route احتياطي بـ preference <u>أعلى</u>، يظهر في الـ table فقط لو الأساسي فشل.</li>
+<li><b>Default route:</b> <span class="en">0.0.0.0 0.0.0.0</span> (last resort لو ما في longest match آخر).</li></ul></li>
+</ul>
+<b>أوامر الـ static routing (3 صيغ لنفس الـ route):</b>
+<pre><code>[RTB]ip route-static 192.168.1.0 255.255.255.0 10.0.12.1          # next-hop
+[RTB]ip route-static 192.168.1.0 255.255.255.0 Serial 1/0/0       # outbound interface
+[RTB]ip route-static 192.168.1.0 24 Serial 1/0/0                  # prefix length
+
+# Load balancing (نفس الـ preference):
+[RTB]ip route-static 192.168.1.0 255.255.255.0 10.0.12.1
+[RTB]ip route-static 192.168.1.0 255.255.255.0 20.0.12.1
+
+# Floating (backup) route:
+[RTB]ip route-static 192.168.1.0 255.255.255.0 10.0.12.1
+[RTB]ip route-static 192.168.1.0 255.255.255.0 20.0.12.1 preference 100
+
+# Default route:
+[RTA]ip route-static 0.0.0.0 0.0.0.0 10.0.12.2</code></pre>
+<b>سيناريو اللاب (R1 و R2 و R3) — خطوة بخطوة:</b>
+<div class="tw"><table>
+<tr><th>الراوتر</th><th>الواجهات</th></tr>
+<tr><td>R1</td><td>G0/0/0 = 10.0.13.1/24، G0/0/1 = 10.0.12.1/24، Loopback0 = 10.0.1.1/24</td></tr>
+<tr><td>R2</td><td>G0/0/1 = 10.0.12.2/24، G0/0/2 = 10.0.23.2/24، Loopback0 = 10.0.2.2/24</td></tr>
+<tr><td>R3</td><td>G0/0/0 = 10.0.13.3/24، G0/0/2 = 10.0.23.3/24، Loopback0 = 10.0.3.3/24</td></tr>
+</table></div>
+<ol>
+<li><b>Step 1:</b> اضبط الأسماء والـ IPs و loopbacks، وتحقق بـ <span class="en">display ip interface brief</span>، واعمل ping للجيران المباشرين.</li>
+<li><b>Step 2:</b> اختبر R2 ← 10.0.13.3 و 10.0.3.3: <b>يفشل</b> لأن ما في routes (الـ routing table ما فيها الشبكتين).</li>
+<li><b>Step 3:</b> على R2:
+<pre><code>[R2]ip route-static 10.0.13.0 24 10.0.23.3
+[R2]ip route-static 10.0.3.0 24 10.0.23.3      # preference 60 افتراضياً</code></pre></li>
+<li><b>Step 4 (backup/floating):</b> الـ preference = 80:
+<pre><code>[R1]ip route-static 10.0.3.0 24 10.0.13.3
+[R2]ip route-static 10.0.13.0 255.255.255.0 10.0.12.1 preference 80
+[R2]ip route-static 10.0.3.0 24 10.0.12.1 preference 80
+[R3]ip route-static 10.0.12.0 24 10.0.13.1</code></pre></li>
+<li><b>Step 5:</b> تحقق: الـ table فيها routes Static بـ Pre = 60. اختبر الاتصال R2 ↔ R3.</li>
+<li><b>Step 6:</b> اختبر الـ backup: <span class="en">[R2-GigabitEthernet0/0/2]shutdown</span>، وقارن الـ routing table: الـ next hop تغيّر لـ 10.0.12.1 والـ preference صار 80.</li>
+<li><b>Step 7:</b> <span class="en">undo shutdown</span> ثم تحقق من R1 ← 10.0.23.3: يفشل (R1 ما عنده route). الحل: default route: <span class="en">[R1]ip route-static 0.0.0.0 0.0.0.0 10.0.13.3</span>.</li>
+<li><b>Step 8:</b> backup default route (في الاتجاهين):
+<pre><code>[R1]ip route-static 0.0.0.0 0.0.0.0 10.0.12.2 preference 80
+[R3]ip route-static 10.0.12.0 24 10.0.23.2 preference 80</code></pre></li>
+<li><b>Step 9:</b> اختبر: اعمل <span class="en">shutdown</span> لـ G0/0/0 على R1 و R3، شوف جدول R1: الـ default route ظهر بـ Pre = 80، والـ <span class="en">ping 10.0.23.3</span> يشتغل. <span class="en">tracert 10.0.23.3</span> يبين أن الـ packets تعدّي عن طريق R2 (10.0.12.2).</li>
+</ol>
+<b>أسئلة متوقعة</b>
+<details><summary>ما ترتيب اتخاذ قرارات الـ routing؟ وماذا تمثل الـ preference؟</summary>1) longest match. 2) أقل preference. 3) أقل metric. الـ preference تمثل أولوية/وثوقية مصدر الـ route (Direct 0، OSPF 10، Static 60، RIP 100): الأقل أفضل.</details>
+<details><summary>ما الذي يجب تغييره ليتحول static route إلى floating static route؟</summary>تعطيه <b>preference أعلى</b> من الـ route الأساسي (مثلاً <span class="en">preference 100</span> بدل 60 الافتراضي).</details>
+<details><summary>ما network address المطلوب لتنفيذ default static route؟</summary><b>0.0.0.0</b> مع mask <b>0.0.0.0</b> (يعني <span class="en">ip route-static 0.0.0.0 0.0.0.0 next-hop</span>).</details>
+<details><summary>لو في routeين: 10.1.1.0/24 و 10.1.1.0/30 (كلاهما Static)، أي منهما يُستخدم لـ 10.1.1.2؟</summary>الـ /30 لأن longest match يُفحص قبل الـ preference.</details>
+<details><summary>ليش ما نقدر نعمل ping من R2 لـ 10.0.3.3 قبل الـ static route؟</summary>لأن جدول R2 ما فيه route للشبكة 10.0.3.0/24 فيُرمى الـ packet. ولازم R3 كذلك يعرف الطريق للرجوع (route للشبكة اللي فيها R2).</details>
+<details><summary>متى نحدد outbound interface ومتى next-hop في static route؟</summary>Serial/point-to-point: outbound interface. Ethernet (broadcast): next-hop.</details>
+<div class="box warn"><b class="t">غلطات شائعة</b>• نسيان إضافة الـ route العكسي (الرجوع). • نسيان <span class="en">undo shutdown</span> بعد الاختبار. • في الـ floating route: preference أقل من الأساسي (فيصير هو الأساسي!). • الخلط بين preference (بين البروتوكولات) و metric (داخل البروتوكول).</div>
+
+<!-- ================= LAB 7 ================= -->
+<h3>Lab 7: OSPF <span class="tag hot">اشرح بوضوح</span> <span class="tag">Quiz 2 ينتهي هنا</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+Lab 6 كامل (routing table، preference، static routes)، الـ multicast (L9، Lab 2)، وأمر <span class="en">network</span> مع wildcard (عكس الـ mask: mask 255.255.255.0 ← wildcard 0.0.0.255).</div>
+<b>احفظ:</b>
+<ul>
+<li><b>OSPF:</b> Interior Gateway Protocol (IGP) مبني على <b>link-state</b>. مزاياه: minimal routing traffic، rapid convergence، scalable، accurate metrics. بيشتغل حتى على MPLS.</li>
+<li><b>OSPF Convergence:</b> الراوترات تتبادل <b>LSAs (LSA flooding)</b> ← تبني <b>LSDB</b> ← تشغّل <b>SPF algorithm</b> ← تحصل على <b>Shortest Path Tree</b> ← تبني الـ <b>IP routing table</b>.</li>
+<li><b>Router ID:</b> 32 bit تعرّف كل راوتر (مثل 1.1.1.1). في اللاب نعيّنه يدوياً (عادة عنوان الـ loopback).</li>
+<li><b>Network types:</b> <b>Broadcast</b> (Ethernet — الافتراضي)، <b>Point-to-Point</b> (PPP و HDLC)، <b>NBMA</b> (ATM و Frame Relay — الافتراضي)، <b>Point-to-Multipoint</b>. تغيير النوع: <span class="en">ospf network-type p2p</span>.</li>
+<li><b>DR و BDR:</b> في الـ broadcast networks لتقليل عدد الـ adjacencies. الـ <b>BDR</b> يتحول DR لو الـ DR فشل.</li>
+<li><b>Neighbor vs Adjacent:</b> حالتا علاقة. كل الراوترات في الـ segment جيران (neighbors) و <b>2-Way</b>، لكن <b>adjacent</b> (Full) فقط مع DR و BDR.</li>
+<li><b>الـ DR election:</b> بناءً على <b>Priority</b> (الأعلى يفوز)، ولو تساوت فالأعلى <b>Router ID</b>. Priority = 0 ← <u>لا يشارك</u> في الانتخاب. <b>Non-preemptive</b>: لو جاء راوتر أعلى بعد الانتخاب ما ياخد مكان الـ DR.</li>
+<li><b>Hello packets:</b> لاكتشاف وصيانة الجيران. تحتوي: Router priority، DR، BDR، <b>Hello interval</b>، <b>Router dead interval</b>، Options، Neighbor.</li>
+<li><b>الحالات (Link State Establishment):</b> <b>Down ← Init ← 2-Way ← ExStart ← Exchange ← Loading ← Full</b> (+ Attempt في NBMA). Neighbor حتى 2-Way، Adjacent من ExStart لـ Full.</li>
+<li><b>Database sync:</b> يتفاوضون Master/Slave. <b>DD</b> (Database Description) تحمل LSA headers ← <b>LSR</b> (Link State Request) تطلب اللي ناقص ← <b>LSU</b> (Link State Update) تحمل الـ LSA كاملاً.</li>
+<li><b>Cost (Metric):</b> <b>10⁸ / bandwidth</b>. تعدّل بـ <span class="en">ospf cost 20</span> (على interface) أو <span class="en">bandwidth-reference 10000</span> (تحت <span class="en">ospf</span>) لتحسين الدقة مع الـ Gigabit.</li>
+<li><b>Areas:</b> <b>Single area</b> = LSDB واحدة (رقم أي area لكن <b>area 0</b> هو الموصى به). <b>Multi area</b> = LSDBs منفصلة تقلل أثر التغييرات.</li>
+<li><b>Authentication:</b> simple password أو cryptographic (MD5).</li>
+<li><b>Silent interface:</b> يمنع الـ interface من تكوين neighbor relationships (لا يرسل hellos).</li>
+<li><b>Timers الافتراضية:</b> Hello = <b>10</b> ثواني، Dead = <b>40</b> ثانية (4×Hello)، Poll 120، Retransmit 5.</li>
+<li><b>Multicast addresses:</b> <b>224.0.0.5</b> = كل راوترات OSPF (AllSPFRouters)، <b>224.0.0.6</b> = الـ DR و BDR (AllDRouters).</li>
+</ul>
+<b>أوامر OSPF:</b>
+<pre><code>[R1]ospf 1 router-id 10.0.1.1                 # process 1 + router ID (يدوي)
+[R1-ospf-1]area 0                             # (0 = 0.0.0.0)
+[R1-ospf-1-area-0.0.0.0]network 10.0.1.0 0.0.0.255      # wildcard مش mask!
+[R1-ospf-1-area-0.0.0.0]network 10.0.12.0 0.0.0.255
+[R1-ospf-1-area-0.0.0.0]network 10.0.13.0 0.0.0.255
+
+[R1-GigabitEthernet0/0/0]ospf cost 20
+[R1-GigabitEthernet0/0/0]ospf timer hello 15
+[R1-GigabitEthernet0/0/0]ospf timer dead 60
+[R1-GigabitEthernet0/0/0]ospf authentication-mode md5 1 huawei
+[R1-GigabitEthernet0/0/0]ospf network-type p2p
+[R1-ospf-1]silent-interface GigabitEthernet0/0/0
+[R1-ospf-1]bandwidth-reference 10000
+
+&lt;R1&gt;display ospf peer            &lt;R1&gt;display ospf peer brief
+&lt;R1&gt;display ospf interface GigabitEthernet 0/0/0
+&lt;R1&gt;display ip routing-table
+&lt;R1&gt;debugging ospf packet   (مع terminal debugging)</code></pre>
+<div class="box know"><b class="t">سيناريو اللاب</b>
+نفس العناوين الأساسية: R1 (G0/0/1 = 10.0.12.1، G0/0/0 = 10.0.13.1، Lo0 = 10.0.1.1)، R2 (G0/0/1 = 10.0.12.2، Lo0 = 10.0.2.2)، R3 (G0/0/0 = 10.0.13.3، Lo0 = 10.0.3.3، Lo2 = 172.16.0.1/24). كلهم <b>process 1، area 0</b>، وRouter ID = عنوان الـ Lo0 لكل واحد. <b>تأكد أن الـ State = Full</b> بـ <span class="en">display ospf peer</span>. لاحظ أن الـ 10.0.13.1 صار DR (non-preemptive).<br>
+<b>أخطاء تمنع الـ adjacency:</b> process ID مختلف بين الراوترات (يخلق LSDBs منفصلة)، نسيان الـ wildcard (استعمال mask بدله)، hello/dead timers غير متطابقة، authentication مختلف، area مختلف.</div>
+<b>أسئلة متوقعة</b>
+<details><summary>ما غرض الـ dead interval في OSPF header؟</summary>المدة التي ينتظرها الراوتر بدون أن يسمع Hello من جاره قبل أن يعتبره down (الافتراضي 40 ثانية = 4 × hello interval).</details>
+<details><summary>في broadcast network، ما الـ multicast address الذي يستمع إليه الـ DR و BDR لتحديثات الـ link state؟</summary><b>224.0.0.6</b> (AllDRouters). بينما 224.0.0.5 لكل راوترات OSPF. <span class="tag">224.0.0.6 معلومة معيارية مني؛ السلايد يظهر 224.0.0.5 في الـ debug</span></details>
+<details><summary>اشرح مراحل OSPF convergence.</summary>LSA flooding ← LSDB ← SPF ← Shortest Path Tree ← IP routing table.</details>
+<details><summary>رتّب حالات الـ neighbor من Down إلى Full.</summary>Down، Init، 2-Way، ExStart، Exchange، Loading، Full.</details>
+<details><summary>كيف يُنتخب الـ DR؟ وهل ممكن راوتر جديد بأولوية أعلى ياخد مكانه؟</summary>بالأعلى priority ثم الأعلى Router ID. Priority 0 لا يشارك. لا، الانتخاب non-preemptive.</details>
+<details><summary>كيف يحسب OSPF الـ cost؟ وكيف تحسّن الدقة؟</summary>cost = 10⁸ / bandwidth. للـ links السريعة (Gigabit) تستخدم <span class="en">bandwidth-reference</span> أكبر أو تضبط <span class="en">ospf cost</span> يدوياً.</details>
+<details><summary>ما الفرق بين neighbor و adjacent؟</summary>Neighbor: راوترات تتبادل hello (حتى 2-Way). Adjacent: وصلت لتزامن الـ LSDB (Full)؛ في broadcast networks تتكون فقط مع DR و BDR.</details>
+<details><summary>لماذا نستخدم DR/BDR؟ ولماذا Silent interface؟</summary>DR/BDR يقللان عدد الـ adjacencies في الـ Ethernet. Silent interface يمنع تكوين neighbors على interface (مثلاً متصل بـ users) مع الاستمرار في الإعلان عن الشبكة.</details>
+
+<!-- ================= LAB 8 ================= -->
+<h3>Lab 8: FTP + DHCP</h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+TCP ports (Lab 4)، الـ application layer (L4–L6) خصوصاً الـ client/server، وضبط IP (Lab 3).</div>
+<b>FTP — احفظ:</b>
+<ul>
+<li>تبادل ملفات بين مواقع بعيدة بغض النظر عن اختلاف نظام التخزين. مفيد في الـ backup واسترجاع الـ log files و configuration files.</li>
+<li>يعتمد على <b>اتصالين TCP</b>: <b>Control connection</b> (أوامر وردود، port <b>21</b>) و <b>Data connection</b> (نقل الملفات، port <b>20</b>).</li>
+<li><b>Transmission modes:</b> ASCII و Binary (الأفضل للملفات التنفيذية مثل <span class="en">.cc</span> و <span class="en">.zip</span>).</li>
+</ul>
+<pre><code># على الـ server (R1)
+[R1]ftp server enable
+[R1]set default ftp-directory flash:/
+[R1]aaa
+[R1-aaa]local-user huawei password cipher huawei123
+[R1-aaa]local-user huawei service-type ftp
+[R1-aaa]local-user huawei privilege level 15
+[R1-aaa]local-user huawei ftp-directory flash:
+[R1]display ftp-server                  # يعرض أنه شغال على TCP 21
+
+# على الـ client (R2)
+&lt;R2&gt;ftp 10.0.12.1                       # user: huawei / pass: huawei123
+[R2-ftp]dir
+[R2-ftp]binary
+[R2-ftp]get vrpcfg.zip                    # تحميل (لو الملف ما موجود: save على R1)
+[R2-ftp]put vrpnew.zip vrpnew2.zip        # رفع (مع اسم جديد)
+[R2-ftp]bye                               # إغلاق</code></pre>
+<b>DHCP — احفظ:</b>
+<ul>
+<li>الغرض: توزيع IP وإعدادات الشبكة مركزياً بدل الضبط اليدوي (متعب وبه أخطاء).</li>
+<li><b>3 آليات للتوزيع:</b> <b>Dynamic</b> (من pool مثلاً 192.168.1.10–252)، <b>Automatic</b>، <b>Manual</b> (عنوان محجوز لجهاز بعينه مثل 192.168.1.1).</li>
+<li><b>الرسائل:</b> DISCOVER (broadcast من الـ client لإيجاد servers)، OFFER (رد السيرفر بعرض)، REQUEST (الـ client يطلب العرض ويرفض العروض الباقية، أو يؤكد/يجدد)، ACK (تأكيد وتثبيت العنوان)، NAK (العنوان المطلوب ما ينفع)، RELEASE (الـ client يتخلى عن العنوان).</li>
+<li><b>عملية الحصول (DORA):</b> Discover <b>(broadcast)</b> ← Offer <b>(unicast)</b> ← Request <b>(broadcast)</b> ← ACK <b>(unicast)</b>.</li>
+<li><b>Lease renewal:</b> عند بقاء <b>50%</b> من مدة الـ lease: DHCP Request <b>unicast</b> للسيرفر ← ACK. لو ما نجح ← عند بقاء <b>12.5%</b> (Rebinding): Request <b>broadcast</b> ← ACK/NAK. لو انتهت المدة بدون تجديد ← يتحرر العنوان (Release).</li>
+<li><b>Address pools:</b> <b>Interface-based</b> (<span class="en">dhcp select interface</span>) أو <b>Global</b> (<span class="en">ip pool</span> + <span class="en">dhcp select global</span>).</li>
+</ul>
+<pre><code># Interface pool
+[Huawei]dhcp enable
+[Huawei]interface GigabitEthernet0/0/0
+[Huawei-GigabitEthernet0/0/0]ip address 10.1.1.1 24
+[Huawei-GigabitEthernet0/0/0]dhcp select interface
+[Huawei-GigabitEthernet0/0/0]dhcp server dns-list 10.1.1.2
+[Huawei-GigabitEthernet0/0/0]dhcp server excluded-ip-address 10.1.1.2
+[Huawei-GigabitEthernet0/0/0]dhcp server lease day 3
+[Huawei]display ip pool interface GigabitEthernet0/0/0
+
+# Global pool
+[Huawei]dhcp enable
+[Huawei]ip pool pool2
+[Huawei-ip-pool-pool2]network 10.2.2.0 mask 24
+[Huawei-ip-pool-pool2]gateway-list 10.2.2.1
+[Huawei-ip-pool-pool2]lease day 1
+[Huawei-ip-pool-pool2]quit
+[Huawei]interface GigabitEthernet0/0/1
+[Huawei-GigabitEthernet0/0/1]ip address 10.2.2.1 24
+[Huawei-GigabitEthernet0/0/1]dhcp select global
+[Huawei]display ip pool</code></pre>
+<b>أسئلة متوقعة</b>
+<details><summary>أي ports لازم تكون مفتوحة لتشغيل FTP؟</summary>TCP 21 (control) و TCP 20 (data).</details>
+<details><summary>مستخدم ما عنده صلاحية دخول أي working directory. ما الخطوات للحل؟</summary>تحقق من إعداد المستخدم في AAA: <span class="en">local-user … service-type ftp</span>، و <span class="en">ftp-directory</span> (تحديد المجلد، مثلاً flash:)، و <span class="en">privilege level</span> مناسب (مثلاً 3 أو 15)، وأن <span class="en">set default ftp-directory</span> مضبوط على الـ server.</details>
+<details><summary>أي عناوين IP تُستثنى عادة من الـ address pool؟</summary>العناوين الثابتة المحجوزة: الـ gateway، والـ DNS server، وأي servers/printers بعناوين static. (في اللاب استثنينا عنوان الـ DNS 10.1.1.2). <span class="tag">الصياغة العامة مني</span></details>
+<details><summary>ما الـ lease period الافتراضية؟</summary>يوم واحد (1 day). <span class="tag">إضافة مني بناءً على إعدادات Huawei؛ اللاب يضبط 3 أيام في interface pool ويوم في global pool</span></details>
+<details><summary>اشرح عملية DORA وحدد أي رسائل broadcast وأيها unicast.</summary>Discover (broadcast) ← Offer (unicast) ← Request (broadcast) ← ACK (unicast).</details>
+<details><summary>متى يحاول الـ client تجديد الـ lease؟</summary>عند بقاء 50% من المدة (unicast Request). لو فشل، عند بقاء 12.5% يعمل rebinding (broadcast Request).</details>
+<details><summary>الفرق بين interface pool و global pool؟</summary>Interface pool: يُعرَّف تحت الـ interface نفسه (<span class="en">dhcp select interface</span>)، والشبكة تؤخذ من عنوان الـ interface. Global pool: يُعرَّف بـ <span class="en">ip pool</span> مع network/gateway ثم يُفعّل على الـ interface بـ <span class="en">dhcp select global</span>.</details>
+
+<!-- ================= LAB 9 ================= -->
+<h3>Lab 9: مراجعة شاملة (4 Topologies) <span class="tag hot">غالباً هو شكل الـ Practical</span></h3>
+<div class="box know"><b class="t">لازم تكون عارف قبل ما تدخل</b>
+كل اللابات من 3 لـ 8. Lab 9 هو إعادة لأربع سيناريوهات سابقة، وعشان كده هو أفضل تمرين قبل الـ Practical Exam. الأجهزة: AR 2220 (router) و S3700 (switch)، وشبكات P2P و broadcast.</div>
+<div class="tw"><table>
+<tr><th>Topology</th><th>المطلوب</th><th>الأوامر الأساسية</th></tr>
+<tr><td><b>1: Device navigation + connectivity</b></td><td>clock + timezone، console password (+ idle-timeout 20 0)، header messages، IP + description للـ interface (UP UP)، ping بين R1 و R3</td><td><span class="en">clock timezone/datetime</span>، <span class="en">user-interface console 0</span>، <span class="en">header login/shell</span>، <span class="en">ip address</span>، <span class="en">description</span>، <span class="en">ping 10.0.13.3</span></td></tr>
+<tr><td><b>2: FTP</b></td><td>R1 = server، R2 = client، ping، ftp server enable، مستخدم AAA، get/put</td><td><span class="en">ftp server enable</span>، <span class="en">aaa / local-user</span>، <span class="en">ftp 10.0.12.1</span>، <span class="en">binary</span>، <span class="en">get/put</span>، <span class="en">bye</span></td></tr>
+<tr><td><b>3: Static + default routes</b></td><td>نفس سيناريو Lab 6 (R1/R2/R3): static، floating (pref 80)، default، backup default، اختبار بـ shutdown وtracert</td><td><span class="en">ip route-static</span>، <span class="en">preference 80</span>، <span class="en">display ip routing-table</span>، <span class="en">tracert</span></td></tr>
+<tr><td><b>4: OSPF single area</b></td><td>نفس سيناريو Lab 7: area 0، process 1، router IDs، تحقق Full، تعديل hello/dead (15/60)</td><td><span class="en">ospf 1 router-id</span>، <span class="en">area 0</span>، <span class="en">network … wildcard</span>، <span class="en">display ospf peer</span>، <span class="en">ospf timer hello/dead</span></td></tr>
+</table></div>
+<div class="box"><b class="t">طريقة التدريب الأفضل للـ Practical</b>
+1) افتح eNSP جديد وابني Topology 3 من الصفر بدون النظر للسلايدات، وراجع بعدها. 2) كرر مع Topology 4 (OSPF). 3) بعد كل واحد اعمل <span class="en">display ip routing-table</span> و <span class="en">display ip interface brief</span> وافهم كل عمود. 4) تعلّم التحقق: ping بين كل الأطراف + tracert. 5) تعوّد تكتب <span class="en">save</span> في الآخر. 6) جرّب تكسر شيء (shutdown) وتشوف الـ backup route تشتغل. هذا النوع من الأسئلة ("ماذا يحدث لو...") هو الأكثر ورودًا في الـ practical عادةً <span class="tag">تقدير مني</span>.</div>
+<h2 id="drill">الجزء الثالث: تمارين للتدريب (بحلول، حاول تحل قبل ما تفتح)</h2>
+<p>التمارين دي من عندي، بنفس نوع ومنطق مسائل السلايدات. الأرقام اتحسبت وتم التأكد منها.</p>
+
+<h3>أ) Delay و Throughput</h3>
+<details><summary>1) packet حجمه 1500 bytes يُرسل على link سرعته 10 Mbps، طول الـ link 2000 km وسرعة الانتشار 2×10⁸ m/s. احسب d_trans و d_prop.</summary>
+L = 1500×8 = 12,000 bits. d_trans = 12,000 / 10⁷ = <b>0.0012 s = 1.2 ms</b>.<br>
+d_prop = 2×10⁶ / 2×10⁸ = <b>0.01 s = 10 ms</b>.</details>
+<details><summary>2) 10 packets وصلوا الـ queue في نفس اللحظة، كل واحد 4000 bits، والـ link 2 Mbps. كم queuing delay للـ packet رقم 6؟</summary>
+(6−1) × (4000 / 2×10⁶) = 5 × 0.002 = <b>0.01 s = 10 ms</b>.</details>
+<details><summary>3) مصدر Rs = 5 Mbps، link وسيط R1 = 2 Mbps، وlink للمستقبل Rc = 10 Mbps. كم الـ throughput؟</summary>min(5, 2, 10) = <b>2 Mbps</b> (الـ bottleneck).</details>
+<details><summary>4) ملف 8 Mbit يُرسل على مسار فيه hopين (store-and-forward) كل link 4 Mbps. كم وقت الإرسال (إهمال الـ propagation)؟</summary>
+L/R = 8/4 = 2 s لكل hop ← <b>4 s</b> على hopين.</details>
+
+<h3>ب) HTTP و RTT</h3>
+<details><summary>5) صفحة فيها base file و 20 صورة. احسب RTT في الحالات الأربع (parallel = 5 connections).</summary>
+Non-persistent بدون parallel: 2 + 2×20 = <b>42</b>.<br>
+Non-persistent مع 5 parallel: 2 + 2×(20/5) = 2 + 8 = <b>10</b>.<br>
+Persistent بدون pipelining: 2 + 20 = <b>22</b>.<br>
+Persistent مع pipelining: 2 + 1 = <b>3</b>.</details>
+
+<h3>ج) Checksum</h3>
+<details><summary>6) احسب 8-bit checksum للكلمتين: 10110011 و 01101110.</summary>
+10110011 + 01101110 = 1 00100001 (فيه carry). نرجّع الـ carry: 00100001 + 1 = <b>00100010</b>. نعمل complement: <b>11011101</b>. المستقبل يجمع الكلمتين + الـ checksum: 00100010 + 11011101 = 11111111 ← كلها 1 = سليم.</details>
+<details><summary>7) احسب 16-bit checksum: 1110011001100110 و 1101010101010101 (مثال السلايد).</summary>
+المجموع بعد wrap = 1011101110111100، والـ checksum (complement) = <b>0100010001000011</b>.</details>
+
+<h3>د) Parity و CRC</h3>
+<details><summary>8) استخدم even parity: الداتا 1011001. ما الـ parity bit؟ وماذا لو وصلت 1011101 مع نفس الـ parity؟</summary>
+عدد الـ 1s في 1011001 = 4 (زوجي) ← parity bit = <b>0</b>. 1011101 فيها 5 واحدات + parity 0 = عدد فردي ← يُكتشف الخطأ (single-bit error).</details>
+<details><summary>9) 2D parity (even). الجدول 3 صفوف × 4 أعمدة داتا: 1011 / 0110 / 1100. احسب parity الصفوف والأعمدة.</summary>
+Row parity: 1011 ← 1 (ثلاث 1s) | 0110 ← 0 | 1100 ← 0.<br>
+Column parity: العمود 1: 1,0,1 ← 0 | العمود 2: 0,1,1 ← 0 | العمود 3: 1,1,0 ← 0 | العمود 4: 1,0,0 ← 1.<br>
+الركن (parity of parity): نحسب parity عمود الـ row-parities (1,0,0) فيعطي <b>1</b>، وهو نفسه parity صف الـ column-parities (0,0,0,1) = <b>1</b> (متطابقان).<br>
+لو انقلب bit واحد: الصف والعمود المتقاطعان يعطيان parity خطأ ← تحدد مكانه وتصححه.</details>
+<details><summary>10) CRC: D = 1101011111، G = 10011. احسب R و الـ codeword.</summary>
+k = 5 ← نضيف 4 أصفار. القسمة modulo-2 تعطي <b>R = 0010</b>. الـ codeword = <b>11010111110010</b> (14 bit = n + k − 1 = 10 + 4).</details>
+<details><summary>11) في CRC، D = 101110، G = 1001: كم طول الـ codeword وطول R؟</summary>n = 6، k = 4 ← R = k−1 = <b>3 bits</b>، والـ codeword = n + k − 1 = <b>9 bits</b>.</details>
+
+<h3>هـ) IP و Subnetting و Longest Prefix</h3>
+<details><summary>12) IP 192.168.10.77/26. حدد الـ network و broadcast وأول/آخر host وعدد الـ hosts.</summary>
+/26 ← n = 6 ← block size = 64. 77 يقع في الـ block 64–127. Network = <b>192.168.10.64</b>، Broadcast = <b>192.168.10.127</b>، أول host = <b>.65</b>، آخر host = <b>.126</b>، عدد الـ hosts = 2⁶−2 = <b>62</b>.</details>
+<details><summary>13) نحتاج 5 subnets من 10.0.0.0/24. ما الـ mask وكم host في كل subnet؟</summary>
+2³ = 8 ≥ 5 ← نستلف 3 bits ← <b>/27 (255.255.255.224)</b> ← 30 host لكل subnet. Subnets: .0 و .32 و .64 و .96 و .128 و .160 و .192 و .224.</details>
+<details><summary>14) Forwarding table: 11001000 00010111 00010*** → 0، 11001000 00010111 00011000 → 1، 11001000 00010111 00011*** → 2، otherwise → 3. حدد الـ interface لـ DA = 11001000 00010111 00011100 00000001.</summary>
+يطابق الثالث (00011***) فقط، لأن الثاني يتطلب 00011000 والعنوان فيه 00011100. ← <b>Interface 2</b>.</details>
+<details><summary>15) أي class لكل من: 10.5.6.7، 130.1.1.1، 200.1.1.1، 230.1.1.1؟ وأيها private؟</summary>
+10.x ← A (private)، 130.x ← B (public)، 200.x ← C (public)، 230.x ← D (multicast). الـ private فقط 10.5.6.7 من القائمة.</details>
+<details><summary>16) كم host صالح في شبكة 172.16.0.0/20؟</summary>n = 12 ← 2¹² − 2 = <b>4094</b>.</details>
+
+<h2 id="cheat">الجزء الرابع: Cheat Sheet</h2>
+
+<h3>جداول الحفظ السريع (قارن بين...)</h3>
+<div class="tw"><table>
+<tr><th>موضوع</th><th>الحاجة لازم تذكرها</th></tr>
+<tr><td>TCP</td><td>reliable، in-order، flow + congestion control، connection setup، header 20 bytes</td></tr>
+<tr><td>UDP</td><td>unreliable، unordered، بدون connection، header 8 bytes، بس checksum</td></tr>
+<tr><td>HTTP / SMTP</td><td>HTTP: pull، port 80. SMTP: push، port 25، 7-bit ASCII، persistent</td></tr>
+<tr><td>POP / IMAP</td><td>POP: authorization، stateless. IMAP: على السيرفر، folders، state محفوظ</td></tr>
+<tr><td>Persistent / Non-persistent</td><td>Persistent: connection واحد. Non: 2 RTT لكل object</td></tr>
+<tr><td>Flow / Congestion</td><td>Flow يحمي المستقبل (rwnd). Congestion يحمي الشبكة (slow start / avoidance / detection)</td></tr>
+<tr><td>Routing / Forwarding</td><td>Routing = control plane، خوارزميات، المسار الكامل. Forwarding = data plane، محلي، input ← output</td></tr>
+<tr><td>Switch / Router</td><td>Switch: collision domains منفصلة، نفس broadcast domain، MAC table. Router: broadcast domains منفصلة، routing table</td></tr>
+<tr><td>Ethernet II / 802.3</td><td>Type ≥ 1536 (0x0600) / Length ≤ 1500 (0x05DC)</td></tr>
+<tr><td>Preference</td><td>Direct 0 &lt; OSPF 10 &lt; Static 60 &lt; RIP 100 (الأقل أفضل)</td></tr>
+<tr><td>Ports</td><td>FTP 20/21، SSH (إضافة) 22، Telnet 23، SMTP 25، HTTP 80</td></tr>
+<tr><td>IP Protocol field</td><td>TCP 0x06، UDP 0x11، ICMP 0x01</td></tr>
+<tr><td>Ethernet Type</td><td>IP 0x0800، ARP 0x0806</td></tr>
+<tr><td>Multicast OSPF</td><td>224.0.0.5 (all OSPF)، 224.0.0.6 (DR/BDR)</td></tr>
+<tr><td>Delay formulas</td><td>d_trans = L/R، d_prop = d/s، d_queue(N) = (N−1)L/R</td></tr>
+<tr><td>Subnets / hosts</td><td>hosts = 2ⁿ−2 | subnets = 2^(bits مستلفة)</td></tr>
+</table></div>
+
+<h3>أوامر Huawei VRP (ورقة غش للـ Practical)</h3>
+<div class="tw"><table>
+<tr><th>الهدف</th><th>الأمر</th><th>الـ view</th></tr>
+<tr><td>دخول system view</td><td class="en">system-view</td><td>User</td></tr>
+<tr><td>الرجوع لـ user view</td><td class="en">Ctrl+Z (أو return)</td><td>أي view</td></tr>
+<tr><td>اسم الجهاز</td><td class="en">sysname R1</td><td>System</td></tr>
+<tr><td>ضبط الوقت</td><td class="en">clock timezone Local add 08:00:00 / clock datetime 12:00:00 2016-03-11</td><td>User</td></tr>
+<tr><td>رسائل الدخول</td><td class="en">header login information "..." / header shell information "..."</td><td>System</td></tr>
+<tr><td>Console password</td><td class="en">user-interface console 0 → authentication-mode password → set authentication password cipher xxx → idle-timeout 20 0</td><td>System</td></tr>
+<tr><td>Telnet VTY</td><td class="en">user-interface vty 0 4 → authentication-mode password → set authentication password cipher xxx</td><td>System</td></tr>
+<tr><td>Interface IP</td><td class="en">interface GigabitEthernet 0/0/0 → ip address 10.0.13.1 24 → description ...</td><td>System ثم Interface</td></tr>
+<tr><td>Loopback</td><td class="en">interface loopback 0 → ip address 10.0.1.1 24</td><td>System</td></tr>
+<tr><td>Shutdown / تشغيل</td><td class="en">shutdown / undo shutdown</td><td>Interface</td></tr>
+<tr><td>Switch interface</td><td class="en">undo negotiation auto → duplex full → speed 100</td><td>Interface</td></tr>
+<tr><td>Static route</td><td class="en">ip route-static 10.0.3.0 24 10.0.23.3 [preference 80]</td><td>System</td></tr>
+<tr><td>Default route</td><td class="en">ip route-static 0.0.0.0 0.0.0.0 10.0.13.3</td><td>System</td></tr>
+<tr><td>OSPF</td><td class="en">ospf 1 router-id 1.1.1.1 → area 0 → network 10.0.12.0 0.0.0.255</td><td>System</td></tr>
+<tr><td>OSPF timers</td><td class="en">ospf timer hello 15 / ospf timer dead 60 (على interface)</td><td>Interface</td></tr>
+<tr><td>FTP server</td><td class="en">ftp server enable → set default ftp-directory flash:/ → aaa → local-user ... service-type ftp, privilege level 15, ftp-directory flash:</td><td>System/AAA</td></tr>
+<tr><td>DHCP interface pool</td><td class="en">dhcp enable → (interface) dhcp select interface, dhcp server dns-list, dhcp server excluded-ip-address, dhcp server lease day 3</td><td>System/Interface</td></tr>
+<tr><td>DHCP global pool</td><td class="en">dhcp enable → ip pool X → network .. mask 24, gateway-list .., lease day 1 → (interface) dhcp select global</td><td>System/Pool</td></tr>
+<tr><td>التحقق</td><td class="en">display ip interface brief | display ip routing-table | display ospf peer [brief] | display interface G0/0/0 | display this | display current-configuration | display saved-configuration | display clock | display version | display ip pool | display ftp-server</td><td>أي view</td></tr>
+<tr><td>اختبار</td><td class="en">ping x.x.x.x | tracert x.x.x.x | telnet x.x.x.x | ftp x.x.x.x</td><td>User</td></tr>
+<tr><td>حفظ وإعادة تشغيل</td><td class="en">save | reset saved-configuration | reboot | dir</td><td>User</td></tr>
+<tr><td>على الـ PC (eNSP)</td><td class="en">arp -a | ping</td><td>PC Command</td></tr>
+</table></div>
+
+<h3>روتين الأسبوع الأخير قبل الامتحان</h3>
+<ol>
+<li><b>اليوم -7 إلى -5:</b> محاضرات 1–6 (نظري). اقرأ ملخصها هنا، وجاوب أسئلتها بدون ما تفتح الإجابة.</li>
+<li><b>اليوم -4 إلى -3:</b> محاضرات 7–10 + كل الحسابات (الجزء الثالث).</li>
+<li><b>اليوم -3 إلى -1:</b> اللابات في eNSP: بناء من الصفر (Lab 9). كل topology مرتين.</li>
+<li><b>آخر ليلة:</b> جداول "قارن بين" + الـ Cheat Sheet فقط. ما تبدأ أي حاجة جديدة.</li>
+<li><b>في الامتحان:</b> في الحسابات اكتب القانون أولاً ثم التعويض ثم النتيجة بالوحدة. الدكتورة غالباً بتدي درجات على الخطوات حتى لو الناتج غلط (<span class="tag">افتراض مني، اسألها</span>).</li>
+</ol>
+
+<div class="box warn"><b class="t">تنبيهات أخيرة</b>
+• بعض السلايدات فيها أخطاء مطبعية (مثل "802.111" بدل 802.11، و"22 subnets" بدل 2² = 4، وجملة أن Wi-Fi يعمل على licensed spectrum، والصحيح أنه unlicensed). في الامتحان اتبع إجابة الدكتورة، لكن اعرف الصحيح.<br>
+• ما تحفظ أرقام IPs اللابات بدون فهم. الامتحان ممكن يغير الأرقام والـ topology.<br>
+• اسأل الـ TA عن: شكل الـ Practical، وهل يشمل Telnet/FTP/DHCP، وهل في أسئلة على Wireshark.
+</div>
+</main>
+<script>
+window.addEventListener('beforeprint',function(){document.querySelectorAll('details').forEach(function(d){d.open=true;});});
+</script>
+</body>
+</html>

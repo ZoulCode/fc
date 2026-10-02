@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>شرح SAAD: المحاضرة 3 + لاب 3</title>
+<style>
+:root{--bg:#fff;--ink:#17202a;--mut:#5b6773;--line:#d9e0e6;--soft:#f2f6f8;--acc:#0f5c63;--acc2:#b4472f;--ok:#1d6b3a;--code:#101820;--codeink:#e6edf3}
+@media (prefers-color-scheme:dark){:root{--bg:#10171c;--ink:#e6edf1;--mut:#9fb0bc;--line:#2a3640;--soft:#18222a;--acc:#5fc4cc;--acc2:#f0907a;--ok:#6fd08c;--code:#0a0f13;--codeink:#e6edf3}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,"Noto Sans Arabic",system-ui,sans-serif;line-height:1.9;font-size:17px}
+.wrap{max-width:880px;margin:0 auto;padding:24px 18px 80px}
+h1{font-size:1.9rem;line-height:1.4;margin:.2em 0}
+h2{font-size:1.4rem;margin:2.4em 0 .5em;padding:.45em .8em;background:var(--acc);color:#fff;border-radius:8px}
+h2.lab{background:var(--acc2)}
+h3{font-size:1.12rem;margin:1.6em 0 .3em;color:var(--acc);border-bottom:2px solid var(--line);padding-bottom:.15em}
+h2.lab ~ h3{color:var(--acc2)}
+p{margin:.55em 0}
+ul,ol{padding-inline-start:1.4em;margin:.4em 0}
+li{margin:.25em 0}
+code{direction:ltr;unicode-bidi:isolate;font-family:Consolas,"Courier New",monospace;background:var(--soft);padding:.05em .4em;border-radius:4px;font-size:.9em;border:1px solid var(--line)}
+pre{direction:ltr;text-align:left;background:var(--code);color:var(--codeink);padding:12px 14px;border-radius:8px;overflow-x:auto;font-size:.88rem;line-height:1.55;margin:.7em 0}
+pre code{background:none;border:0;padding:0;color:inherit}
+.box{background:var(--soft);border:1px solid var(--line);border-inline-start:5px solid var(--acc);border-radius:8px;padding:10px 16px;margin:12px 0}
+.box.warn{border-inline-start-color:var(--acc2)}
+.box.ok{border-inline-start-color:var(--ok)}
+.box b.t{display:block;margin-bottom:.15em}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.95rem;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:start;vertical-align:top}
+th{background:var(--soft)}
+details{border:1px solid var(--line);border-radius:8px;margin:8px 0}
+summary{cursor:pointer;padding:9px 14px;font-weight:600}
+details[open]>summary{background:var(--soft);border-bottom:1px solid var(--line)}
+details .a{padding:8px 16px 10px}
+nav{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px 18px;margin:14px 0}
+nav a{color:var(--acc);font-weight:600;text-decoration:none;margin-inline-end:14px;display:inline-block}
+.tag{font-size:.78rem;padding:0 .55em;border:1px solid var(--acc2);color:var(--acc2);border-radius:99px;margin-inline-start:.3em}
+@media print{body{font-size:12.5px}nav{display:none}details .a{display:block}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>شرح محاضرة ولاب: الجزء الثاني</h1>
+<p>المحاضرة 3 (Requirements) ← لاب 3 (Conflicts وRebase وStash).</p>
+<nav><a href="#l3">محاضرة 3</a><a href="#b3">لاب 3</a></nav>
+
+<!-- ================= LECTURE 3 ================= -->
+<h2 id="l3">المحاضرة 3: Requirements (المتطلبات)</h2>
+
+<h3>الفكرة الكبيرة</h3>
+<p>قبل ما تبني أي نظام لازم تعرف <b>بالظبط شنو المطلوب</b>. أغلب فشل المشاريع سببه إن الناس فهموا المطلوب غلط. المتطلبات هي الأساس اللي كل المراحل بعده بتبنى عليه.</p>
+
+<h3>شنو هو الـ Requirement؟</h3>
+<p>تمثيل قابل للاستخدام لـ <b>need</b> (حاجة). وهو بيحدد واحد من أربعة:</p>
+<table>
+<tr><th>يحدد</th><th>مثال من الشرائح</th></tr>
+<tr><td><b>Feature</b> لازم الحل يتيحه</td><td>Cloud Access</td></tr>
+<tr><td><b>Function</b> لازم الحل ينفذها</td><td>Calculate Savings</td></tr>
+<tr><td><b>Fact</b> لازم الحل يفرضه</td><td>الالتزام باللوائح والقوانين</td></tr>
+<tr><td><b>Quality</b> لازم الحل يحققها</td><td>فتح الملف في ثانية واحدة</td></tr>
+</table>
+
+<h3>تصنيف المتطلبات (أربعة أنواع)</h3>
+<table>
+<tr><th>النوع</th><th>الفكرة</th><th>مثال</th></tr>
+<tr><td><b>Business</b></td><td>أهداف عليا، بتجاوب "<b>لماذا</b> المشروع مطلوب؟". بيحددها المستوى التنفيذي في وثيقة <b>BRD</b> (Business Requirements Document)</td><td>"المستشفى يحتاج تقليل زمن انتظار المرضى"</td></tr>
+<tr><td><b>Stakeholder</b></td><td>احتياجات ورغبات stakeholder وكيف حيتفاعل مع الحل. هي <b>الجسر</b> بين Business وSolution. بتقول <b>"ما المطلوب"</b> مش <b>"كيف"</b></td><td>"As a doctor, I need to see a patient's history so I can decide treatment"</td></tr>
+<tr><td><b>Solution</b></td><td>خصائص محددة للحل. بتنقسم لـ Functional وNon-functional</td><td>"Calculate total charges including delivery and taxes"</td></tr>
+<tr><td><b>Transition</b></td><td>قدرات <b>مؤقتة</b> لنقل المؤسسة من الوضع الحالي (as-is) للمستقبلي (to-be). بتتعلق بتحويل البيانات والتدريب واستمرارية العمل. ما محتاجة لما النظام يدخل production</td><td>"Sales personnel must attend a 2-day program قبل استخدام النظام" و"البيانات القديمة تبقى في النظامين لنهاية الربع الأول"</td></tr>
+</table>
+<div class="box ok"><b class="t">طريقة تفرّق بيها</b>اسأل: "ليه؟" ← Business. "منو محتاج شنو؟" ← Stakeholder. "النظام لازم يعمل/يكون شنو؟" ← Solution. "كيف ننتقل من القديم للجديد؟" ← Transition.</div>
+
+<h3>Functional مقابل Non-functional</h3>
+<table>
+<tr><th>Functional</th><th>Non-functional (NFR)</th></tr>
+<tr><td>خدمات بيقدمها النظام وكيف يتفاعل مع مدخلات معينة. ممكن تذكر كمان ما <b>لا</b> يجب أن يفعله</td><td>قيود على الخدمات: زمن، عملية التطوير، معايير. غالباً بتنطبق على <b>النظام كله</b> مش على feature واحد</td></tr>
+</table>
+<p>مثال نظام Mentcare (من الشرائح):</p>
+<ul>
+<li>"المستخدم يقدر يبحث في قوائم المواعيد لكل العيادات."</li>
+<li>"النظام يولد كل يوم لكل عيادة قائمة بالمرضى المتوقع حضورهم."</li>
+<li>"كل موظف يتعرف عليه برقم موظف من 8 أرقام."</li>
+</ul>
+<h3>مشكلة الغموض (Imprecision)</h3>
+<p>لو المتطلب ما واضح، المطور والمستخدم بيفهموه بشكلين مختلفين. مثال كلمة "search": المستخدم يقصد البحث عن اسم مريض في كل العيادات، والمطور يفهمها بحث داخل عيادة واحدة يختارها المستخدم الأول. النتيجة نظام غير مطلوب.</p>
+<p>لذلك المتطلبات لازم تكون <b>3Cs</b>: <b>Clear</b> (واضحة)، <b>Complete</b> (كاملة)، <b>Consistent</b> (متسقة بدون تناقض). عملياً صعب تحققها كلها بسبب التعقيد.</p>
+
+<h3>أنواع الـ Functional Requirements (تسعة)</h3>
+<table>
+<tr><th>النوع</th><th>الفكرة</th></tr>
+<tr><td>Authentication</td><td>التحقق من هوية المستخدم قبل الدخول (باسورد، بصمة، multifactor)</td></tr>
+<tr><td>Authorization levels</td><td>مستويات الصلاحيات (admin صلاحيات كاملة، مستخدم عادي صلاحيات محدودة)</td></tr>
+<tr><td>Data processing</td><td>إدخال البيانات والتحقق منها وتخزينها واسترجاعها</td></tr>
+<tr><td>UI/UX</td><td>التصميم والتفاعل بحيث يكون النظام سهل الاستخدام</td></tr>
+<tr><td>Reporting</td><td>توليد التقارير (مصادر البيانات، الصيغ)</td></tr>
+<tr><td>System integration</td><td>التفاعل والتكامل مع أنظمة أو خدمات خارجية</td></tr>
+<tr><td>Transaction handling</td><td>التعامل مع المعاملات (مهم في الأنظمة المالية)</td></tr>
+<tr><td>Error handling and logging</td><td>رسائل الخطأ وخطوات المعالجة وسجلات النظام</td></tr>
+<tr><td>Backup and recovery</td><td>النسخ الاحتياطي واستعادة النظام عند الفشل</td></tr>
+</table>
+
+<h3>Functional Decomposition وWBS</h3>
+<p>تفكيك نظام معقد لأجزاء أبسط تحلل كل جزء على حدة، والناتج رسم اسمه <b>Work Breakdown Structure (WBS)</b>. التسلسل:</p>
+<pre><code>High-level Function  ->  Subfunction  ->  Process  ->  Activity</code></pre>
+<p>نفكك لحد ما الجزء ما يتفكك أكتر. مثال من عندي <span class="tag">مثال توضيحي</span>:</p>
+<pre><code>Manage Orders (High-level function)
+ ├─ Place Order (Subfunction)
+ │    ├─ Validate Cart (Process)
+ │    └─ Process Payment (Process)
+ │         └─ Charge credit card (Activity)
+ └─ Track Order (Subfunction)</code></pre>
+
+<h3>Non-functional Requirements بالتفصيل</h3>
+<p>بتحدد خصائص وقيود مثل الاعتمادية (reliability)، زمن الاستجابة، التخزين، قدرات الـ I/O. <b>مهمة زي الـ functional</b>: لو ما اتحققت ممكن النظام يبقى ما يفيد (نظام صح لكن بياخد دقيقة لكل نقرة ما حد يستخدمه). وبتأثر في معمارية النظام كله.</p>
+
+<h3>Goal مقابل Verifiable NFR</h3>
+<table>
+<tr><th>Goal (هدف عام، ما يتختبر)</th><th>Verifiable NFR (قابل للاختبار بقياس)</th></tr>
+<tr><td>"النظام سهل الاستخدام للطاقم الطبي ويقلل أخطاء المستخدم"</td><td>"الطاقم يقدر يستخدم كل الوظائف بعد <b>4 ساعات</b> تدريب، ومتوسط الأخطاء <b>لا يتعدى 2 في الساعة</b>"</td></tr>
+</table>
+<p>القاعدة: لازم يكون في <b>رقم</b> تقدر تختبره. أي كلمة زي "fast" و"easy" و"reasonable" و"secure" لوحدها = goal غامض.</p>
+
+<h3>تصنيف الـ NFR (ثلاثة)</h3>
+<table>
+<tr><th>النوع</th><th>الفكرة</th><th>مثال Mentcare</th></tr>
+<tr><td><b>Product</b></td><td>سلوك المنتج: سرعة، reliability</td><td>"متاح لكل العيادات الإثنين–الجمعة 08:30–17:30، وفترة التوقف في أي يوم ما تتعدى 5 ثواني"</td></tr>
+<tr><td><b>Organisational</b></td><td>نتيجة سياسات وإجراءات المؤسسة (معايير العملية، متطلبات التنفيذ)</td><td>"المستخدمون يتحققون بواسطة بطاقة الهوية من الهيئة الصحية"</td></tr>
+<tr><td><b>External</b></td><td>عوامل خارج النظام وعملية تطويره (تشريعات، interoperability)</td><td>"النظام يطبق أحكام خصوصية المريض الواردة في HStan-03-2006-priv"</td></tr>
+</table>
+
+<h3>مقاييس الـ NFR (من الشرائح)</h3>
+<table>
+<tr><th>الخاصية</th><th>المقياس</th></tr>
+<tr><td>Speed</td><td>معاملات في الثانية، زمن استجابة المستخدم/الحدث، زمن تحديث الشاشة</td></tr>
+<tr><td>Size</td><td>ميجابايت</td></tr>
+<tr><td>Ease of use</td><td>زمن التدريب، عدد شاشات المساعدة</td></tr>
+<tr><td>Reliability</td><td>متوسط الوقت حتى الفشل (MTTF)، احتمال عدم التوفر، معدل حدوث الفشل</td></tr>
+<tr><td>Availability / Robustness</td><td>زمن إعادة التشغيل بعد الفشل، نسبة الأحداث التي تسبب فشلاً، احتمال تلف البيانات عند الفشل</td></tr>
+</table>
+
+<h3>FURPS وFURPS+</h3>
+<p>طريقة لتصنيف الـ NFR. الحروف:</p>
+<ul>
+<li><b>F</b>unctionality: الوظائف.</li>
+<li><b>U</b>sability: الواجهة، المساعدة، التوثيق.</li>
+<li><b>R</b>eliability: اعتمادية النظام وخطر انهياره.</li>
+<li><b>P</b>erformance: قياس الحمل مثل throughput وزمن الاستجابة.</li>
+<li><b>S</b>upportability: التركيب والإعداد والمراقبة والصيانة.</li>
+</ul>
+<p><b>الـ "+"</b> بتضيف: Design constraints (قيود على الـ hardware والـ software)، Implementation (لغات وأدوات)، Interface (التفاعل بين الأنظمة)، Physical (حجم، وزن، استهلاك كهرباء، ظروف التشغيل).</p>
+
+<h3>Perfect Technology</h3>
+<div class="box"><b class="t">القاعدة</b>تخيل إن التقنية مثالية (سرعة لا نهائية، ما في أعطال). لو المتطلب <b>لسه مطلوب</b> حتى مع تقنية مثالية ← <b>functional</b>. لو اختفت الحاجة ليه بسبب التقنية المثالية ← <b>non-functional</b>.</div>
+<p>مثال من عندي <span class="tag">توضيحي</span>: "النظام يتحقق من باسورد المستخدم" سيظل مطلوباً حتى مع تقنية مثالية ← functional. "الباسورد يتحقق في أقل من ثانية" ما نحتاجه مع تقنية مثالية (سرعتها لانهائية) ← non-functional.</p>
+
+<h3>Elicitation Tasks (أربع مهام)</h3>
+<ol>
+<li>Prepare for Elicitation (التحضير).</li>
+<li>Conduct Elicitation (التنفيذ).</li>
+<li>Confirm Elicitation Results (تأكيد النتائج).</li>
+<li>Manage Stakeholder Collaboration (إدارة التعاون مع stakeholders).</li>
+</ol>
+<p>الـ <b>Mind map</b> أداة بتساعد تنظم الأفكار حول الموضوع المركزي.</p>
+
+<h3>إدارة تعاون الـ Stakeholders</h3>
+<ul>
+<li><b>Stakeholder lists:</b> قائمة بيهم.</li>
+<li><b>Stakeholder maps:</b> مثل <b>Stakeholder Matrix</b>: بتقابل مستوى <b>influence</b> (التأثير) بمستوى <b>impact</b> (التأثر).</li>
+<li><b>Persona:</b> شخصية خيالية تمثل فئة مستخدمين، بخصائص نموذجية وقصة قصيرة (مثال الشرائح: Bob مسؤول نظم في IBM بنيويورك، وFritz أب عمره 50 لسباح ألماني).</li>
+<li><b>Proto-persona:</b> persona مبنية على معلومات محدودة، بتتعمل كتمرين جماعي للفريق. أقل دقة من persona مبنية على دراسات مستخدمين، <b>لكنها أفضل من لا شيء</b>.</li>
+</ul>
+
+<h3>تمارين الشرائح (E-commerce) مع الحل</h3>
+<p>النص: نظام تسوق يتيح تصفح الكتالوج، اختيار الأصناف ووضعها في سلة، الدفع (credit card وشيكات شخصية وحوالات)، طرق شحن (ground وsecond business day وnext business day)، ولوحة admin لإضافة المنتجات وإدارة حسابات العملاء والمخزون. المطلوب: معاملات دفع آمنة، الاتصال بالعملاء بالإيميل، الالتزام بالقوانين المحلية والدولية ومعيار الشركة STD0945، العميل يحتاج web browser وذاكرة معقولة، زمن استجابة سريع، تحمل الأعطال الشائعة.</p>
+<details><summary>استخرج الـ Functional requirements</summary><div class="a"><ul>
+<li>تصفح الكتالوج واختيار الأصناف ووضعها في e-cart.</li>
+<li>الدفع بـ credit card أو personal check أو money order.</li>
+<li>اختيار طريقة الشحن (ground / second business day / next business day).</li>
+<li>Admin: إضافة منتجات، إدارة حسابات العملاء، إدارة المخزون.</li>
+<li>التواصل مع العملاء بالإيميل.</li></ul></div></details>
+<details><summary>استخرج الـ Non-functional requirements (وحدد الغامض)</summary><div class="a"><ul>
+<li>معاملات دفع آمنة: <b>غامض</b> (security) ← حوّله لمقياس مثل "تشفير كل بيانات البطاقات بـ TLS".</li>
+<li>الالتزام بالقوانين المحلية والدولية: <b>External</b>.</li>
+<li>الالتزام بمعيار STD0945: <b>Organisational</b>.</li>
+<li>client side: web browser وذاكرة معقولة: constraint، وكلمة "reasonable" غامضة.</li>
+<li>زمن استجابة سريع: <b>غامض</b> ← "الصفحة تحمل في أقل من 2 ثانية لـ 95% من الطلبات" <span class="tag">مثال مني</span>.</li>
+<li>تحمل الأعطال الشائعة: <b>غامض</b> (reliability) ← حدده بـ MTTF أو availability 99.9%.</li></ul></div></details>
+
+<h3>تمرين Hospital MS</h3>
+<p>الجمل في نص الشريحة بالترتيب: (1) النظام يحتفظ بمعلومات الأطباء والمرضى والزيارات والوصفات. (2) الدكتور يزور المرضى ويفحصهم ويضيف تشخيصات ويسجل الأعراض ويصف الأدوية ويجدول الإجراءات ويبلغ عن الحالة ثم يخرج المريض. (3) النظام يحتفظ بمعلومات الأعراض والتشخيص والأدوية. (4) المريض يسجل نفسه ويلغي التسجيل ويؤكد الإجراء الطبي ويملأ طلب الخروج. (5) الدكتور يطلع على تاريخ المريض. (6) حالة المريض: hospitalized, intensive care, away, discharged.</p>
+<div class="box warn"><b class="t">تنبيه</b>أنا اعتمدت الترقيم ده من ترتيب الجمل. ما متأكد إن الدكتورة تقصد نفس الترقيم، فراجع الشريحة. الفكرة في الحلول واحدة حتى لو الرقم اختلف.</div>
+<details><summary>أعد كتابة المتطلب 3 كـ stakeholder requirement</summary><div class="a">"As a doctor, I need to view a patient's symptoms, diagnosis and prescribed drugs so that I can make accurate treatment decisions."</div></details>
+<details><summary>أعد كتابة المتطلب 4 كـ non-functional requirement</summary><div class="a">"A patient shall be able to complete self-registration in under 3 minutes, and each registration screen shall respond within 2 seconds." (قابل للقياس)</div></details>
+<details><summary>اقترح transition requirement</summary><div class="a">"All existing paper patient records shall be migrated into the new system before go-live." أو "Doctors and nurses must attend a 1-day training before using the system."</div></details>
+<details><summary>أي متطلب هو business requirement؟</summary><div class="a">الأول (الهدف العام): النظام يحتفظ بمعلومات الأطباء والمرضى والزيارات والوصفات، لأنه بيجاوب "لماذا" على مستوى المؤسسة.</div></details>
+<details><summary>اقترح personas</summary><div class="a">(1) د. هالة، 45 سنة، استشارية باطنة، وقتها ضيق وتحتاج وصولاً سريعاً لتاريخ المريض. (2) أ. عمر، 62 سنة، مريض جديد قليل الخبرة بالتقنية ويحتاج واجهة تسجيل بسيطة.</div></details>
+
+<h3>أسئلة تدريب</h3>
+<details><summary>الفرق بين Business وStakeholder وSolution وTransition requirements؟</summary><div class="a">Business: لماذا (أهداف عليا). Stakeholder: ماذا يحتاج stakeholder (الجسر). Solution: خصائص الحل (functional وNFR). Transition: مؤقتة لنقل النظام من as-is إلى to-be.</div></details>
+<details><summary>ليه "النظام يجب أن يكون سريعاً" متطلب ضعيف؟</summary><div class="a">لأنه goal غامض ما يتختبر. لازم يتحول لقياس مثل "زمن الاستجابة أقل من 2 ثانية لـ 95% من الطلبات".</div></details>
+<details><summary>اشرح FURPS+</summary><div class="a">F وظائف، U usability، R reliability، P performance، S supportability. والـ + تضيف design constraints وimplementation وinterface وphysical.</div></details>
+
+<!-- ================= LAB 3 ================= -->
+<h2 id="b3" class="lab">Lab 3: حل الـ Conflicts، حذف Branch، Rebase، Stash</h2>
+
+<h3>Case study: ليه بيحصل conflict؟</h3>
+<p>الـ developers على master لقوا إن الـ business يحتاج <code>my_sum()</code> تاخد <b>3 أرقام</b> بدل اتنين، فغيروها وعملوا commit. وفي نفس الوقت الـ developers على فرع <code>math-feature</code> لقوا إن الاسم <code>my_sum</code> مش احترافي فغيروه لـ <code>sum()</code>. الاتنين عدلوا <b>نفس السطور</b>. لما ندمج، Git ما يعرف أي تغيير يحتفظ بيه، فيتوقف ويقول لك "حل الـ conflict بنفسك".</p>
+<pre><code>        A  (master: my_sum بـ 3 parameters)
+       /
+base --+
+       \
+        B  (math-feature: الاسم بقى sum)</code></pre>
+
+<h3>متى بالظبط يحصل conflict؟</h3>
+<div class="box warn"><b class="t">تذكير بقاعدة لاب 2</b>الـ 3-way merge بينظر لثلاثة commits: <b>base</b> وآخر commit في كل فرع. القاعدة: <b>change vs no-change → the change wins</b>. لو الفرعين عدلوا <b>نفس السطور بشكل مختلف</b> → <b>conflict</b>.</div>
+<p>في مثال الشرائح فيه مكانين متعارضين: تعريف الدالة واستدعاؤها، وأجزاء ثانية في الملف عدلها فرع واحد بس (دي اندمجت تلقائياً).</p>
+
+<h3>شكل الملف أثناء الـ conflict</h3>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+  (نسخة الفرع الحالي)
+=======
+  (نسخة الفرع المدموج)
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; اسم-الفرع-أو-الـ-commit</code></pre>
+<p>شغلك: تفتح الملف، وتختار الصح (أو تدمج الاتنين)، وتمسح علامات <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> و<code>=======</code> و<code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> بالكامل.</p>
+<p>في مثال المحاضرة الحل كان <b>الاحتفاظ بالتغييرين</b>: الاسم الجديد مع الـ 3 parameters:</p>
+<pre><code>int sum(int a, int b, int c)      // الاستدعاء كذلك: sum(2, 4, 6);</code></pre>
+<div class="box ok"><b class="t">إنهاء الـ merge</b>لتعلن إن الـ conflict اتحل: <b>stage ثم commit</b> للملفات المتعارضة.<pre><code>git add file.cpp
+git commit -m "resolve conflict"</code></pre></div>
+
+<h3>حذف Branch</h3>
+<p>بعد ما دالة <code>sum</code> انضافت لـ master بنجاح، ما في حاجة للفرع <code>math-feature</code>.</p>
+<pre><code>git branch -d &lt;name&gt;    # آمن: يرفض لو فيه تغييرات لم تُدمج
+git branch -D &lt;name&gt;    # إجباري: يحذف حتى لو غير مدموج (يضيع الـ commits)</code></pre>
+<ul>
+<li><b>ما تقدر تحذف الفرع الحالي</b> (اللي HEAD عليه).</li>
+<li>سؤال الشرائح: حذف math-feature بـ <code>-d</code> هل يعطي تحذير؟ <b>لا</b>، لأن تغييراته اتدمجت في master.</li>
+<li>حتى بعد حذف الفرع، الـ <code>git log</code> بيفضل يبين تاريخ الدمج كامل.</li>
+</ul>
+<div class="box"><b class="t">توضيح مني</b>الشريحة بتقول "كل الـ commits على الفرع بتتجمع في commit واحد على الفرع الحالي". الأدق إن التغييرات بتدخل عبر <b>merge commit واحد</b> بأبوين، لكن الـ commits الفردية بتفضل في التاريخ (وده سبب إن الـ log بيحتفظ بالدمج حتى بعد حذف الفرع).</div>
+
+<h3>Rebase: تاريخ نظيف</h3>
+<p>لو في ناس كتيرة بتشتغل على فروع وبتدمج، الـ log graph بيبقى زي الشبكة ويصعب تتبعه. <code>git rebase</code> بيحل المشكلة.</p>
+<p><b>الفكرة:</b> يأخذ commits فرعك الحالي ويعيد تطبيقها فوق رأس الفرع الأساسي (بينشئ نسخ جديدة بـ <b>hash جديد</b>). النتيجة تاريخ <b>خطي</b>.</p>
+
+<p><b>الـ case study (Black Friday):</b> الـ developers عملوا فرع <code>discounts</code> للعروض الجديدة وعدلوا commit، وعلى master نظفوا الملف بحذف أسطر زيادة. لو عملنا <code>git merge</code> الآن بيبقى <b>3-way</b> (الفرعان تباعدا) والتاريخ يصعب قراءته.</p>
+<pre><code>قبل:                       بعد rebase:
+
+C0 --- M1 (master)         C0 --- M1 --- F1' (discounts)
+  \                                       ^ master عند M1 (ما اتحرك)
+   F1 (discounts)</code></pre>
+<p>F1' هي نفس تغييرات F1 لكن commit جديد (hash مختلف) فوق M1.</p>
+<p>الخطوات بالترتيب:</p>
+<pre><code>git checkout &lt;feature-branch&gt;
+git rebase &lt;base-branch&gt;     # لو conflict: حله ثم
+git rebase --continue
+git checkout &lt;base-branch&gt;
+git merge &lt;feature-branch&gt;   # الآن fast-forward لأن فيه direct path</code></pre>
+<div class="box warn"><b class="t">سؤال الشرائح: أي branch pointer اتحرك بعد الـ rebase؟</b>فرع الـ <b>feature</b> هو اللي اتحرك (ونُسخت commits بتاعته). الـ base ما اتحرك لسه، ولذلك محتاجين الخطوة الأخيرة (<code>checkout base</code> ثم <code>merge feature</code>) وهي تبقى fast-forward.</div>
+
+<h3>Merge مقابل Rebase</h3>
+<table>
+<tr><th></th><th>git merge</th><th>git rebase</th></tr>
+<tr><td>التاريخ</td><td>يحفظ كل شيء كما حدث (غير خطي)</td><td>يعيد كتابة التاريخ (خطي)</td></tr>
+<tr><td>الـ log</td><td>شكل متفرع</td><td>خط مستقيم</td></tr>
+<tr><td>commits جديدة</td><td>merge commit واحد</td><td>يعيد كتابة commits موجودة (IDs جديدة)</td></tr>
+<tr><td>الأمان</td><td>آمن حتى على repos مشتركة</td><td><b>خطير لو الفرع مدفوع (pushed)</b>: يغير الـ IDs ويكسر نسخ الآخرين</td></tr>
+<tr><td>Conflicts</td><td>تحلها مرة واحدة</td><td>قد تحلها مع كل commit</td></tr>
+<tr><td>متى؟</td><td>دمج عمل عدة أشخاص، أو الفرع مدفوع، أو تريد الاحتفاظ بالسجل الحقيقي</td><td>أنت وحدك على feature محلي وتريد تاريخاً نظيفاً قبل الدمج في master</td></tr>
+</table>
+
+<h3>Git Stash</h3>
+<p><b>القصة:</b> سارة مبرمجة في منتصف feature (دالة حساب خصم في صفحة السلة). مدير الفريق يرسل: "عاجل! bug حرج في الـ checkout على الـ main". تغييراتها ما جاهزة للـ commit، وهي محتاجة تنتقل لـ main بسرعة بدون ما تفقد شغلها.</p>
+<p><b>Stash:</b> يحفظ تغييراتك المحلية <b>مؤقتاً بدون commit</b> ويرجّع الـ working directory نظيف.</p>
+<pre><code>git stash          # يحفظ التغييرات ويُنظف المجلد
+git stash list     # قائمة الـ stashes المحفوظة
+git stash apply    # يرجّع آخر stash ويبقيه في القائمة (يمكن تطبيقه تاني)
+git stash pop      # يرجّع آخر stash ويحذفه من القائمة
+git stash drop     # يحذف stash بدون تطبيقه</code></pre>
+<p><b>حل مشكلة سارة (6 خطوات):</b></p>
+<ol>
+<li><code>git stash</code> (الـ working directory صار نظيف).</li>
+<li><code>git checkout main</code>.</li>
+<li>أصلح الـ bug، commit، push.</li>
+<li><code>git checkout feature-branch</code>.</li>
+<li><code>git stash apply</code> (أو pop).</li>
+<li>كمّل شغلها كأن شيء ما حصل.</li>
+</ol>
+
+<h3>الـ Hands-on الكبير (14 خطوة) مع الشرح</h3>
+<p>جربته على Git فعلياً. النتائج الحقيقية بين الخطوات.</p>
+<table>
+<tr><th>#</th><th>الأمر / العمل</th><th>الملاحظة</th></tr>
+<tr><td>1–2</td><td>مجلد جديد ثم <code>git init</code></td><td></td></tr>
+<tr><td>3</td><td><code>touch .gitignore</code></td><td></td></tr>
+<tr><td>4</td><td>أنشئ <code>comments.txt</code> وضعه في .gitignore</td><td>بعد كده <code>git status</code> ما يظهر comments.txt (تأكدت)</td></tr>
+<tr><td>5</td><td>أنشئ ملف Main (فيه cout) وcommit</td><td></td></tr>
+<tr><td>6</td><td><code>git branch dev</code> و<code>git branch testing</code></td><td>الفرعان عند نفس الـ commit</td></tr>
+<tr><td>7</td><td><code>git branch -d testing</code></td><td>اتحذف بدون تحذير لأنه ما فيه تغييرات (طلعت: <code>Deleted branch testing</code>)</td></tr>
+<tr><td>8</td><td>على master: غيّر آخر cout لـ "git is fun edited by master" وcommit</td><td></td></tr>
+<tr><td>9–10</td><td><code>git checkout dev</code> ثم غيّر <b>نفس السطر</b> لـ "...edited by dev" وcommit</td><td>الاتنين عدلوا نفس السطر ← conflict جاي</td></tr>
+<tr><td>11</td><td><code>git log --all --oneline --decorate --graph</code></td><td>الشكل أدناه</td></tr>
+<tr><td>12</td><td>على dev: <code>git rebase master</code></td><td><b>conflict</b> (الشكل أدناه)</td></tr>
+<tr><td>13</td><td>على master: <code>git merge dev</code></td><td>نوعه <b>fast-forward</b></td></tr>
+<tr><td>14</td><td>اعرض الـ graph</td><td>خطي</td></tr>
+</table>
+<p><b>بعد الخطوة 11</b> (تفرع):</p>
+<pre><code>* 264f4b3 (HEAD -&gt; dev) dev edit
+| * 8f13a1b (master) master edit
+|/
+* 015f0b7 main file</code></pre>
+<p><b>الخطوة 12</b>: <code>git rebase master</code> بيقول <code>Could not apply 264f4b3... dev edit</code> والملف يصير:</p>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main(){
+  cout &lt;&lt; "hello" &lt;&lt; endl;
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+  cout &lt;&lt; "git is fun edited by master" &lt;&lt; endl;
+=======
+  cout &lt;&lt; "git is fun edited by dev" &lt;&lt; endl;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 264f4b3 (dev edit)
+}</code></pre>
+<div class="box warn"><b class="t">تفصيلة مهمة في الـ rebase</b>أثناء الـ rebase، الجزء اللي تحت <code>HEAD</code> هو نسخة <b>master</b> (الفرع اللي تعمل rebase عليه)، والجزء الثاني هو <b>commit بتاعك من dev</b>. ده معكوس شوية عن الـ merge العادي، وناس كتيرة بتتلخبط فيه.</div>
+<p><b>حل الـ conflict:</b> اختر النسخة اللي تريدها (أو اكتب نسخة تجمع الاتنين) <b>وامسح علامات الـ conflict</b>. بعدين:</p>
+<pre><code>git add main.cpp
+git rebase --continue      # (مو git commit!)</code></pre>
+<p>طلع: <code>Successfully rebased and updated refs/heads/dev.</code> والـ graph بعدها خطي:</p>
+<pre><code>* aa968ce (HEAD -&gt; dev) dev edit
+* 8f13a1b (master) master edit
+* 015f0b7 main file</code></pre>
+<p><b>الخطوة 13:</b> على master:</p>
+<pre><code>git checkout master
+git merge dev
+Updating 8f13a1b..aa968ce
+Fast-forward</code></pre>
+<div class="box ok"><b class="t">ليه fast-forward؟</b>لأن الـ rebase جعل dev مبنياً مباشرة فوق رأس master، فبقى في <b>مسار مباشر</b> وGit بس يحرك مؤشر master. هذا هو السؤال في الشريحة: "What's the type of merge?"</div>
+<p class="lead">معلومة عامة <span class="tag">خارج الشرائح</span>: لو تراجعت أثناء rebase مليء بالتعارضات، <code>git rebase --abort</code> بيرجعك لحالتك قبل الـ rebase.</p>
+
+<h3>ملخص الأوامر (من شرائح اللاب)</h3>
+<table>
+<tr><th>الأمر</th><th>وظيفته</th></tr>
+<tr><td><code>cd</code></td><td>تغيير المجلد</td></tr>
+<tr><td><code>git init</code></td><td>تهيئة repo</td></tr>
+<tr><td><code>git add &lt;file&gt;</code></td><td>stage</td></tr>
+<tr><td><code>git commit</code></td><td>حفظ الملفات الـ staged</td></tr>
+<tr><td><code>git status</code></td><td>حالة المشروع</td></tr>
+<tr><td><code>git log</code></td><td>تاريخ الـ commits</td></tr>
+<tr><td><code>git restore &lt;file&gt;</code></td><td>يرجع الملف لآخر نسخة committed</td></tr>
+<tr><td><code>git branch &lt;name&gt;</code> / <code>git branch</code></td><td>إنشاء فرع / عرض الفروع</td></tr>
+<tr><td><code>git branch -d / -D</code></td><td>حذف آمن / حذف إجباري</td></tr>
+<tr><td><code>git merge &lt;feature&gt;</code></td><td>دمج feature في الفرع الحالي</td></tr>
+<tr><td><code>git rebase &lt;base&gt;</code></td><td>تطبيق commits فرعك الحالي فوق رأس الـ base</td></tr>
+<tr><td><code>git log --all --decorate --oneline --graph</code></td><td>رسم التاريخ</td></tr>
+<tr><td><code>git stash / list / apply / pop / drop</code></td><td>حفظ مؤقت وإدارته</td></tr>
+</table>
+
+<h3>أسئلة تدريب</h3>
+<details><summary>متى يحدث merge conflict؟</summary><div class="a">لما يعدل فرعان <b>نفس السطور في نفس الملف</b> بشكل مختلف. لو غيّر فرع واحد بس الجزء، تغييره يكسب تلقائياً.</div></details>
+<details><summary>كيف تعلن لـ Git إن الـ conflict اتحل في merge عادي؟</summary><div class="a">تعدل الملف وتمسح العلامات، ثم stage وcommit للملف.</div></details>
+<details><summary>الفرق بين <code>-d</code> و<code>-D</code>؟</summary><div class="a">-d آمن ويرفض حذف فرع فيه تغييرات لم تُدمج. -D إجباري ويحذف حتى مع تغييرات غير مدمجة (تضيع نهائياً). ولا يمكن حذف الفرع الحالي.</div></details>
+<details><summary>ماذا يفعل rebase؟ وليه الـ merge بعده fast-forward؟</summary><div class="a">ينقل commits فرعك فوق رأس الـ base بنسخ جديدة (hash جديد) فيصير التاريخ خطياً. بعده فرع الـ feature مبني مباشرة فوق الـ base، فيوجد direct path ويصير الـ merge fast-forward.</div></details>
+<details><summary>متى لا تستخدم rebase؟</summary><div class="a">لما الفرع يكون مدفوعاً (pushed) أو مشتركاً مع آخرين، لأنه يغير commit IDs ويكسر نسخهم.</div></details>
+<details><summary>الفرق بين <code>stash apply</code> و<code>stash pop</code>؟</summary><div class="a">apply يرجّع التغييرات ويترك الـ stash في القائمة. pop يرجّعها ويحذف الـ stash من القائمة.</div></details>
+<details><summary>أنت في منتصف feature وجاك bug عاجل، شنو تعمل؟</summary><div class="a">git stash ← git checkout main ← أصلح وcommit وpush ← git checkout feature ← git stash apply ← كمّل.</div></details>
+
+<div class="box ok"><b class="t">الجزء الجاي</b>المحاضرة 4 (Elicitation وSpecification وValidation) ولاب 4 (Cherry-pick والتعاون عبر GitHub).</div>
+</div>
+</body>
+</html>
